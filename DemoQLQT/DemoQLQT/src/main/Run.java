@@ -19,7 +19,7 @@ public class Run {
 				try { 
 					UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
 					new GiaoDienDangNhap().setVisible(true);
-					//new GiaoDienNhanVien().setVisible(true);
+					//Test coi nào
 				} 
 				catch(Exception ex)
 				{
