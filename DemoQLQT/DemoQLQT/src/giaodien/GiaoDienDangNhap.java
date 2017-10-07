@@ -30,6 +30,7 @@ import java.io.FileReader;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
+import java.awt.event.KeyEvent;
 
 
 public class GiaoDienDangNhap extends JFrame {
@@ -107,6 +108,7 @@ public class GiaoDienDangNhap extends JFrame {
 
 
 		btnDangNhap = new JButton("  Đăng Nhập");
+		btnDangNhap.setMnemonic(KeyEvent.VK_ENTER);
 		btnDangNhap.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDangNhap.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/log_in.png")));
 		btnDangNhap.setFont(new Font("Tahoma", Font.PLAIN, 12));
