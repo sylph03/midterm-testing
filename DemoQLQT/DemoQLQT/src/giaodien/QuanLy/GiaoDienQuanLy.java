@@ -10,8 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.jtattoo.plaf.hifi.HiFiInternalFrameUI;
-
 import control.ControlGiaoDien;
 import control.DanhSachDuLieu;
 import entity.CTHoaDonNhap;
@@ -61,8 +59,6 @@ import javax.swing.AbstractListModel;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.ComponentOrientation;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
@@ -143,7 +139,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private JTextField txtTimKiem_DanhSach_DanhSachNhanVien;
 	private JButton btnTim_DanhSach_DanhSachThuoc;
 	private JPanel panelDanhMuc;
-	private JButton btnTrangChu;
+	private JButton btnTrangDangNhap;
 	private JPanel ThanhToolBar;
 	private JLabel lblNewLabel_20;
 	private JLabel lblSinThoi;
@@ -154,7 +150,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private ButtonGroup groupDanhMuc,GroupGioiTinh;
 	private JButton btnTim_DanhSach_DanhSachNV;
 	private JMenuItem itemMnThongTinSanPham;
-	private JButton btnLocDuLieu;
+	private JButton btnNewButton_1;
 	private JButton btnSua_NhapHang_DanhSachDon;
 	private JButton btnXoa_NhapHang_DanhSachDon;
 	private JTextField textField;
@@ -204,14 +200,14 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		ThanhToolBar.add(toolBar);
 		toolBar.setVerifyInputWhenFocusTarget(false);
 
-		btnTrangChu = new JButton("Home");
-		btnTrangChu.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnTrangChu.setVerticalAlignment(SwingConstants.TOP);
-		btnTrangChu.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnTrangChu.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/home.png")));
-		btnTrangChu.setPreferredSize(new Dimension(100, 75));
-		btnTrangChu.setMaximumSize(new Dimension(100, 100));
-		toolBar.add(btnTrangChu);
+		btnTrangDangNhap = new JButton("Home");
+		btnTrangDangNhap.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnTrangDangNhap.setVerticalAlignment(SwingConstants.TOP);
+		btnTrangDangNhap.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnTrangDangNhap.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/home.png")));
+		btnTrangDangNhap.setPreferredSize(new Dimension(100, 75));
+		btnTrangDangNhap.setMaximumSize(new Dimension(100, 100));
+		toolBar.add(btnTrangDangNhap);
 
 		JButton btnNhanVien = new JButton("Thông Tin");
 		btnNhanVien.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -223,14 +219,14 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		toolBar.add(btnNhanVien);
 		btnNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		btnLocDuLieu = new JButton("Lọc");
-		btnLocDuLieu.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnLocDuLieu.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/filter_list.png")));
-		btnLocDuLieu.setVerticalAlignment(SwingConstants.TOP);
-		btnLocDuLieu.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnLocDuLieu.setPreferredSize(new Dimension(100, 75));
-		btnLocDuLieu.setMaximumSize(new Dimension(100, 100));
-		toolBar.add(btnLocDuLieu);
+		btnNewButton_1 = new JButton("Tìm kiếm");
+		btnNewButton_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnNewButton_1.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/search (1).png")));
+		btnNewButton_1.setVerticalAlignment(SwingConstants.TOP);
+		btnNewButton_1.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnNewButton_1.setPreferredSize(new Dimension(100, 75));
+		btnNewButton_1.setMaximumSize(new Dimension(100, 100));
+		toolBar.add(btnNewButton_1);
 
 
 
@@ -255,19 +251,19 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnDangXuat.setPreferredSize(new Dimension(100, 75));
 		btnDangXuat.setMaximumSize(new Dimension(100, 100));
 
-		JButton btnThoatChuongTrinh = new JButton("Thoát");
-		btnThoatChuongTrinh.addActionListener(new ActionListener() {
+		JButton btnNewButton = new JButton("Thoát");
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}
 		});
-		btnThoatChuongTrinh.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnThoatChuongTrinh.setVerticalAlignment(SwingConstants.TOP);
-		btnThoatChuongTrinh.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnThoatChuongTrinh.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/exit (1).png")));
-		btnThoatChuongTrinh.setPreferredSize(new Dimension(100, 75));
-		btnThoatChuongTrinh.setMaximumSize(new Dimension(100, 100));
-		toolBar.add(btnThoatChuongTrinh);
+		btnNewButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnNewButton.setVerticalAlignment(SwingConstants.TOP);
+		btnNewButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnNewButton.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/exit (1).png")));
+		btnNewButton.setPreferredSize(new Dimension(100, 75));
+		btnNewButton.setMaximumSize(new Dimension(100, 100));
+		toolBar.add(btnNewButton);
 
 
 		btnNhanVien.addActionListener(new ActionListener() {
@@ -852,29 +848,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panelThongTinChiTietThuoc.add(txtLoai_DanhSach_DanhSachThuoc);
 		txtLoai_DanhSach_DanhSachThuoc.setColumns(10);
 
-		txtTimkiem_DanhSach_DanhSachThuoc = new JTextField("Tên thuốc....");
-		txtTimkiem_DanhSach_DanhSachThuoc.setForeground(Color.GRAY);
-		txtTimkiem_DanhSach_DanhSachThuoc.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				txtTimkiem_DanhSach_DanhSachThuoc.setForeground(Color.BLACK);
-				txtTimkiem_DanhSach_DanhSachThuoc.setText("");
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				if(!txtTimkiem_DanhSach_DanhSachThuoc.getText().equals(""))
-				{
-
-				}
-				else
-				{
-					txtTimkiem_DanhSach_DanhSachThuoc.setForeground(Color.GRAY);
-					txtTimkiem_DanhSach_DanhSachThuoc.setText("Nhap thuoc");
-					listTimKiem_DanhSach_DanhSachThuoc.setVisible(false);
-				}
-			}
-		});
-
+		txtTimkiem_DanhSach_DanhSachThuoc = new JTextField();
 		txtTimkiem_DanhSach_DanhSachThuoc.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -891,7 +865,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 								for(int i=0;i<data.length;i++)
 								{
 									if(i<4)
-										listModelTimKiem_DanhSach_DanhSachThuoc.addElement(data[i]);
+									listModelTimKiem_DanhSach_DanhSachThuoc.addElement(data[i]);
 									else
 										break;
 								}
@@ -942,6 +916,12 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnXoa_DanhSach_DanhSachThuoc.setBounds(292, 152, 35, 35);
 		panelDanhSachThuoc.add(btnXoa_DanhSach_DanhSachThuoc);
 
+		btnTim_DanhSach_DanhSachThuoc = new JButton(" ");
+		btnTim_DanhSach_DanhSachThuoc.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnTim_DanhSach_DanhSachThuoc.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/search.png")));
+		btnTim_DanhSach_DanhSachThuoc.setBounds(542, 152, 33, 33);
+		panelDanhSachThuoc.add(btnTim_DanhSach_DanhSachThuoc);
+
 		listModelTimKiem_DanhSach_DanhSachThuoc =new DefaultListModel<>();
 		listTimKiem_DanhSach_DanhSachThuoc= new JList(listModelTimKiem_DanhSach_DanhSachThuoc);
 		listTimKiem_DanhSach_DanhSachThuoc.setSelectionBackground(new Color(0, 120, 215));
@@ -969,27 +949,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		listTimKiem_DanhSach_DanhSachThuoc.setBounds(346, 183, 186, 86);
 		panelDanhSachThuoc.add(listTimKiem_DanhSach_DanhSachThuoc);
 		panelDanhSachThuoc.add(scrollPane_ThongtinThuoc= new JScrollPane(tableThongtinThuoc_DanhSach=new JTable(tableModelThongTinthuoc)));
-
-		btnTim_DanhSach_DanhSachThuoc = new JButton(" ");
-		btnTim_DanhSach_DanhSachThuoc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String tenthuoc=txtTimkiem_DanhSach_DanhSachThuoc.getText();
-				int vitri =ds.TimVitrithuocTrongbang(tenthuoc);
-				if(vitri!=-1)
-				{
-					tableThongtinThuoc_DanhSach.getSelectionModel().setSelectionInterval(vitri,vitri);
-					tableThongtinThuoc_DanhSach.scrollRectToVisible(tableThongtinThuoc_DanhSach.getCellRect(vitri, vitri, true));
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(panelDanhSachThuoc,vitri+"");
-				}
-			}
-		});
-		btnTim_DanhSach_DanhSachThuoc.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnTim_DanhSach_DanhSachThuoc.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/search.png")));
-		btnTim_DanhSach_DanhSachThuoc.setBounds(542, 152, 33, 33);
-		panelDanhSachThuoc.add(btnTim_DanhSach_DanhSachThuoc);
 		scrollPane_ThongtinThuoc.setOpaque(false);
 		tableThongtinThuoc_DanhSach.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -1015,7 +974,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		scrollPaneNhanVien.setOpaque(false);
 		scrollPaneNhanVien.setBounds(10, 200, 575, 220);
 		tableThongTinNV.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
+			
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				// TODO Auto-generated method stub
@@ -1385,7 +1344,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			}
 			xoaRowtrongTable();
 			duaDuLieuTuListVaoTable();
-
+			
 		}
 	}
 
@@ -1414,13 +1373,13 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			Object[] row = {hdn.getMaHDN(),hdn.getNgayNhap(),hdn.getTongGiaNhap()};
 			tableModel_NhapHang_DanhSachDon.addRow(row);
 		}
-
+		
 		for(NhanVien nv : ds.listNV)
 		{
 			Object[] row = {nv.getMaNv(),nv.getHoTenNV(),nv.getNgaySinh(),nv.getGioiTinh(),nv.getDiaChi()};
 			tableModelThongTinNV.addRow(row);
 		}
-
+		
 		for(HoaDonBanHang hdb : ds.listHDB)
 		{
 			Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(TimNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
@@ -1452,7 +1411,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			txtLoai_DanhSach_DanhSachThuoc.setText(tableThongtinThuoc_DanhSach.getValueAt(row, 2)+"");
 		}
 	}
-
+	
 	public void fillFormNV(int row)
 	{
 		if(row!=-1)
@@ -1485,9 +1444,9 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			if(nv.getMaNv().equalsIgnoreCase(ma))
 				return nv;
 		return null;
-
+	
 	}
-
+	
 
 	public void xoaRowtrongTable()
 	{

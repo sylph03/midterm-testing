@@ -177,7 +177,7 @@ public class DanhSachDuLieu {
 			con.close();
 		}
 	}
-
+	
 	public int demSoHDBan()
 	{
 		try {
@@ -247,7 +247,7 @@ public class DanhSachDuLieu {
 				return nv;
 		return null;
 	}
-
+	
 	//------------------------List KH---------------------
 	public  void docBangKhachHang() throws SQLException ///Đọc dữ liệu KH từ SQL vào list 
 	{
@@ -277,39 +277,27 @@ public class DanhSachDuLieu {
 
 	//-----------------------Danh Sach thuốc timg kiếm thông minh----------------------
 	//29-09-2017
-	public String Timtenthuoc(String tenthuoc) throws SQLException
-	{
-		String thuoctim="";
-		Connection con =KetNoiSQL.getInstance().connect();
-		try 
+		public String Timtenthuoc(String tenthuoc) throws SQLException
 		{
-			String sql="select ten from dbo.DSThuoc where Ten like ?";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, tenthuoc+"%");
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next())
+			String thuoctim="";
+			Connection con =KetNoiSQL.getInstance().connect();
+			try 
 			{
-				thuoctim+=rs.getString(1)+";";
+				String sql="select ten from dbo.DSThuoc where Ten like ?";
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, tenthuoc+"%");
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next())
+				{
+					thuoctim+=rs.getString(1)+";";
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				con.close();
 			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			con.close();
+			
+			return thuoctim;
 		}
-
-		return thuoctim;
-	}
-	//7-10-2017
-	public int TimVitrithuocTrongbang(String tenthuoc)
-	{
-		for (ThongTinThuoc thongTinThuoc : listThuoc)
-		{
-			if(thongTinThuoc.getTenThuoc().equals(tenthuoc))
-			{
-				return listThuoc.indexOf(thongTinThuoc);
-			}
-		}
-		return -1;
-	}
 }
