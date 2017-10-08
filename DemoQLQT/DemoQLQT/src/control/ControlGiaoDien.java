@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -291,6 +292,22 @@ public class ControlGiaoDien {
 		}
 		return tong;
 	}
+	public String layChuoiNgayThangNam(JComboBox ngay,JComboBox thang,JComboBox nam)
+	{
+		String date = nam.getSelectedItem().toString()+"-"+thang.getSelectedItem().toString()+"-"+ngay.getSelectedItem().toString();
+		return date;
+	}
+	public String layChuoiThangNam(JComboBox thang,JComboBox nam)
+	{
+		String month = nam.getSelectedItem().toString()+"-"+thang.getSelectedItem().toString();
+		return month;
+	}
+	public String layChuoiNam(JComboBox nam)
+	{
+		String year = nam.getSelectedItem().toString();
+		return year;
+	}
+	
 		//-------------------Tim kiem doi tuong trong table ở SQL-----------------
 	
 	

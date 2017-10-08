@@ -70,6 +70,7 @@ public class GiaoDienNhanVien extends JFrame {
 	private JTextField txtTongTien_timkiem;
 	private JTextField txtTongDoanhThu;
 	private JPanel panelCTHD,panelDSHD,panelDSThuoc,panelDoanhThu;
+	private JComboBox cbbNgay,cbbThang,cbbNam,comboBoxNgay_DoanhThu,comboBoxThang_DoanhThu,comboBoxNam_DoanhThu;
 
 	public GiaoDienNhanVien() {
 		setResizable(false);
@@ -284,7 +285,7 @@ public class GiaoDienNhanVien extends JFrame {
 		String[] headerDanhSachDon="Mã hóa đơn;Người lập;Ngày lập;Tổng tiền".split(";");
 		tablemodelDanhSachDon = new DefaultTableModel(headerDanhSachDon,0);
 
-		String[] headerCTHD="Mã thuốc;Số lượng;Giá bán".split(";");
+		String[] headerCTHD="Tên thuốc;Số lượng;Giá bán".split(";");
 		tablemodelCTHD = new DefaultTableModel(headerCTHD,0);
 
 		String[] headerDoanhThu="Mã đơn;Ngày lập;Người Lập;Tổng tiền".split(";");
@@ -426,20 +427,20 @@ public class GiaoDienNhanVien extends JFrame {
 		panelDSHD.add(lblNgayLap_timkiem);
 		lblNgayLap_timkiem.setFont(new Font("Tahoma", Font.BOLD, 11));
 
-		JComboBox cbbNgay = new JComboBox();
+		cbbNgay = new JComboBox();
 		cbbNgay.setBounds(80, 43, 49, 25);
 		panelDSHD.add(cbbNgay);
-		cbbNgay.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""}));
+		cbbNgay.setModel(new DefaultComboBoxModel(new String[] {"All--","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""}));
 
-		JComboBox cbbThang = new JComboBox();
+		cbbThang = new JComboBox();
 		cbbThang.setBounds(139, 43, 49, 25);
 		panelDSHD.add(cbbThang);
-		cbbThang.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "04", "05", "06", "07", "08", "09", "10", "11", "12", ""}));
+		cbbThang.setModel(new DefaultComboBoxModel(new String[] {"All--","01", "02", "04", "05", "06", "07", "08", "09", "10", "11", "12", ""}));
 
-		JComboBox cbbNam = new JComboBox();
+		cbbNam = new JComboBox();
 		cbbNam.setBounds(198, 43, 59, 25);
 		panelDSHD.add(cbbNam);
-		cbbNam.setModel(new DefaultComboBoxModel(new String[] {"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998",
+		cbbNam.setModel(new DefaultComboBoxModel(new String[] {"All--","1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998",
 				"1999", "2000", "2001", "2002", "2003", "2004", "2017", "2018"}));
 
 		JButton btnXemChiTiet = new JButton("Xem chi tiết");
@@ -454,6 +455,7 @@ public class GiaoDienNhanVien extends JFrame {
 
 					String maHD =(String) tableDanhSachDon.getValueAt(row, 0);
 					String ngay =(String) tableDanhSachDon.getValueAt(row, 2);
+					String tongTien = tableDanhSachDon.getValueAt(row, 3)+"";
 					try {
 						ds.docBangCTHoaDonBan();
 					} catch (SQLException e1) {
@@ -463,12 +465,13 @@ public class GiaoDienNhanVien extends JFrame {
 					for (CTHoaDonBan cthd : ds.listThuocBan)
 					{
 						if (cthd.getMaHD().equalsIgnoreCase(maHD)) {
-							Object[] roww = {cthd.getMaThuoc(),cthd.getSoLuong(),cthd.getDonGia()};
+							Object[] roww = {cthd.getTenThuoc(),cthd.getSoLuong(),cthd.getDonGia()};
 							tablemodelCTHD.addRow(roww);
 						}
 					}
 					txtMaHD.setText(maHD);
 					txtNgayLap.setText(ngay);
+					txtTongTien_timkiem.setText(tongTien);
 
 				}
 				else {
@@ -490,7 +493,107 @@ public class GiaoDienNhanVien extends JFrame {
 		btnTim_DSHoaDon.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/search.png")));
 		btnTim_DSHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			}
+				String date = control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam);
+				try {
+					ds.docBangHDB();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for(int i=tablemodelDanhSachDon.getRowCount()-1;i>=0;i--)
+				{
+					tablemodelDanhSachDon.removeRow(i);
+				}
+				if(date.equals("All---All---All--"))
+				{
+					for (HoaDonBanHang hd : ds.listHDB)
+					{
+						Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+						tablemodelDanhSachDon.addRow(row);	
+					}
+				}
+				else if(!cbbNgay.getSelectedItem().toString().equals("All--")
+						&& !cbbThang.getSelectedItem().toString().equals("All--") 
+						&& !cbbNam.getSelectedItem().toString().equals("All--"))
+					{
+						for (HoaDonBanHang hd : ds.listHDB)
+						{
+							if(hd.getNgayLap().equals(date))
+							{
+								Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+								tablemodelDanhSachDon.addRow(row);	
+							}
+						}
+					}
+				else if(!cbbThang.getSelectedItem().toString().equals("All--") 
+						&& !cbbNam.getSelectedItem().toString().equals("All--")
+						&& cbbNgay.getSelectedItem().toString().equals("All--"))
+				{
+					for(int i=1;i<=31;i++)
+					{
+						date = control.layChuoiThangNam(cbbThang, cbbNam)+"-"+ i +"";
+						for (HoaDonBanHang hd : ds.listHDB)
+						{
+							if(hd.getNgayLap().equals(date))
+							{
+								Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+								tablemodelDanhSachDon.addRow(row);	
+							}
+						}
+					}
+				}
+				else if(!cbbNam.getSelectedItem().toString().equals("All--")
+						&&cbbThang.getSelectedItem().toString().equals("All--")
+						&&cbbNgay.getSelectedItem().toString().equals("All--"))
+				{
+					for(int j=1;j<=12;j++)
+					{
+						for(int i=1;i<=31;i++)
+						{
+							if(j<10)
+							{
+								if(i<10)
+									date = cbbNam.getSelectedItem().toString()+"-0"+j+"-0"+i+"";
+								else
+									date = cbbNam.getSelectedItem().toString()+"-0"+j+"-"+i+"";
+							}
+							if(j>=10)
+							{
+								if(i<10)
+									date = cbbNam.getSelectedItem().toString()+"-"+j+"-0"+i+"";
+								else
+									date = cbbNam.getSelectedItem().toString()+"-"+j+"-"+i+"";
+							}
+							for (HoaDonBanHang hd : ds.listHDB)
+							{
+								if(hd.getNgayLap().equals(date))
+								{
+									Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+									tablemodelDanhSachDon.addRow(row);	
+								}
+							}
+						}
+					}
+				}
+				else if(cbbNam.getSelectedItem().toString().equals("All--") 
+						&& !cbbThang.getSelectedItem().toString().equals("All--") 
+						&& !cbbNgay.getSelectedItem().toString().equals("All--"))
+				{
+					JOptionPane.showMessageDialog(contentPane, "Phải chọn năm!");
+				}
+				else if(cbbThang.getSelectedItem().toString().equals("All--") 
+						&& !cbbNgay.getSelectedItem().toString().equals("All--")
+						&& !cbbNam.getSelectedItem().toString().equals("All--"))
+				{
+					JOptionPane.showMessageDialog(contentPane, "Phải chọn tháng!");
+				}
+				else if(cbbThang.getSelectedItem().toString().equals("All--") 
+						&& !cbbNgay.getSelectedItem().toString().equals("All--")
+						&& cbbNam.getSelectedItem().toString().equals("All--"))
+				{
+					JOptionPane.showMessageDialog(contentPane, "Phải chọn tháng và năm!");
+				}
+			}	
 		});
 
 		panelDSHD.add(scrollPaneDanhSachDon = new JScrollPane(tableDanhSachDon = new JTable(tablemodelDanhSachDon)));
@@ -527,20 +630,20 @@ public class GiaoDienNhanVien extends JFrame {
 		panelDoanhThu.add(lblChon);
 		lblChon.setFont(new Font("Tahoma", Font.BOLD, 11));
 
-		JComboBox comboBoxNgay_DoanhThu = new JComboBox();
+		comboBoxNgay_DoanhThu = new JComboBox();
 		comboBoxNgay_DoanhThu.setBounds(68, 54, 49, 20);
 		panelDoanhThu.add(comboBoxNgay_DoanhThu);
-		comboBoxNgay_DoanhThu.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""}));
+		comboBoxNgay_DoanhThu.setModel(new DefaultComboBoxModel(new String[] {"All--","01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", ""}));
 
-		JComboBox comboBoxThang_DoanhThu = new JComboBox();
+		comboBoxThang_DoanhThu = new JComboBox();
 		comboBoxThang_DoanhThu.setBounds(175, 54, 49, 20);
 		panelDoanhThu.add(comboBoxThang_DoanhThu);
-		comboBoxThang_DoanhThu.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "04", "05", "06", "07", "08", "09", "10", "11", "12", ""}));
+		comboBoxThang_DoanhThu.setModel(new DefaultComboBoxModel(new String[] {"All--","01", "02", "04", "05", "06", "07", "08", "09", "10", "11", "12", ""}));
 
-		JComboBox comboBoxNam_DoanhThu = new JComboBox();
+		comboBoxNam_DoanhThu = new JComboBox();
 		comboBoxNam_DoanhThu.setBounds(272, 54, 67, 20);
 		panelDoanhThu.add(comboBoxNam_DoanhThu);
-		comboBoxNam_DoanhThu.setModel(new DefaultComboBoxModel(new String[] {"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998",
+		comboBoxNam_DoanhThu.setModel(new DefaultComboBoxModel(new String[] {"All--","1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998",
 				"1999", "2000", "2001", "2002", "2003", "2004", "2017", "2018"}));
 
 		JLabel lblNewLabel_1 = new JLabel("Ngày:");
@@ -575,6 +678,121 @@ public class GiaoDienNhanVien extends JFrame {
 		panelDoanhThu.add(btntimDoanhThu);
 		btntimDoanhThu.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/search.png")));
 		btntimDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btntimDoanhThu.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String date = control.layChuoiNgayThangNam(comboBoxNgay_DoanhThu, comboBoxThang_DoanhThu, comboBoxNam_DoanhThu);
+				try {
+					ds.docBangHDB();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for(int i=tablemodelDoanhThu.getRowCount()-1;i>=0;i--)
+				{
+					tablemodelDoanhThu.removeRow(i);
+				}
+				if(date.equals("All---All---All--"))
+				{
+					for (HoaDonBanHang hd : ds.listHDB)
+					{
+						if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
+							Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
+							tablemodelDoanhThu.addRow(row);
+						}	
+					}
+				}
+				else if(!comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--")
+						&& !comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
+						&& !comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--"))
+					{
+						for (HoaDonBanHang hd : ds.listHDB)
+						{
+							if(hd.getNgayLap().equals(date))
+							{
+								if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
+									Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
+									tablemodelDoanhThu.addRow(row);
+								}
+							}
+						}
+					}
+				else if(!comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
+						&& !comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--")
+						&& comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--"))
+				{
+					for(int i=1;i<=31;i++)
+					{
+						date = control.layChuoiThangNam(comboBoxThang_DoanhThu, comboBoxNam_DoanhThu)+"-"+ i +"";
+						for (HoaDonBanHang hd : ds.listHDB)
+						{
+							if(hd.getNgayLap().equals(date))
+							{
+								if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
+									Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
+									tablemodelDoanhThu.addRow(row);
+								}
+							}
+						}
+					}
+				}
+				else if(!comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--")
+						&&comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--")
+						&&comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--"))
+				{
+					for(int j=1;j<=12;j++)
+					{
+						for(int i=1;i<=31;i++)
+						{
+							if(j<10)
+							{
+								if(i<10)
+									date = comboBoxNam_DoanhThu.getSelectedItem().toString()+"-0"+j+"-0"+i+"";
+								else
+									date = comboBoxNam_DoanhThu.getSelectedItem().toString()+"-0"+j+"-"+i+"";
+							}
+							if(j>=10)
+							{
+								if(i<10)
+									date = comboBoxNam_DoanhThu.getSelectedItem().toString()+"-"+j+"-0"+i+"";
+								else
+									date = comboBoxNam_DoanhThu.getSelectedItem().toString()+"-"+j+"-"+i+"";
+							}
+							for (HoaDonBanHang hd : ds.listHDB)
+							{
+								if(hd.getNgayLap().equals(date))
+								{
+									if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
+										Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
+										tablemodelDoanhThu.addRow(row);
+									}
+								}
+							}
+						}
+					}
+				}
+				else if(comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--") 
+						&& !comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
+						&& !comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--"))
+				{
+					JOptionPane.showMessageDialog(contentPane, "Phải chọn năm!");
+				}
+				else if(comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
+						&& !comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--")
+						&& !comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--"))
+				{
+					JOptionPane.showMessageDialog(contentPane, "Phải chọn tháng!");
+				}
+				else if(comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
+						&& !comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--")
+						&& comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--"))
+				{
+					JOptionPane.showMessageDialog(contentPane, "Phải chọn tháng và năm!");
+				}
+			}	
+		});
 		panelDoanhThu.add(scrollPaneDoanhThu = new JScrollPane(tableDoanhThu = new JTable(tablemodelDoanhThu)));
 
 		JLabel lblNewLabel_6 = new JLabel("");
@@ -610,16 +828,15 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 		for (HoaDonBanHang hd : ds.listHDB)
 		{
-			Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),""};
+			Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
 			tablemodelDanhSachDon.addRow(row);
 		}
 		for (HoaDonBanHang hd : ds.listHDB) {
 			if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
-				Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),""};
+				Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
 				tablemodelDoanhThu.addRow(row);
 			}
 		}
-
-
 	}
+	
 }
