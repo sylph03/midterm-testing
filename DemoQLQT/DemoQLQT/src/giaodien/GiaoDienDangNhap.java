@@ -88,6 +88,7 @@ public class GiaoDienDangNhap extends JFrame {
 				}
 			}
 		});
+		txtTK.setActionCommand("DangNhap");
 		txtTK.setBounds(122, 27, 238, 24);
 		plDangNhap.add(txtTK);
 		txtTK.setColumns(10);
@@ -127,7 +128,7 @@ public class GiaoDienDangNhap extends JFrame {
 
 
 		btnDangNhap = new JButton("  Đăng Nhập");
-		btnDangNhap.setMnemonic(KeyEvent.VK_ENTER);
+		btnDangNhap.setActionCommand("DangNhap");
 		btnDangNhap.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDangNhap.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/log_in.png")));
 		btnDangNhap.setFont(new Font("Tahoma", Font.PLAIN, 12));

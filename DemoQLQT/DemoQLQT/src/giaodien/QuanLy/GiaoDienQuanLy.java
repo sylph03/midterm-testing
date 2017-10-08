@@ -246,6 +246,21 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnLocDuLieu.setPreferredSize(new Dimension(100, 75));
 		btnLocDuLieu.setMaximumSize(new Dimension(100, 100));
 		toolBar.add(btnLocDuLieu);
+		
+		JButton btnThmThuc = new JButton("Thêm Thuốc");
+		btnThmThuc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnNhapHang.doClick();
+				tabbedPane_NhapHang.setSelectedIndex(2);
+			}
+		});
+		btnThmThuc.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/drug_basket.png")));
+		btnThmThuc.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnThmThuc.setVerticalAlignment(SwingConstants.TOP);
+		btnThmThuc.setPreferredSize(new Dimension(100, 75));
+		btnThmThuc.setMaximumSize(new Dimension(100, 100));
+		btnThmThuc.setHorizontalTextPosition(SwingConstants.CENTER);
+		toolBar.add(btnThmThuc);
 
 
 
