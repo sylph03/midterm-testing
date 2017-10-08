@@ -3,6 +3,7 @@ package entity;
 public class CTHoaDonBan {
 	String MaHD;
 	String MaThuoc;
+	String TenThuoc;
 	int SoLuong;
 	double DonGia;
 	public String getMaHD() {
@@ -29,10 +30,19 @@ public class CTHoaDonBan {
 	public void setDonGia(double donGia) {
 		DonGia = donGia;
 	}
-	public CTHoaDonBan(String maHD, String maThuoc, int soLuong, double donGia) {
+	
+	public String getTenThuoc() {
+		return TenThuoc;
+	}
+	public void setTenThuoc(String tenThuoc) {
+		TenThuoc = tenThuoc;
+	}
+	
+	public CTHoaDonBan(String maHD, String maThuoc, String tenThuoc, int soLuong, double donGia) {
 		super();
 		MaHD = maHD;
 		MaThuoc = maThuoc;
+		TenThuoc = tenThuoc;
 		SoLuong = soLuong;
 		DonGia = donGia;
 	}

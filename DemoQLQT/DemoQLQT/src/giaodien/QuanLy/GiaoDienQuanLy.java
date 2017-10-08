@@ -1270,8 +1270,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			if(row!=-1)
 			{
 				Object[] data= {tableDulieuThuoc_NhapHang_NhapDon.getValueAt(row, 0),tableDulieuThuoc_NhapHang_NhapDon.getValueAt(row, 1),
-						TimThuocTheoMa(tableDulieuThuoc_NhapHang_NhapDon.getValueAt(row, 0).toString()).getSoLuong()+"",
-						TimThuocTheoMa(tableDulieuThuoc_NhapHang_NhapDon.getValueAt(row, 0)+"").getHsd()+""};
+						control.TimThuocTheoMa(tableDulieuThuoc_NhapHang_NhapDon.getValueAt(row, 0).toString()).getSoLuong()+"",
+						control.TimThuocTheoMa(tableDulieuThuoc_NhapHang_NhapDon.getValueAt(row, 0)+"").getHsd()+""};
 				tableModelDulieuthuoc.removeRow(row);
 				tableModelThuocNhap.addRow(data);
 			}
@@ -1433,7 +1433,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 		for(HoaDonBanHang hdb : ds.listHDB)
 		{
-			Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(TimNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
+			Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(control.TimNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
 			tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.addRow(row);
 		}
 	}
@@ -1454,11 +1454,11 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			txtMaThuoc_DanhSach_DanhSachThuoc.setText(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"");
 			txtTenThuoc_DanhSach_DanhSachThuoc.setText(tableThongtinThuoc_DanhSach.getValueAt(row, 1)+"");
 			txtNCC_DanhSach_DanhSachThuoc.setText(tableThongtinThuoc_DanhSach.getValueAt(row, 3)+"");
-			txtSoLuong_DanhSach_DanhSachThuoc.setText(TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0).toString()).getSoLuong()+"");
-			txtGiaBan_DanhSach_DanhSachThuoc.setText(TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getGiaBan()+"");
-			txtGiaNhap_DanhSach_DanhSachThuoc.setText(TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getGiaNhap()+"");
-			txtHSD_DanhSach_DanhSachThuoc.setText(TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getHsd()+"");
-			txtDonViTinh_DanhSach_DanhSachThuoc.setText(TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getDonViTinh()+"");
+			txtSoLuong_DanhSach_DanhSachThuoc.setText(control.TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0).toString()).getSoLuong()+"");
+			txtGiaBan_DanhSach_DanhSachThuoc.setText(control.TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getGiaBan()+"");
+			txtGiaNhap_DanhSach_DanhSachThuoc.setText(control.TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getGiaNhap()+"");
+			txtHSD_DanhSach_DanhSachThuoc.setText(control.TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getHsd()+"");
+			txtDonViTinh_DanhSach_DanhSachThuoc.setText(control.TimThuocTheoMa(tableThongtinThuoc_DanhSach.getValueAt(row, 0)+"").getDonViTinh()+"");
 			txtLoai_DanhSach_DanhSachThuoc.setText(tableThongtinThuoc_DanhSach.getValueAt(row, 2)+"");
 		}
 	}
@@ -1471,31 +1471,15 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			txtTenNV_DanhSach_DanhSachNV.setText(tableThongTinNV.getValueAt(row, 1)+"");
 			txtNgaySinh_DanhSach_DanhSachNV.setText(tableThongTinNV.getValueAt(row, 2)+"");
 			txtDiaChi_DanhSach_DanhSachNV.setText(tableThongTinNV.getValueAt(row, 4)+"");
-			txtCMND_DanhSach_DanhSachNV.setText(TimNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getCmnd());
+			txtCMND_DanhSach_DanhSachNV.setText(control.TimNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getCmnd());
 			if((tableThongTinNV.getValueAt(row, 3)+"").equalsIgnoreCase("Nam"))
 			{
 				rdbtnNam_DanhSach_DanhSachNV.setSelected(true);
 			}
 			else
 				rdbtnNu_DanhSach_DanhSachNV.setSelected(true);
-			txtSDT_DanhSach_DanhSachNV.setText(TimNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getSdt());
+			txtSDT_DanhSach_DanhSachNV.setText(control.TimNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getSdt());
 		}
-	}
-	public ThongTinThuoc TimThuocTheoMa(String ma)
-	{
-		for (ThongTinThuoc thuoc : ds.listThuoc)
-			if(thuoc.getMaThuoc().equalsIgnoreCase(ma))
-				return thuoc;
-		return null;
-
-	}
-	public NhanVien TimNVTheoMa(String ma)
-	{
-		for (NhanVien nv: ds.listNV)
-			if(nv.getMaNv().equalsIgnoreCase(ma))
-				return nv;
-		return null;
-
 	}
 
 
