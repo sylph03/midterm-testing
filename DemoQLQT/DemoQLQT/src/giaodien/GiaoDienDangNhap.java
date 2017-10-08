@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 
 
 public class GiaoDienDangNhap extends JFrame {
@@ -78,6 +79,15 @@ public class GiaoDienDangNhap extends JFrame {
 		plDangNhap.add(lblTaiKhoan);
 
 		txtTK = new JTextField();
+		txtTK.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnDangNhap.doClick();
+				}
+			}
+		});
 		txtTK.setBounds(122, 27, 238, 24);
 		plDangNhap.add(txtTK);
 		txtTK.setColumns(10);
@@ -88,6 +98,15 @@ public class GiaoDienDangNhap extends JFrame {
 		plDangNhap.add(lblMatKhau);
 
 		txtMK = new JPasswordField();
+		txtMK.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnDangNhap.doClick();
+				}
+			}
+		});
 		txtMK.setBounds(122, 62, 238, 24);
 		plDangNhap.add(txtMK);
 		txtMK.setColumns(10);
