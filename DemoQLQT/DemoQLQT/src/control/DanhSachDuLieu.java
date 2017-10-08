@@ -54,12 +54,6 @@ public class DanhSachDuLieu {
 		}
 	}
 
-	public int layViTriThuocTrongList(ThongTinThuoc thuoc)
-	{
-		int index = -1;
-		index = listThuoc.indexOf(thuoc);
-		return index;
-	}
 
 	public ThongTinThuoc layThongTinThuocMoi() /////Lấy thông tin thuốc từ test field
 	{
@@ -67,45 +61,15 @@ public class DanhSachDuLieu {
 		return thuocmoi;
 	}
 
-	public boolean ThemThuoc(ThongTinThuoc thuoc)
+	public ThongTinThuoc TimThuocTheoMa(String ma)
 	{
-		if(listThuoc.contains(thuoc))
-		{
-			return false;
-		}
-		return listThuoc.add(thuoc);
+		for (ThongTinThuoc thuoc : listThuoc)
+			if(thuoc.getMaThuoc().equalsIgnoreCase(ma))
+				return thuoc;
+		return null;
+
 	}
 
-
-	public boolean Xoa(int index)
-	{
-		if(index!=-1)
-		{
-			listThuoc.remove(index);
-			return true;
-		}
-		return false;
-	}
-
-	public boolean Sua(ThongTinThuoc thuocmoi)
-	{
-		for (ThongTinThuoc thuoc : listThuoc) 
-		{
-			if(thuocmoi.getMaThuoc()==thuoc.getMaThuoc())
-			{
-				thuoc.setTenThuoc(thuocmoi.getTenThuoc());
-				thuoc.setLoai(thuocmoi.getLoai());
-				thuoc.setNcc(thuocmoi.getNcc());
-				thuoc.setGiaBan(thuocmoi.getGiaBan());
-				thuoc.setGiaNhap(thuocmoi.getGiaNhap());
-				thuoc.setHsd(thuocmoi.getHsd());
-				thuoc.setSoLuong(thuocmoi.getSoLuong());
-				thuoc.setDonViTinh(thuocmoi.getDonViTinh()	);
-				return true;
-			}
-		}
-		return false;
-	}
 	//------------------List NV-----------------------
 	public  void docNV() throws SQLException ///Đọc dữ liệu nhân viên từ SQL vào list 
 	{
@@ -151,6 +115,16 @@ public class DanhSachDuLieu {
 		}
 		return false;
 	}
+	
+	public NhanVien TimNVTheoMa(String ma)
+	{
+		for (NhanVien nv: listNV)
+			if(nv.getMaNv().equalsIgnoreCase(ma))
+				return nv;
+		return null;
+
+	}
+	
 	//----------------------List HD bán----------------
 	public  void docBangHDB() throws SQLException ///Đọc dữ liệu hóa đơn bán từ SQL vào list 
 	{
@@ -170,6 +144,34 @@ public class DanhSachDuLieu {
 				Double tongTien= rs.getDouble(5);
 				HoaDonBanHang hdb = new HoaDonBanHang(maHD, ngayLap, maNVLap, maKH, tongTien);
 				listHDB.add(hdb);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			con.close();
+		}
+	}
+	
+	//-------------------------List CTHDB------------------------
+	public  void docBangCTHoaDonBan() throws SQLException 
+	{
+		listThuocBan = new ArrayList<CTHoaDonBan>();
+		Connection con =  KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="Select * from ChiTietHoaDon";
+			Statement stmt =con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while(rs.next())
+			{
+				String maDon = rs.getString(1);
+				String maThuoc= rs.getString(2);
+				String tenThuoc= rs.getString(3);
+				int sl= rs.getInt(4);
+				double donGia = rs.getDouble(5);
+				CTHoaDonBan cthd = new CTHoaDonBan(maDon, maThuoc,tenThuoc, sl, donGia);
+				listThuocBan.add(cthd);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -291,21 +291,7 @@ public class ControlGiaoDien {
 		}
 		return tong;
 	}
-	//-------------------Tim kiem doi tuong trong list-----------------
-	public ThongTinThuoc TimThuocTheoMa(String ma)
-	{
-		for (ThongTinThuoc thuoc : ds.listThuoc)
-			if(thuoc.getMaThuoc().equalsIgnoreCase(ma))
-				return thuoc;
-		return null;
-
-	}
-	public NhanVien TimNVTheoMa(String ma)
-	{
-		for (NhanVien nv: ds.listNV)
-			if(nv.getMaNv().equalsIgnoreCase(ma))
-				return nv;
-		return null;
-
-	}
+		//-------------------Tim kiem doi tuong trong table ở SQL-----------------
+	
+	
 }
