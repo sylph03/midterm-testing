@@ -33,7 +33,7 @@ import java.awt.Toolkit;
 
 public class GiaoDienThongTinNhanVien extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel panel;
 	private JTextField txtHoTen;
 	private JTextField txtNgaySinh;
 	private JTextField txtSDT;
@@ -50,87 +50,88 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		setTitle("Thông Tin");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(600, 200, 274, 396);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		panel = new JPanel();
+		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(panel);
+		panel.setLayout(null);
 
-		JButton btnNewButton = new JButton(" ");
-		btnNewButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNewButton.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/edit.png")));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnDoiMK = new JButton(" ");
+		btnDoiMK.setToolTipText("Thay đổi");
+		btnDoiMK.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnDoiMK.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/edit.png")));
+		btnDoiMK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				new GiaoDienDoiMatKhau().setVisible(true);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnNewButton.setBounds(223, 288, 28, 23);
-		btnNewButton.setBorder(null);
-		btnNewButton.setBackground(Color.decode("#EEEEEE"));
-		contentPane.add(btnNewButton);
+		btnDoiMK.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		btnDoiMK.setBounds(223, 288, 28, 23);
+		btnDoiMK.setBackground(Color.decode("#EEEEEE"));
+		panel.add(btnDoiMK);
 
 		txtHoTen = new JTextField();
 		txtHoTen.setEnabled(false);
 		txtHoTen.setEditable(false);
 		txtHoTen.setBounds(76, 139, 175, 20);
-		contentPane.add(txtHoTen);
+		panel.add(txtHoTen);
 		txtHoTen.setColumns(10);
 
 		JLabel lblHoTen = new JLabel("Họ Tên: ");
 		lblHoTen.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblHoTen.setBounds(10, 142, 46, 14);
-		contentPane.add(lblHoTen);
+		panel.add(lblHoTen);
 
 		JLabel lblNgaySinh = new JLabel("Ngày Sinh:");
 		lblNgaySinh.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNgaySinh.setBounds(10, 192, 65, 14);
-		contentPane.add(lblNgaySinh);
+		panel.add(lblNgaySinh);
 
 		JLabel lblGioiTinh = new JLabel("Giới Tính:");
 		lblGioiTinh.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblGioiTinh.setBounds(10, 217, 65, 14);
-		contentPane.add(lblGioiTinh);
+		panel.add(lblGioiTinh);
 
 		JLabel lblSDT = new JLabel("SDT:");
 		lblSDT.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSDT.setBounds(10, 242, 46, 14);
-		contentPane.add(lblSDT);
+		panel.add(lblSDT);
 
 		txtNgaySinh = new JTextField();
 		txtNgaySinh.setEnabled(false);
 		txtNgaySinh.setBounds(76, 189, 175, 20);
-		contentPane.add(txtNgaySinh);
+		panel.add(txtNgaySinh);
 		txtNgaySinh.setColumns(10);
 
 		txtSDT = new JTextField();
 		txtSDT.setEnabled(false);
 		txtSDT.setBounds(76, 239, 175, 20);
-		contentPane.add(txtSDT);
+		panel.add(txtSDT);
 		txtSDT.setColumns(10);
 
-		JLabel lblDiaChi = new JLabel("Địa Chỉ");
+		JLabel lblDiaChi = new JLabel("Địa Chỉ:");
 		lblDiaChi.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDiaChi.setBounds(10, 267, 46, 14);
-		contentPane.add(lblDiaChi);
+		panel.add(lblDiaChi);
 
 		txtDiaChi = new JTextField();
 		txtDiaChi.setEnabled(false);
 		txtDiaChi.setBounds(77, 264, 174, 20);
-		contentPane.add(txtDiaChi);
+		panel.add(txtDiaChi);
 		txtDiaChi.setColumns(10);
 
 		JLabel lblMatKhau = new JLabel("Mật Khẩu:");
 		lblMatKhau.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblMatKhau.setBounds(10, 292, 65, 14);
-		contentPane.add(lblMatKhau);
+		panel.add(lblMatKhau);
 
 		txtMatKhau = new JPasswordField();
 		txtMatKhau.setEnabled(false);
 		txtMatKhau.setBounds(77, 289, 136, 20);
-		contentPane.add(txtMatKhau);
+		panel.add(txtMatKhau);
 		txtMatKhau.setColumns(10);
 
 		JButton btnOk = new JButton("OK");
+		btnOk.setToolTipText("Enter để lưu");
 		btnOk.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnOk.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/save.png")));
 
@@ -152,7 +153,9 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 				setVisible(false);
 			}
 		});
-		contentPane.add(btnOk);
+		panel.add(btnOk);
+		
+		//-----------------phím tắt---------------------------
 		
 		txtSDT.addKeyListener(new KeyAdapter() {
 			@Override
@@ -163,27 +166,36 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 				}
 			}
 		});
-
+		txtDiaChi.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnOk.doClick();
+				}
+			}
+		});
+		//-----------------------------------------------------------
 		JLabel lblCMND = new JLabel("CMND:");
 		lblCMND.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblCMND.setBounds(10, 167, 46, 14);
-		contentPane.add(lblCMND);
+		panel.add(lblCMND);
 
 		txtCMND = new JTextField();
 		txtCMND.setEnabled(false);
 		txtCMND.setBounds(76, 164, 175, 20);
-		contentPane.add(txtCMND);
+		panel.add(txtCMND);
 		txtCMND.setColumns(10);
 
 
 
 		rbtnNam = new JRadioButton("Nam");
 		rbtnNam.setBounds(86, 213, 73, 23);
-		contentPane.add(rbtnNam);
+		panel.add(rbtnNam);
 
 		rbtnNu = new JRadioButton("Nữ");
 		rbtnNu.setBounds(192, 213, 62, 23);
-		contentPane.add(rbtnNu);
+		panel.add(rbtnNu);
 
 
 		ButtonGroup gr = new ButtonGroup();
@@ -201,18 +213,18 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSua.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/edit.png")));
 		btnSua.setBounds(56, 322, 80, 23);
-		contentPane.add(btnSua);
+		panel.add(btnSua);
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/ava.png")));
 		//lblNewLabel.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/ava.png")));
 		lblNewLabel.setBounds(76, 25, 136, 104);
-		contentPane.add(lblNewLabel);
+		panel.add(lblNewLabel);
 
-		JLabel lblnh = new JLabel("Ảnh");
+		JLabel lblnh = new JLabel("Ảnh:");
 		lblnh.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblnh.setBounds(136, 11, 28, 14);
-		contentPane.add(lblnh);
+		lblnh.setBounds(131, 11, 28, 14);
+		panel.add(lblnh);
 		btnSua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txtDiaChi.setEditable(true);

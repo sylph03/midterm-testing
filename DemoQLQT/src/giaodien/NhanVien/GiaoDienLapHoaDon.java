@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import control.ControlGiaoDien;
 import control.DanhSachDuLieu;
@@ -32,9 +33,11 @@ import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
@@ -53,6 +56,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 	private JPanel panelDienThongTin, panelBangThemThuoc;
 	private JComboBox cbbNgay,cbbThang,cbbNam;
 	GiaoDienDangNhap dn;
+	MaskFormatter formattext;
 	ControlGiaoDien control = new ControlGiaoDien() ;
 	DanhSachDuLieu ds = new DanhSachDuLieu();
 	private JTextArea txtAMota;
@@ -320,7 +324,14 @@ public class GiaoDienLapHoaDon extends JFrame {
 		txtTenThuoc_TimKiem.setBounds(75, 249, 142, 21);
 		panelDienThongTin.add(txtTenThuoc_TimKiem);
 
-		txtSoLuong = new JTextField();
+		try {
+			formattext = new MaskFormatter("####");
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		txtSoLuong = new JFormattedTextField(formattext);
 		txtSoLuong.setToolTipText("Vui lòng nhập số: ");
 		txtSoLuong.setColumns(10);
 		txtSoLuong.setBounds(315, 250, 48, 20);
@@ -496,7 +507,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		lblSLng.setBounds(391, 36, 52, 14);
 		panelBangThemThuoc.add(lblSLng);
 
-		txtSoLuong_BangThemThuoc = new JTextField();
+		txtSoLuong_BangThemThuoc = new JFormattedTextField(formattext);
 		txtSoLuong_BangThemThuoc.setToolTipText("Vui lòng nhập số");
 		txtSoLuong_BangThemThuoc.setBounds(390, 61, 64, 20);
 		txtSoLuong_BangThemThuoc.setColumns(10);

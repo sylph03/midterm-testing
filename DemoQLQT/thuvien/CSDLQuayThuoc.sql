@@ -1,8 +1,8 @@
 create database QuanLyQuayThuoc
 on
-	primary (name = QuanLyQuayThuocdata, filename = 'D:\CSDL\QuanLyQuayThuoc.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
+	primary (name = QuanLyQuayThuocdata, filename = 'E:\CSDL\QuanLyQuayThuoc.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
 log on
-	(name = QuanLyQuayThuoclog, filename = 'D:\CSDL\QuanLyQuayThuoc.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
+	(name = QuanLyQuayThuoclog, filename = 'E:\CSDL\QuanLyQuayThuoc.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
 
 use QuanLyQuayThuoc
 
