@@ -158,4 +158,3 @@ insert ChiTietHoaDonNhap values('N002','A006',500,'26/10/2018')
 insert ChiTietHoaDonNhap values('N002','A007',600,'26/10/2018')
 insert ChiTietHoaDonNhap values('N002','A008',700,'26/10/2018')
 
-select * from KhachHang

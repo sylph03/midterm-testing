@@ -74,7 +74,7 @@ public class GiaoDienNhanVien extends JFrame {
 
 	public GiaoDienNhanVien() {
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("aaaa.jpg"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienNhanVien.class.getResource("/ser/pill.png")));
 		setTitle("Nhân Viên");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(300, 100, 800, 600);
@@ -212,7 +212,7 @@ public class GiaoDienNhanVien extends JFrame {
 				panelDoanhThu.setVisible(true);
 			}
 		});
-		btnDoanhThu.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/report4848.png")));
+		btnDoanhThu.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/report.png")));
 		btnDoanhThu.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnDoanhThu.setVerticalAlignment(SwingConstants.TOP);
 		btnDoanhThu.setPreferredSize(new Dimension(90, 75));

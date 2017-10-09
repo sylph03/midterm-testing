@@ -69,7 +69,15 @@ public class DanhSachDuLieu {
 		return null;
 
 	}
+	
+	public ThongTinThuoc TimThuocTheoTen(String tenThuoc)
+	{
+		for (ThongTinThuoc thuoc : listThuoc)
+			if(thuoc.getTenThuoc().equalsIgnoreCase(tenThuoc))
+				return thuoc;
+		return null;
 
+	}
 	//------------------List NV-----------------------
 	public  void docNV() throws SQLException ///Đọc dữ liệu nhân viên từ SQL vào list 
 	{

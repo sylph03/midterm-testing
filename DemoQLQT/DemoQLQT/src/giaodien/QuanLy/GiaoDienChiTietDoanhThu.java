@@ -1,11 +1,17 @@
 package giaodien.QuanLy;
 
 import java.awt.EventQueue;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import control.DanhSachDuLieu;
+import entity.CTHoaDonBan;
+import entity.HoaDonBanHang;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -20,6 +26,7 @@ public class GiaoDienChiTietDoanhThu extends JFrame {
 	private DefaultTableModel tablemodel;
 	private JTable table;
 	private JScrollPane scrollPane ;
+	private DanhSachDuLieu ds = new DanhSachDuLieu();
 
 	/**
 	 * Create the frame.
@@ -42,7 +49,7 @@ public class GiaoDienChiTietDoanhThu extends JFrame {
 		lblNewLabel_1.setBounds(10, 35, 100, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Tổng Doanh thu");
+		JLabel lblNewLabel_2 = new JLabel("Tổng đơn giá");
 		lblNewLabel_2.setBounds(10, 60, 100, 14);
 		contentPane.add(lblNewLabel_2);
 		
@@ -68,12 +75,28 @@ public class GiaoDienChiTietDoanhThu extends JFrame {
 		lblNewLabel_3.setBounds(10, 87, 81, 16);
 		contentPane.add(lblNewLabel_3);
 		
-		String[] header="Mã thuốc;Tên thuốc;Số lượng bán; Tổng tiền".split(";");
+		String[] header="Mã thuốc;Tên thuốc;Số lượng bán; Đơn giá".split(";");
 		tablemodel =new DefaultTableModel(header, 0);
 		
 		contentPane.add(scrollPane =new JScrollPane(table=new JTable(tablemodel)));
 		scrollPane.setBounds(10, 111, 385, 340);
 		
+		duaDuLieuLenTable();
 		
+	}
+	public void duaDuLieuLenTable()
+	{
+		try {
+			ds.docBangCTHoaDonBan();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(CTHoaDonBan ctHDB : ds.listThuocBan)
+		{	
+			Object[] row = {ctHDB.getMaThuoc(),ctHDB.getTenThuoc(),ctHDB.getSoLuong(),ctHDB.getDonGia()};
+			tablemodel.addRow(row);
+		}
 	}
 }

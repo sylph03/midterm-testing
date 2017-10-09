@@ -249,6 +249,25 @@ public class ControlGiaoDien {
 			con.close();
 		}
 	}
+	
+	public boolean xoaHDNtrongSQL(String maHDN) throws SQLException
+	{
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="delete from HoaDonNhap"+" where MaHDN = ? ";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,maHDN);
+			pstmt.execute();
+			return true;
+		} catch (Exception e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();	
+			con.close();
+		}
+		return false;
+	}
 	//-------------------DL CT hóa đơn nhập--------------------
 	public void themCTHoaDonNhapVaoSQL(CTHoaDonNhap ctHDN) throws SQLException
 	{
@@ -267,6 +286,26 @@ public class ControlGiaoDien {
 			e.printStackTrace();
 			con.close();
 		}
+		
+	}
+	
+	public boolean xoaCTHoaDonNhaptrongSQL(String maHDN) throws SQLException
+	{
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="delete from ChiTietHoaDonNhap"+" where MaHDN = ? ";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,maHDN);
+			pstmt.execute();
+			return true;
+		} catch (Exception e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();	
+			con.close();
+		}
+		return false;
 	}
 
 	//---------------Hàm xử lý--------------------------
@@ -291,6 +330,12 @@ public class ControlGiaoDien {
 			tong+=tong2;
 		}
 		return tong;
+	}
+	public double tinhTongGiaChoTungLoaiThuocBan(ThongTinThuoc thuoc, int soLuong)
+	{
+		double gia =0;
+		gia = thuoc.getGiaBan()*soLuong;
+		return gia;
 	}
 	public String layChuoiNgayThangNam(JComboBox ngay,JComboBox thang,JComboBox nam)
 	{
