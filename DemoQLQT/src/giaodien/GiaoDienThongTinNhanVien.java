@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +29,7 @@ import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class GiaoDienThongTinNhanVien extends JFrame {
 
@@ -37,15 +40,16 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 	private JTextField txtDiaChi;
 	private JPasswordField txtMatKhau;
 	private JTextField txtCMND;
-	private JRadioButton rbtnNam, rbtnNu,rbtnKhac;
+	private JRadioButton rbtnNam, rbtnNu;
 	GiaoDienDangNhap dn;
 	ControlGiaoDien control = new ControlGiaoDien();
 
 	public GiaoDienThongTinNhanVien() throws SQLException {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienThongTinNhanVien.class.getResource("/ser/user.png")));
 		setResizable(false);
 		setTitle("Thông Tin");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(600, 200, 297, 396);
+		setBounds(600, 200, 274, 396);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -60,64 +64,77 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		btnNewButton.setBounds(226, 288, 28, 23);
+		btnNewButton.setBounds(223, 288, 28, 23);
 		btnNewButton.setBorder(null);
 		btnNewButton.setBackground(Color.decode("#EEEEEE"));
 		contentPane.add(btnNewButton);
 
 		txtHoTen = new JTextField();
-		txtHoTen.setBounds(76, 139, 195, 20);
+		txtHoTen.setEnabled(false);
+		txtHoTen.setEditable(false);
+		txtHoTen.setBounds(76, 139, 175, 20);
 		contentPane.add(txtHoTen);
 		txtHoTen.setColumns(10);
 
 		JLabel lblHoTen = new JLabel("Họ Tên: ");
+		lblHoTen.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblHoTen.setBounds(10, 142, 46, 14);
 		contentPane.add(lblHoTen);
 
 		JLabel lblNgaySinh = new JLabel("Ngày Sinh:");
+		lblNgaySinh.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNgaySinh.setBounds(10, 192, 65, 14);
 		contentPane.add(lblNgaySinh);
 
 		JLabel lblGioiTinh = new JLabel("Giới Tính:");
+		lblGioiTinh.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblGioiTinh.setBounds(10, 217, 65, 14);
 		contentPane.add(lblGioiTinh);
 
 		JLabel lblSDT = new JLabel("SDT:");
+		lblSDT.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblSDT.setBounds(10, 242, 46, 14);
 		contentPane.add(lblSDT);
 
 		txtNgaySinh = new JTextField();
-		txtNgaySinh.setBounds(76, 189, 195, 20);
+		txtNgaySinh.setEnabled(false);
+		txtNgaySinh.setBounds(76, 189, 175, 20);
 		contentPane.add(txtNgaySinh);
 		txtNgaySinh.setColumns(10);
 
 		txtSDT = new JTextField();
-		txtSDT.setBounds(76, 239, 195, 20);
+		txtSDT.setEnabled(false);
+		txtSDT.setBounds(76, 239, 175, 20);
 		contentPane.add(txtSDT);
 		txtSDT.setColumns(10);
 
 		JLabel lblDiaChi = new JLabel("Địa Chỉ");
+		lblDiaChi.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDiaChi.setBounds(10, 267, 46, 14);
 		contentPane.add(lblDiaChi);
 
 		txtDiaChi = new JTextField();
-		txtDiaChi.setBounds(77, 264, 194, 20);
+		txtDiaChi.setEnabled(false);
+		txtDiaChi.setBounds(77, 264, 174, 20);
 		contentPane.add(txtDiaChi);
 		txtDiaChi.setColumns(10);
 
 		JLabel lblMatKhau = new JLabel("Mật Khẩu:");
+		lblMatKhau.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblMatKhau.setBounds(10, 292, 65, 14);
 		contentPane.add(lblMatKhau);
 
 		txtMatKhau = new JPasswordField();
+		txtMatKhau.setEnabled(false);
 		txtMatKhau.setBounds(77, 289, 136, 20);
 		contentPane.add(txtMatKhau);
 		txtMatKhau.setColumns(10);
 
 		JButton btnOk = new JButton("OK");
+		btnOk.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnOk.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/save.png")));
 
-		btnOk.setBounds(151, 322, 73, 23);
+		btnOk.setBounds(139, 322, 80, 23);
 		btnOk.addActionListener(new ActionListener() {
 
 			@Override
@@ -136,49 +153,54 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 			}
 		});
 		contentPane.add(btnOk);
+		
+		txtSDT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnOk.doClick();
+				}
+			}
+		});
 
 		JLabel lblCMND = new JLabel("CMND:");
+		lblCMND.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblCMND.setBounds(10, 167, 46, 14);
 		contentPane.add(lblCMND);
 
 		txtCMND = new JTextField();
-		txtCMND.setBounds(76, 164, 195, 20);
+		txtCMND.setEnabled(false);
+		txtCMND.setBounds(76, 164, 175, 20);
 		contentPane.add(txtCMND);
 		txtCMND.setColumns(10);
 
 
 
 		rbtnNam = new JRadioButton("Nam");
-		rbtnNam.setBounds(76, 213, 73, 23);
+		rbtnNam.setBounds(86, 213, 73, 23);
 		contentPane.add(rbtnNam);
 
 		rbtnNu = new JRadioButton("Nữ");
-		rbtnNu.setBounds(151, 213, 62, 23);
+		rbtnNu.setBounds(192, 213, 62, 23);
 		contentPane.add(rbtnNu);
-
-		rbtnKhac = new JRadioButton("Khác");
-		rbtnKhac.setBounds(217, 213, 68, 23);
-		contentPane.add(rbtnKhac);
 
 
 		ButtonGroup gr = new ButtonGroup();
 		gr.add(rbtnNam);
 		gr.add(rbtnNu);
-		gr.add(rbtnKhac);
-
-		txtHoTen.setEditable(false);
 		txtCMND.setEditable(false);
 		txtDiaChi.setEditable(false);
 		txtMatKhau.setEditable(false);
 		txtSDT.setEditable(false);
 		txtNgaySinh.setEditable(false);
-		rbtnKhac.setEnabled(false);
 		rbtnNam.setEnabled(false);
 		rbtnNu.setEnabled(false);
 
 		JButton btnSua = new JButton("Sửa");
+		btnSua.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSua.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/edit.png")));
-		btnSua.setBounds(68, 322, 73, 23);
+		btnSua.setBounds(56, 322, 80, 23);
 		contentPane.add(btnSua);
 
 		JLabel lblNewLabel = new JLabel("");
@@ -188,12 +210,15 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		JLabel lblnh = new JLabel("Ảnh");
+		lblnh.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblnh.setBounds(136, 11, 28, 14);
 		contentPane.add(lblnh);
 		btnSua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				txtDiaChi.setEditable(true);
+				txtDiaChi.setEnabled(true);
 				txtSDT.setEditable(true);
+				txtSDT.setEnabled(true);
 			}
 		});
 
