@@ -27,11 +27,12 @@ public class GiaoDienChiTietDoanhThu extends JFrame {
 	private JTable table;
 	private JScrollPane scrollPane ;
 	private DanhSachDuLieu ds = new DanhSachDuLieu();
+	private GiaoDienQuanLy ql;
 
 	/**
 	 * Create the frame.
 	 */
-	public GiaoDienChiTietDoanhThu() {
+	public GiaoDienChiTietDoanhThu(String maHD,String maNV,String tenNV,double tongTien) {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 421, 501);
 		contentPane = new JPanel();
@@ -81,10 +82,14 @@ public class GiaoDienChiTietDoanhThu extends JFrame {
 		contentPane.add(scrollPane =new JScrollPane(table=new JTable(tablemodel)));
 		scrollPane.setBounds(10, 111, 385, 340);
 		
-		duaDuLieuLenTable();
+		txtma.setText(maNV);
+		txtTen.setText(tenNV);
+		txtTongDoanhThu.setText(tongTien+"");
+		
+		duaDuLieuLenTable(maHD);
 		
 	}
-	public void duaDuLieuLenTable()
+	public void duaDuLieuLenTable(String maHD)
 	{
 		try {
 			ds.docBangCTHoaDonBan();
@@ -95,8 +100,11 @@ public class GiaoDienChiTietDoanhThu extends JFrame {
 		
 		for(CTHoaDonBan ctHDB : ds.listThuocBan)
 		{	
-			Object[] row = {ctHDB.getMaThuoc(),ctHDB.getTenThuoc(),ctHDB.getSoLuong(),ctHDB.getDonGia()};
-			tablemodel.addRow(row);
-		}
+			if(ctHDB.getMaHD().equals(maHD))
+			{
+				Object[] row = {ctHDB.getMaThuoc(),ctHDB.getTenThuoc(),ctHDB.getSoLuong(),ctHDB.getDonGia()};
+				tablemodel.addRow(row);
+			}
+		}	
 	}
 }

@@ -122,60 +122,60 @@ public class GiaoDienDoiMatKhau extends JFrame {
 		btnLuuMK.setBounds(73, 86, 77, 23);
 		contentPane.add(btnLuuMK);
 		//-----------------phần phím tắt-----------------------
-//		txtXacNhan.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-//				{
-//					btnLuuMK.doClick();
-//				}
-//			}
-//		});
-//		txtMKCu.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-//				{
-//					btnLuuMK.doClick();
-//				}
-//			}
-//		});
-//		txtMKMoi.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-//				{
-//					btnLuuMK.doClick();
-//				}
-//			}
-//		});
-//		txtXacNhan.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
-//				{
-//					btnHuy.doClick();
-//				}
-//			}
-//		});
-//		txtMKCu.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
-//				{
-//					btnHuy.doClick();
-//				}
-//			}
-//		});
-//		txtMKMoi.addKeyListener(new KeyAdapter() {
-//			@Override
-//			public void keyPressed(KeyEvent e) {
-//				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
-//				{
-//					btnHuy.doClick();
-//				}
-//			}
-//		});
+		txtXacNhan.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnLuuMK.doClick();
+				}
+			}
+		});
+		txtMKCu.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnLuuMK.doClick();
+				}
+			}
+		});
+		txtMKMoi.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnLuuMK.doClick();
+				}
+			}
+		});
+		txtXacNhan.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					btnHuy.doClick();
+				}
+			}
+		});
+		txtMKCu.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					btnHuy.doClick();
+				}
+			}
+		});
+		txtMKMoi.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					btnHuy.doClick();
+				}
+			}
+		});
 		//--------------------------------------------------
 		
 		btnHuy = new JButton("Hủy");

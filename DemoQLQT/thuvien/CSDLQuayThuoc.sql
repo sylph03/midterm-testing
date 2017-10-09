@@ -41,7 +41,7 @@ create table HoaDon
 (MaHD varchar(10) primary key not null,
 MaNVLap varchar(10) foreign key references NhanVien(MaNV),  --id của nv lập
 NgayLap date,
-MaKH varchar(15) foreign key references KhachHang(CMND),
+MaKH varchar(15) ,
 TongTien money
 )
 
