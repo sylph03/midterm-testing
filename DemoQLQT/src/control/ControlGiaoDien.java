@@ -16,9 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import entity.CTHoaDonBan;
 import entity.CTHoaDonNhap;
 import entity.HoaDonBanHang;
 import entity.HoaDonNhapHang;
+import entity.KhachHang;
 import entity.NhanVien;
 import entity.ThongTinThuoc;
 import giaodien.GiaoDienDangNhap;
@@ -220,7 +222,7 @@ public class ControlGiaoDien {
 			pstmt.setString(1, hdb.getMaHD());
 			pstmt.setString(2, hdb.getMaNVLap());
 			pstmt.setString(3, hdb.getNgayLap());
-			pstmt.setString(4,hdb.getMaKH());
+			pstmt.setString(4, hdb.getMaKH());
 			pstmt.setInt(5, tongTien);
 			pstmt.execute();
 		} catch (Exception e) {
@@ -229,6 +231,29 @@ public class ControlGiaoDien {
 			con.close();
 		}
 	}
+	//-------------------DL CT hóa đơn bán--------------------
+	public void themCTHoaDonBanVaoSQL(CTHoaDonBan ctHDB) throws SQLException
+	{
+		int donGia = (int)Math.round(ctHDB.getDonGia());
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="insert into dbo.ChiTietHoaDon values(?,?,?,?,?);";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ctHDB.getMaHD());
+			pstmt.setString(2, ctHDB.getMaThuoc());
+			pstmt.setString(3, ctHDB.getTenThuoc());
+			pstmt.setInt(4, ctHDB.getSoLuong());
+			pstmt.setInt(5, donGia);
+			pstmt.execute();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			con.close();
+		}
+		
+	}
+	
 	//----------------------DL Hóa đơn Nhập-------------------
 
 	public void themHDNVaoSQL(HoaDonNhapHang hdn) throws SQLException
@@ -306,6 +331,26 @@ public class ControlGiaoDien {
 			con.close();
 		}
 		return false;
+	}
+	//---------------------DL Khách Hàng------------------
+	public void themKHVaoSQL (KhachHang kh) throws SQLException
+	{
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="insert into KhachHang values(?,?,?,?,?);";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, kh.getCMND());
+			pstmt.setString(2, kh.getHoTenKH());
+			pstmt.setString(3, kh.getNgaySinh());
+			pstmt.setString(4, kh.getSdt());
+			pstmt.setString(5, kh.getMoTaKH());
+			pstmt.execute();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			con.close();
+		}
 	}
 
 	//---------------Hàm xử lý--------------------------

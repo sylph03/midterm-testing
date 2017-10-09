@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 
 import control.ControlGiaoDien;
 import control.DanhSachDuLieu;
+import entity.CTHoaDonBan;
+import entity.HoaDonBanHang;
 import entity.KhachHang;
 import entity.ThongTinThuoc;
 import giaodien.GiaoDienDangNhap;
@@ -51,7 +53,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 	private JPanel panelDienThongTin, panelBangThemThuoc;
 	private JComboBox cbbNgay,cbbThang,cbbNam;
 	GiaoDienDangNhap dn;
-	ControlGiaoDien cc;
+	ControlGiaoDien control = new ControlGiaoDien() ;
 	DanhSachDuLieu ds = new DanhSachDuLieu();
 	private JTextArea txtAMota;
 	private JTextField txtNguoiLap;
@@ -111,10 +113,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		txtTongTien.setColumns(10);
 
 		JButton btnXoq = new JButton("Xong");
-		btnXoq.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		
 		btnXoq.setHorizontalAlignment(SwingConstants.LEFT);
 		btnXoq.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnXoq.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/done.png")));
@@ -124,326 +123,326 @@ public class GiaoDienLapHoaDon extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(0, 0, 484, 279);
 		getContentPane().add(layeredPane);
-		
-				panelDienThongTin = new JPanel();
-				panelDienThongTin.setToolTipText("Thông tin");
-				panelDienThongTin.setBounds(0, 0, 484, 279);
-				layeredPane.add(panelDienThongTin);
-				panelDienThongTin.setLayout(null);
-				
-						JLabel label = new JLabel("THÔNG TIN HÓA ĐƠN");
-						label.setForeground(new Color(75, 0, 130));
-						label.setFont(new Font("Times New Roman", Font.BOLD, 22));
-						label.setBounds(111, 11, 258, 34);
-						panelDienThongTin.add(label);
-						
-								JCheckBox chkKeDon = new JCheckBox("Có kê đơn");
-								
-										chkKeDon.setToolTipText("Chọn nếu bán có kê đơn");
-										chkKeDon.setFont(new Font("Tahoma", Font.BOLD, 11));
-										chkKeDon.setBounds(24, 100, 94, 23);
-										panelDienThongTin.add(chkKeDon);
-										
-												JLabel lblMHan = new JLabel("Mã hóa đơn:");
-												lblMHan.setFont(new Font("Tahoma", Font.BOLD, 11));
-												lblMHan.setBounds(21, 67, 78, 17);
-												panelDienThongTin.add(lblMHan);
-												
-														JLabel lblNgyLp = new JLabel("Ngày lập:");
-														lblNgyLp.setFont(new Font("Tahoma", Font.BOLD, 11));
-														lblNgyLp.setBounds(164, 67, 59, 17);
-														panelDienThongTin.add(lblNgyLp);
-														
-																JLabel label_3 = new JLabel("Người lập:");
-																label_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-																label_3.setBounds(301, 67, 65, 17);
-																panelDienThongTin.add(label_3);
-																
-																		txtNguoiLap = new JTextField();
-																		txtNguoiLap.setText((String) null);
-																		txtNguoiLap.setEnabled(false);
-																		txtNguoiLap.setEditable(false);
-																		txtNguoiLap.setColumns(10);
-																		txtNguoiLap.setBounds(362, 65, 55, 20);
-																		panelDienThongTin.add(txtNguoiLap);
-																		
-																				txtMa = new JTextField();
-																				txtMa.setEnabled(false);
-																				txtMa.setEditable(false);
-																				txtMa.setColumns(10);
-																				txtMa.setBounds(99, 65, 55, 20);
-																				panelDienThongTin.add(txtMa);
-																				
-																						txtNgay = new JTextField();
-																						txtNgay.setEnabled(false);
-																						txtNgay.setEditable(false);
-																						txtNgay.setColumns(10);
-																						txtNgay.setBounds(219, 65, 72, 20);
-																						panelDienThongTin.add(txtNgay);
-																						
-																								JButton btnThongTinNhanVien = new JButton("");
-																								btnThongTinNhanVien.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/user.png")));
-																								btnThongTinNhanVien.addActionListener(new ActionListener() {
-																									public void actionPerformed(ActionEvent arg0) {
-																										try {
-																											new GiaoDienThongTinNhanVien().setVisible(true);
-																										} catch (SQLException e) {
-																											// TODO Auto-generated catch block
-																											e.printStackTrace();
-																										}
-																									}
-																								});
-																								btnThongTinNhanVien.setBounds(417, 60, 33, 29);
-																								panelDienThongTin.add(btnThongTinNhanVien);
-																								
-																										JPanel panelThongtinKH = new JPanel();
-																										panelThongtinKH.setLayout(null);
-																										panelThongtinKH.setForeground(Color.RED);
-																										panelThongtinKH.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:", TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(0, 128, 0)));
-																										panelThongtinKH.setBounds(10, 104, 453, 133);
-																										panelDienThongTin.add(panelThongtinKH);
-																										
-																												JLabel label_4 = new JLabel("CMND: ");
-																												label_4.setEnabled(false);
-																												label_4.setBounds(10, 26, 67, 14);
-																												panelThongtinKH.add(label_4);
-																												
-																														JLabel label_5 = new JLabel("Tên KH:");
-																														label_5.setEnabled(false);
-																														label_5.setBounds(10, 51, 67, 14);
-																														panelThongtinKH.add(label_5);
-																														
-																																JLabel label_6 = new JLabel("Ngày sinh:");
-																																label_6.setEnabled(false);
-																																label_6.setBounds(10, 76, 67, 14);
-																																panelThongtinKH.add(label_6);
-																																
-																																		JLabel label_7 = new JLabel("SDT:");
-																																		label_7.setEnabled(false);
-																																		label_7.setBounds(10, 101, 67, 14);
-																																		panelThongtinKH.add(label_7);
-																																		
-																																				txtCMND = new JTextField();
-																																				txtCMND.setEditable(false);
-																																				txtCMND.setColumns(10);
-																																				txtCMND.setBounds(87, 26, 143, 20);
-																																				panelThongtinKH.add(txtCMND);
-																																				
-																																						txtTenKH = new JTextField();
-																																						txtTenKH.setEditable(false);
-																																						txtTenKH.setColumns(10);
-																																						txtTenKH.setBounds(87, 51, 167, 20);
-																																						panelThongtinKH.add(txtTenKH);
-																																						
-																																								txtSDT = new JTextField();
-																																								txtSDT.setEditable(false);
-																																								txtSDT.setColumns(10);
-																																								txtSDT.setBounds(87, 101, 167, 20);
-																																								panelThongtinKH.add(txtSDT);
-																																								
-																																										JButton btnKiemTra = new JButton("");
-																																										btnKiemTra.addActionListener(new ActionListener() {
-																																											public void actionPerformed(ActionEvent e) {
-																																												String cmnd;
-																																												boolean kt=false;
-																																												cmnd = txtCMND.getText()+"";
-																																												try {
-																																													ds.docBangKhachHang();
-																																												} catch (SQLException e1) {
-																																													// TODO Auto-generated catch block
-																																													e1.printStackTrace();
-																																												}
-																																												for(KhachHang kh : ds.listKhachHang)
-																																												{
-																																													if(kh.getCMND().equalsIgnoreCase(cmnd))
-																																													{
-																																														String[] date=kh.getNgaySinh().split("-");
-																																														txtTenKH.setText(kh.getHoTenKH()+"");
-																																														txtSDT.setText(kh.getSdt()+"");
-																																														txtAMota.setText(kh.getMoTaKH()+"");
-																																														cbbThang.setSelectedItem(date[1]);
-																																														cbbNgay.setSelectedItem(date[2]);
-																																														cbbNam.setSelectedItem(date[0]);
-																																														kt= true;
-																																													}
-																																												}
-																																												if (kt==false)
-																																													JOptionPane.showMessageDialog(panelThongtinKH, "Khách hàng chưa có, vui lòng thêm mới !!");
-																																											}
-																																										});
-																																										btnKiemTra.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/search.png")));
-																																										btnKiemTra.setToolTipText("Kiểm tra");
-																																										btnKiemTra.setEnabled(false);
-																																										btnKiemTra.setBounds(231, 26, 23, 21);
-																																										panelThongtinKH.add(btnKiemTra);
-																																										
-																																												txtAMota = new JTextArea();
-																																												txtAMota.setEditable(false);
-																																												txtAMota.setBackground(Color.WHITE);
-																																												txtAMota.setBounds(264, 46, 179, 75);
-																																												panelThongtinKH.add(txtAMota);
-																																												
-																																														JLabel label_8 = new JLabel("Mô tả:");
-																																														label_8.setEnabled(false);
-																																														label_8.setBounds(264, 26, 46, 14);
-																																														panelThongtinKH.add(label_8);
-																																														
-																																																cbbNgay = new JComboBox(new Object[]{});
-																																																cbbNgay.setEnabled(false);
-																																																cbbNgay.setEditable(false);
-																																																cbbNgay.setBounds(87, 76, 46, 20);
-																																																panelThongtinKH.add(cbbNgay);
-																																																
-																																																		cbbThang = new JComboBox(new Object[]{});
-																																																		cbbThang.setEnabled(false);
-																																																		cbbThang.setEditable(false);
-																																																		cbbThang.setBounds(143, 76, 46, 20);
-																																																		panelThongtinKH.add(cbbThang);
-																																																		
-																																																				cbbNam = new JComboBox();
-																																																				cbbNam.setEnabled(false);
-																																																				cbbNam.setEditable(false);
-																																																				cbbNam.setBounds(199, 76, 55, 20);
-																																																				panelThongtinKH.add(cbbNam);
-																																																				
-																																																						JLabel label_9 = new JLabel("Tên thuốc:");
-																																																						label_9.setFont(new Font("Tahoma", Font.BOLD, 11));
-																																																						label_9.setBounds(10, 248, 65, 22);
-																																																						panelDienThongTin.add(label_9);
-																																																						
-																																																								JLabel label_10 = new JLabel("Số lượng:");
-																																																								label_10.setFont(new Font("Tahoma", Font.BOLD, 11));
-																																																								label_10.setBounds(250, 248, 55, 22);
-																																																								panelDienThongTin.add(label_10);
-																																																								
-																																																										txtTenThuoc_TimKiem = new JTextField();
-																																																										txtTenThuoc_TimKiem.setColumns(10);
-																																																										txtTenThuoc_TimKiem.setBounds(75, 249, 142, 21);
-																																																										panelDienThongTin.add(txtTenThuoc_TimKiem);
-																																																										
-																																																												txtSoLuong = new JTextField();
-																																																												txtSoLuong.setToolTipText("Vui lòng nhập số: ");
-																																																												txtSoLuong.setColumns(10);
-																																																												txtSoLuong.setBounds(315, 250, 48, 20);
-																																																												panelDienThongTin.add(txtSoLuong);
-																																																												
-																																																														JButton btnXoa = new JButton("");
-																																																														btnXoa.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/cancel.png")));
-																																																														btnXoa.addActionListener(new ActionListener() {
-																																																															public void actionPerformed(ActionEvent arg0) {
-																																																																int row = table.getSelectedRow();
-																																																																if (row==-1)
-																																																																	JOptionPane.showMessageDialog(panelDienThongTin, "Vui lòng chọn thuốc");
-																																																																else {
-																																																																	int sel = JOptionPane.showConfirmDialog(panelDienThongTin, "Bạn có muốn xóa không?","Xóa", JOptionPane.YES_NO_OPTION);
-																																																																	if (sel == JOptionPane.YES_OPTION)
-																																																																		tablemode.removeRow(row);
-																																																																}
-																																																															}
-																																																														});
-																																																														btnXoa.setToolTipText("Xóa");
-																																																														btnXoa.setBounds(437, 248, 26, 23);
-																																																														panelDienThongTin.add(btnXoa);
-																																																														
-																																																																JButton btnThemNangCao = new JButton("");
-																																																																btnThemNangCao.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/more_01.png")));
-																																																																btnThemNangCao.addActionListener(new ActionListener() {
-																																																																	public void actionPerformed(ActionEvent arg0) {
-																																																																		panelBangThemThuoc.setVisible(true);
-																																																																		panelDienThongTin.setVisible(false);
-																																																																	}
-																																																																});
-																																																																btnThemNangCao.setToolTipText("Mở bảng");
-																																																																btnThemNangCao.setBounds(217, 249, 26, 21);
-																																																																panelDienThongTin.add(btnThemNangCao);
-																																																																
-																																																																		JButton btnThem = new JButton("");
-																																																																		btnThem.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/add.png")));
-																																																																		btnThem.addActionListener(new ActionListener() {
-																																																																			public void actionPerformed(ActionEvent arg0) {
 
-																																																																				String ten = txtTenThuoc_TimKiem.getText()+"";
-																																																																				int soLuong = Integer.parseInt(txtSoLuong.getText());
-																																																																				try {
-																																																																					ds.docThuoc();
-																																																																				} catch (SQLException e) {
-																																																																					// TODO Auto-generated catch block
-																																																																					e.printStackTrace();
-																																																																				}
-																																																																				for(ThongTinThuoc thuoc : ds.listThuoc)
-																																																																				{
-																																																																					if(ten.equals(thuoc.getTenThuoc()+""))
-																																																																					{
-																																																																						Object[] row = {ten,soLuong,thuoc.getDonViTinh(),thuoc.getGiaBan()};
-																																																																						tablemode.addRow(row);
-																																																																					}
-																																																																				}
-																																																																				txtTongTien.setText(tongTien(tablemode)+"");
+		panelDienThongTin = new JPanel();
+		panelDienThongTin.setToolTipText("Thông tin");
+		panelDienThongTin.setBounds(0, 0, 484, 279);
+		layeredPane.add(panelDienThongTin);
+		panelDienThongTin.setLayout(null);
 
-																																																																			}
-																																																																		});
-																																																																		btnThem.setToolTipText("Thêm");
-																																																																		btnThem.setBounds(405, 248, 26, 23);
-																																																																		panelDienThongTin.add(btnThem);
-																																																																		
-																																																																				txtLoai = new JTextField();
-																																																																				txtLoai.setEnabled(false);
-																																																																				txtLoai.setEditable(false);
-																																																																				txtLoai.setColumns(10);
-																																																																				txtLoai.setBounds(362, 250, 33, 20);
-																																																																				panelDienThongTin.add(txtLoai);
-																																																																				txtNguoiLap.setText(dn.txtTK.getText());
-																																																																				
-																																																																						chkKeDon.addActionListener(new ActionListener() {
-																																																																				
-																																																																							@Override
-																																																																							public void actionPerformed(ActionEvent arg0) {
-																																																																								// TODO Auto-generated method stub
-																																																																								if(chkKeDon.isSelected())
-																																																																								{
-																																																																									panelThongtinKH.setEnabled(true);
-																																																																									label_3.setEnabled(true);
-																																																																									label_4.setEnabled(true);
-																																																																									label_5.setEnabled(true);
-																																																																									label_6.setEnabled(true);
-																																																																									label_7.setEnabled(true);
-																																																																									txtCMND.setEditable(true);
-																																																																									cbbNgay.setEnabled(true);
-																																																																									cbbNgay.setEditable(true);
-																																																																									cbbThang.setEnabled(true);
-																																																																									cbbThang.setEditable(true);
-																																																																									cbbNam.setEnabled(true);
-																																																																									cbbNam.setEditable(true);
-																																																																									txtSDT.setEditable(true);
-																																																																									txtTenKH.setEditable(true);
-																																																																									txtAMota.setEditable(true);
-																																																																									txtAMota.setBackground(Color.decode("#ffffff"));
-																																																																									btnKiemTra.setEnabled(true);
-																																																																								}
-																																																																								else {
-																																																																									panelThongtinKH.setEnabled(false);
-																																																																									label_3.setEnabled(false);
-																																																																									label_4.setEnabled(false);
-																																																																									label_5.setEnabled(false);
-																																																																									label_6.setEnabled(false);
-																																																																									label_7.setEnabled(false);
-																																																																									txtCMND.setEditable(false);
-																																																																									cbbNgay.setEnabled(false);
-																																																																									cbbNgay.setEditable(false);
-																																																																									cbbThang.setEnabled(false);
-																																																																									cbbThang.setEditable(false);
-																																																																									cbbNam.setEnabled(false);
-																																																																									cbbNam.setEditable(false);
-																																																																									txtSDT.setEditable(false);
-																																																																									txtTenKH.setEditable(false);
-																																																																									txtAMota.setEditable(false);
-																																																																									txtAMota.setBackground(Color.decode("#ffffff"));
-																																																																									btnKiemTra.setEnabled(false);
-																																																																								}
-																																																																				
-																																																																							}
-																																																																						});
-																																																																						txtMa.setText("HD"+ds.demSoHDBan());
+		JLabel label = new JLabel("THÔNG TIN HÓA ĐƠN");
+		label.setForeground(new Color(75, 0, 130));
+		label.setFont(new Font("Times New Roman", Font.BOLD, 22));
+		label.setBounds(111, 11, 258, 34);
+		panelDienThongTin.add(label);
+
+		JCheckBox chkKeDon = new JCheckBox("Có kê đơn");
+
+		chkKeDon.setToolTipText("Chọn nếu bán có kê đơn");
+		chkKeDon.setFont(new Font("Tahoma", Font.BOLD, 11));
+		chkKeDon.setBounds(24, 100, 94, 23);
+		panelDienThongTin.add(chkKeDon);
+
+		JLabel lblMHan = new JLabel("Mã hóa đơn:");
+		lblMHan.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblMHan.setBounds(21, 67, 78, 17);
+		panelDienThongTin.add(lblMHan);
+
+		JLabel lblNgyLp = new JLabel("Ngày lập:");
+		lblNgyLp.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNgyLp.setBounds(164, 67, 59, 17);
+		panelDienThongTin.add(lblNgyLp);
+
+		JLabel label_3 = new JLabel("Người lập:");
+		label_3.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_3.setBounds(301, 67, 65, 17);
+		panelDienThongTin.add(label_3);
+
+		txtNguoiLap = new JTextField();
+		txtNguoiLap.setText((String) null);
+		txtNguoiLap.setEnabled(false);
+		txtNguoiLap.setEditable(false);
+		txtNguoiLap.setColumns(10);
+		txtNguoiLap.setBounds(362, 65, 55, 20);
+		panelDienThongTin.add(txtNguoiLap);
+
+		txtMa = new JTextField();
+		txtMa.setEnabled(false);
+		txtMa.setEditable(false);
+		txtMa.setColumns(10);
+		txtMa.setBounds(99, 65, 55, 20);
+		panelDienThongTin.add(txtMa);
+
+		txtNgay = new JTextField();
+		txtNgay.setEnabled(false);
+		txtNgay.setEditable(false);
+		txtNgay.setColumns(10);
+		txtNgay.setBounds(219, 65, 72, 20);
+		panelDienThongTin.add(txtNgay);
+
+		JButton btnThongTinNhanVien = new JButton("");
+		btnThongTinNhanVien.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/user.png")));
+		btnThongTinNhanVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					new GiaoDienThongTinNhanVien().setVisible(true);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		btnThongTinNhanVien.setBounds(417, 60, 33, 29);
+		panelDienThongTin.add(btnThongTinNhanVien);
+
+		JPanel panelThongtinKH = new JPanel();
+		panelThongtinKH.setLayout(null);
+		panelThongtinKH.setForeground(Color.RED);
+		panelThongtinKH.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:", TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(0, 128, 0)));
+		panelThongtinKH.setBounds(10, 104, 453, 133);
+		panelDienThongTin.add(panelThongtinKH);
+
+		JLabel label_4 = new JLabel("CMND: ");
+		label_4.setEnabled(false);
+		label_4.setBounds(10, 26, 67, 14);
+		panelThongtinKH.add(label_4);
+
+		JLabel label_5 = new JLabel("Tên KH:");
+		label_5.setEnabled(false);
+		label_5.setBounds(10, 51, 67, 14);
+		panelThongtinKH.add(label_5);
+
+		JLabel label_6 = new JLabel("Ngày sinh:");
+		label_6.setEnabled(false);
+		label_6.setBounds(10, 76, 67, 14);
+		panelThongtinKH.add(label_6);
+
+		JLabel label_7 = new JLabel("SDT:");
+		label_7.setEnabled(false);
+		label_7.setBounds(10, 101, 67, 14);
+		panelThongtinKH.add(label_7);
+
+		txtCMND = new JTextField();
+		txtCMND.setEditable(false);
+		txtCMND.setColumns(10);
+		txtCMND.setBounds(87, 26, 143, 20);
+		panelThongtinKH.add(txtCMND);
+
+		txtTenKH = new JTextField();
+		txtTenKH.setEditable(false);
+		txtTenKH.setColumns(10);
+		txtTenKH.setBounds(87, 51, 167, 20);
+		panelThongtinKH.add(txtTenKH);
+
+		txtSDT = new JTextField();
+		txtSDT.setEditable(false);
+		txtSDT.setColumns(10);
+		txtSDT.setBounds(87, 101, 167, 20);
+		panelThongtinKH.add(txtSDT);
+
+		JButton btnKiemTra = new JButton("");
+		btnKiemTra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String cmnd;
+				boolean kt=false;
+				cmnd = txtCMND.getText()+"";
+				try {
+					ds.docBangKhachHang();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				for(KhachHang kh : ds.listKhachHang)
+				{
+					if(kh.getCMND().equalsIgnoreCase(cmnd))
+					{
+						String[] date=kh.getNgaySinh().split("-");
+						txtTenKH.setText(kh.getHoTenKH()+"");
+						txtSDT.setText(kh.getSdt()+"");
+						txtAMota.setText(kh.getMoTaKH()+"");
+						cbbThang.setSelectedItem(date[1]);
+						cbbNgay.setSelectedItem(date[2]);
+						cbbNam.setSelectedItem(date[0]);
+						kt= true;
+					}
+				}
+				if (kt==false)
+					JOptionPane.showMessageDialog(panelThongtinKH, "Khách hàng chưa có, vui lòng thêm mới !!");
+			}
+		});
+		btnKiemTra.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/search.png")));
+		btnKiemTra.setToolTipText("Kiểm tra");
+		btnKiemTra.setEnabled(false);
+		btnKiemTra.setBounds(231, 26, 23, 21);
+		panelThongtinKH.add(btnKiemTra);
+
+		txtAMota = new JTextArea();
+		txtAMota.setEditable(false);
+		txtAMota.setBackground(Color.WHITE);
+		txtAMota.setBounds(264, 46, 179, 75);
+		panelThongtinKH.add(txtAMota);
+
+		JLabel label_8 = new JLabel("Mô tả:");
+		label_8.setEnabled(false);
+		label_8.setBounds(264, 26, 46, 14);
+		panelThongtinKH.add(label_8);
+
+		cbbNgay = new JComboBox(new Object[]{});
+		cbbNgay.setEnabled(false);
+		cbbNgay.setEditable(false);
+		cbbNgay.setBounds(87, 76, 46, 20);
+		panelThongtinKH.add(cbbNgay);
+
+		cbbThang = new JComboBox(new Object[]{});
+		cbbThang.setEnabled(false);
+		cbbThang.setEditable(false);
+		cbbThang.setBounds(143, 76, 46, 20);
+		panelThongtinKH.add(cbbThang);
+
+		cbbNam = new JComboBox();
+		cbbNam.setEnabled(false);
+		cbbNam.setEditable(false);
+		cbbNam.setBounds(199, 76, 55, 20);
+		panelThongtinKH.add(cbbNam);
+
+		JLabel label_9 = new JLabel("Tên thuốc:");
+		label_9.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_9.setBounds(10, 248, 65, 22);
+		panelDienThongTin.add(label_9);
+
+		JLabel label_10 = new JLabel("Số lượng:");
+		label_10.setFont(new Font("Tahoma", Font.BOLD, 11));
+		label_10.setBounds(250, 248, 55, 22);
+		panelDienThongTin.add(label_10);
+
+		txtTenThuoc_TimKiem = new JTextField();
+		txtTenThuoc_TimKiem.setColumns(10);
+		txtTenThuoc_TimKiem.setBounds(75, 249, 142, 21);
+		panelDienThongTin.add(txtTenThuoc_TimKiem);
+
+		txtSoLuong = new JTextField();
+		txtSoLuong.setToolTipText("Vui lòng nhập số: ");
+		txtSoLuong.setColumns(10);
+		txtSoLuong.setBounds(315, 250, 48, 20);
+		panelDienThongTin.add(txtSoLuong);
+
+		JButton btnXoa = new JButton("");
+		btnXoa.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/cancel.png")));
+		btnXoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int row = table.getSelectedRow();
+				if (row==-1)
+					JOptionPane.showMessageDialog(panelDienThongTin, "Vui lòng chọn thuốc");
+				else {
+					int sel = JOptionPane.showConfirmDialog(panelDienThongTin, "Bạn có muốn xóa không?","Xóa", JOptionPane.YES_NO_OPTION);
+					if (sel == JOptionPane.YES_OPTION)
+						tablemode.removeRow(row);
+				}
+			}
+		});
+		btnXoa.setToolTipText("Xóa");
+		btnXoa.setBounds(437, 248, 26, 23);
+		panelDienThongTin.add(btnXoa);
+
+		JButton btnThemNangCao = new JButton("");
+		btnThemNangCao.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/more_01.png")));
+		btnThemNangCao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelBangThemThuoc.setVisible(true);
+				panelDienThongTin.setVisible(false);
+			}
+		});
+		btnThemNangCao.setToolTipText("Mở bảng");
+		btnThemNangCao.setBounds(217, 249, 26, 21);
+		panelDienThongTin.add(btnThemNangCao);
+
+		JButton btnThem = new JButton("");
+		btnThem.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/add.png")));
+		btnThem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				String ten = txtTenThuoc_TimKiem.getText()+"";
+				int soLuong = Integer.parseInt(txtSoLuong.getText());
+				try {
+					ds.docThuoc();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(ThongTinThuoc thuoc : ds.listThuoc)
+				{
+					if(ten.equals(thuoc.getTenThuoc()+""))
+					{
+						Object[] row = {ten,soLuong,thuoc.getDonViTinh(),thuoc.getGiaBan()};
+						tablemode.addRow(row);
+					}
+				}
+				txtTongTien.setText(tongTien(tablemode)+"");
+
+			}
+		});
+		btnThem.setToolTipText("Thêm");
+		btnThem.setBounds(405, 248, 26, 23);
+		panelDienThongTin.add(btnThem);
+
+		txtLoai = new JTextField();
+		txtLoai.setEnabled(false);
+		txtLoai.setEditable(false);
+		txtLoai.setColumns(10);
+		txtLoai.setBounds(362, 250, 33, 20);
+		panelDienThongTin.add(txtLoai);
+		txtNguoiLap.setText(dn.txtTK.getText());
+
+		chkKeDon.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if(chkKeDon.isSelected())
+				{
+					panelThongtinKH.setEnabled(true);
+					label_3.setEnabled(true);
+					label_4.setEnabled(true);
+					label_5.setEnabled(true);
+					label_6.setEnabled(true);
+					label_7.setEnabled(true);
+					txtCMND.setEditable(true);
+					cbbNgay.setEnabled(true);
+					cbbNgay.setEditable(true);
+					cbbThang.setEnabled(true);
+					cbbThang.setEditable(true);
+					cbbNam.setEnabled(true);
+					cbbNam.setEditable(true);
+					txtSDT.setEditable(true);
+					txtTenKH.setEditable(true);
+					txtAMota.setEditable(true);
+					txtAMota.setBackground(Color.decode("#ffffff"));
+					btnKiemTra.setEnabled(true);
+				}
+				else {
+					panelThongtinKH.setEnabled(false);
+					label_3.setEnabled(false);
+					label_4.setEnabled(false);
+					label_5.setEnabled(false);
+					label_6.setEnabled(false);
+					label_7.setEnabled(false);
+					txtCMND.setEditable(false);
+					cbbNgay.setEnabled(false);
+					cbbNgay.setEditable(false);
+					cbbThang.setEnabled(false);
+					cbbThang.setEditable(false);
+					cbbNam.setEnabled(false);
+					cbbNam.setEditable(false);
+					txtSDT.setEditable(false);
+					txtTenKH.setEditable(false);
+					txtAMota.setEditable(false);
+					txtAMota.setBackground(Color.decode("#ffffff"));
+					btnKiemTra.setEnabled(false);
+				}
+
+			}
+		});
+		txtMa.setText("HD"+ds.demSoHDBan());
 
 		panelBangThemThuoc = new JPanel();
 		panelBangThemThuoc.setForeground(Color.ORANGE);
@@ -532,6 +531,43 @@ public class GiaoDienLapHoaDon extends JFrame {
 			Object[] row ={thuoc.getTenThuoc(),thuoc.getSoLuong(),thuoc.getDonViTinh(),thuoc.getGiaBan()};
 			tablemodelBangThemThuoc.addRow(row);
 		}
+		btnXoq.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				HoaDonBanHang hdb = new HoaDonBanHang();
+				hdb.setMaHD(txtMa.getText()+"");
+				hdb.setMaNVLap(txtNguoiLap.getText()+"");
+				hdb.setNgayLap(txtNgay.getText()+"");
+				hdb.setMaKH(txtCMND.getText()+"");
+				if(txtTongTien.getText().equals(""))
+					hdb.setTongTien(0);
+				else
+					hdb.setTongTien(Double.parseDouble(txtTongTien.getText()+""));
+				try {
+					control.themHDBVaoSQL(hdb);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(int i=table.getRowCount()-1;i>=0;i--)
+				{
+					String tenThuoc = tablemode.getValueAt(i, 0)+"";
+					String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
+					CTHoaDonBan ctHDB = new CTHoaDonBan();
+					ctHDB.setMaHD(txtMa.getText()+"");
+					ctHDB.setMaThuoc(maThuoc);
+					ctHDB.setTenThuoc(tenThuoc);
+					ctHDB.setSoLuong(Integer.parseInt(tablemode.getValueAt(i, 1)+""));
+					ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
+					try {
+						control.themCTHoaDonBanVaoSQL(ctHDB);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				setVisible(false);
+			}
+		});
 
 		//--------------------------------------------------
 

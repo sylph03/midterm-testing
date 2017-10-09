@@ -156,6 +156,8 @@ public class GiaoDienNhanVien extends JFrame {
 		btnLapHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new GiaoDienLapHoaDon().setVisible(true);
+				xoaDuLieuTrongTable();
+				duaDuLieuTuListVaoTable();
 			}
 		});
 		toolBar.add(btnLapHoaDon);
@@ -837,6 +839,16 @@ public class GiaoDienNhanVien extends JFrame {
 				tablemodelDoanhThu.addRow(row);
 			}
 		}
+	}
+	
+	void xoaDuLieuTrongTable()
+	{
+		for(int i = tablemodelThuoc.getRowCount()-1;i>=0;i--)
+			tablemodelThuoc.removeRow(i);
+		for(int i = tablemodelDanhSachDon.getRowCount()-1;i>=0;i--)
+			tablemodelDanhSachDon.removeRow(i);
+		for(int i = tablemodelDoanhThu.getRowCount()-1;i>=0;i--)
+			tablemodelDoanhThu.removeRow(i);
 	}
 	
 }
