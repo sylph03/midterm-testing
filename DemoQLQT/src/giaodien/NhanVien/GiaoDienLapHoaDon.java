@@ -533,39 +533,81 @@ public class GiaoDienLapHoaDon extends JFrame {
 		}
 		btnXoq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				HoaDonBanHang hdb = new HoaDonBanHang();
-				hdb.setMaHD(txtMa.getText()+"");
-				hdb.setMaNVLap(txtNguoiLap.getText()+"");
-				hdb.setNgayLap(txtNgay.getText()+"");
-				hdb.setMaKH(txtCMND.getText()+"");
-				if(txtTongTien.getText().equals(""))
-					hdb.setTongTien(0);
-				else
-					hdb.setTongTien(Double.parseDouble(txtTongTien.getText()+""));
-				try {
-					control.themHDBVaoSQL(hdb);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				for(int i=table.getRowCount()-1;i>=0;i--)
+				if(table.getRowCount()>=1)
 				{
-					String tenThuoc = tablemode.getValueAt(i, 0)+"";
-					String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
-					CTHoaDonBan ctHDB = new CTHoaDonBan();
-					ctHDB.setMaHD(txtMa.getText()+"");
-					ctHDB.setMaThuoc(maThuoc);
-					ctHDB.setTenThuoc(tenThuoc);
-					ctHDB.setSoLuong(Integer.parseInt(tablemode.getValueAt(i, 1)+""));
-					ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
+					HoaDonBanHang hdb = new HoaDonBanHang();
+					hdb.setMaHD(txtMa.getText()+"");
+					hdb.setMaNVLap(txtNguoiLap.getText()+"");
+					hdb.setNgayLap(txtNgay.getText()+"");
+					hdb.setMaKH(txtCMND.getText()+"");
+					hdb.setTongTien(Double.parseDouble(txtTongTien.getText()+""));
 					try {
-						control.themCTHoaDonBanVaoSQL(ctHDB);
+						control.themHDBVaoSQL(hdb);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					for(int i=table.getRowCount()-1;i>=0;i--)
+					{
+						String tenThuoc = tablemode.getValueAt(i, 0)+"";
+						String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
+						CTHoaDonBan ctHDB = new CTHoaDonBan();
+						ctHDB.setMaHD(txtMa.getText()+"");
+						ctHDB.setMaThuoc(maThuoc);
+						ctHDB.setTenThuoc(tenThuoc);
+						ctHDB.setSoLuong(Integer.parseInt(tablemode.getValueAt(i, 1)+""));
+						ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
+						try {
+							control.themCTHoaDonBanVaoSQL(ctHDB);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if(!txtCMND.getText().equals(""))
+					{
+						boolean kt = false;
+						KhachHang kh = new KhachHang();
+						kh.setCMND(txtCMND.getText());
+						kh.setHoTenKH(txtTenKH.getText());
+						kh.setNgaySinh(control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam));
+						kh.setSdt(txtSDT.getText());
+						kh.setMoTaKH(txtAMota.getText());
+						try {
+							ds.docBangKhachHang();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						for(KhachHang kh1 : ds.listKhachHang)
+						{
+							if(kh1.getCMND().equalsIgnoreCase(kh.getCMND()))
+							{
+								
+								try {
+									control.suaDuLieuKhachHangTrongSQL(kh);
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								kt = true;
+							}
+						}
+						if(kt = false)
+						{
+							try {
+								control.themKHVaoSQL(kh);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+						}
+						setVisible(false);
+					}
 				}
-				setVisible(false);
+				else
+					JOptionPane.showMessageDialog(panelDienThongTin, "Danh sách thuốc bán không được rỗng!");
 			}
 		});
 

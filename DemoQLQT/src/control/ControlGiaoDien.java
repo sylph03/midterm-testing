@@ -352,6 +352,25 @@ public class ControlGiaoDien {
 			con.close();
 		}
 	}
+	public boolean suaDuLieuKhachHangTrongSQL(KhachHang khmoi) throws SQLException
+	{
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="update dbo.KhachHang set MoTa=? where CMND = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,khmoi.getMoTaKH());
+			pstmt.setString(2,khmoi.getCMND());
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();	
+			con.close();
+		}
+		return false;
+	}
 
 	//---------------Hàm xử lý--------------------------
 	public double tongDoanhThuCaNhan(String maNV,String ngayLap)
