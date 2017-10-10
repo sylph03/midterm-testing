@@ -55,8 +55,37 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		setContentPane(panel);
 		panel.setLayout(null);
 
+		JButton btnOk = new JButton("OK");
+		btnOk.setMnemonic(KeyEvent.VK_ENTER);
+		btnOk.setToolTipText("Enter để lưu");
+		btnOk.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnOk.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/save.png")));
+		btnOk.setBounds(139, 322, 80, 23);
+		btnOk.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String diaChiMoi = txtDiaChi.getText()+"";
+				String sdtMoi = txtSDT.getText()+"";
+				String maNV = dn.txtTK.getText()+"";
+				try {
+					control.suaDiaChiVaSDT(diaChiMoi, sdtMoi, maNV);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				setVisible(false);
+			}
+		});
+		panel.add(btnOk);
+		
 		JButton btnDoiMK = new JButton(" ");
+		btnDoiMK.setOpaque(false);
+		btnDoiMK.setVerifyInputWhenFocusTarget(false);
 		btnDoiMK.setToolTipText("Thay đổi");
+		btnDoiMK.setFocusPainted(false);
+		
 		btnDoiMK.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnDoiMK.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/edit.png")));
 		btnDoiMK.addActionListener(new ActionListener() {
@@ -130,30 +159,7 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		panel.add(txtMatKhau);
 		txtMatKhau.setColumns(10);
 
-		JButton btnOk = new JButton("OK");
-		btnOk.setToolTipText("Enter để lưu");
-		btnOk.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnOk.setIcon(new ImageIcon(GiaoDienThongTinNhanVien.class.getResource("/ser/save.png")));
 
-		btnOk.setBounds(139, 322, 80, 23);
-		btnOk.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				String diaChiMoi = txtDiaChi.getText()+"";
-				String sdtMoi = txtSDT.getText()+"";
-				String maNV = dn.txtTK.getText()+"";
-				try {
-					control.suaDiaChiVaSDT(diaChiMoi, sdtMoi, maNV);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				setVisible(false);
-			}
-		});
-		panel.add(btnOk);
 		
 		//-----------------phím tắt---------------------------
 		
@@ -233,7 +239,6 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 				txtSDT.setEnabled(true);
 			}
 		});
-
 		dienDuLieuVaoForm();
 
 	}

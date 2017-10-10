@@ -105,6 +105,8 @@ insert HoaDon values ('HD6','NV002','20/9/2017','15090901',20000)
 insert HoaDon values ('HD7','NV001','21/9/2017','15055421',20000)
 insert HoaDon values ('HD8','NV002','22/9/2017','15090902',20000)
 
+delete HoaDon
+
 insert ChiTietHoaDon values('HD1','A001','COTRIM STADA FORTE',10,2000)
 insert ChiTietHoaDon values('HD1','A002','COTTUF L100ML',20,3000)
 insert ChiTietHoaDon values('HD1','A003','COVERSYL 5ML L30V',15,4000)

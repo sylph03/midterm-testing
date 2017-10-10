@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.Panel;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -338,7 +340,7 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="insert into KhachHang values(?,?,?,?,?);";
+			String sql="insert KhachHang values(?,?,?,?,?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, kh.getCMND());
 			pstmt.setString(2, kh.getHoTenKH());
@@ -351,6 +353,25 @@ public class ControlGiaoDien {
 			e.printStackTrace();
 			con.close();
 		}
+	}
+	public boolean suaDuLieuKhachHangTrongSQL(KhachHang khmoi) throws SQLException
+	{
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="update dbo.KhachHang set MoTa=? where CMND = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1,khmoi.getMoTaKH());
+			pstmt.setString(2,khmoi.getCMND());
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();	
+			con.close();
+		}
+		return false;
 	}
 
 	//---------------Hàm xử lý--------------------------
@@ -396,6 +417,20 @@ public class ControlGiaoDien {
 	{
 		String year = nam.getSelectedItem().toString();
 		return year;
+	}
+	public long kiemTraDulieuNhapSo(String s, JPanel cc, String tb) {
+		try {
+			long a = Long.parseLong(s);
+			return a;
+		}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+		 finally {
+			JOptionPane.showMessageDialog(cc, tb);
+			return -1;
+		}
+		
 	}
 	
 		//-------------------Tim kiem doi tuong trong table ở SQL-----------------
