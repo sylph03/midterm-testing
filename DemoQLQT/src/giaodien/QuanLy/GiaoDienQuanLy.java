@@ -71,6 +71,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollBar;
+
 import java.awt.Toolkit;
 
 public class GiaoDienQuanLy extends JFrame implements ActionListener {
@@ -78,7 +80,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	/**
 	 * 
 	 */
-	private JPanel contentPane;
+	private JPanel contentPane, panelTrangChu;
 	private JTable tableThuocNhap_NhapHang_NhapDon,tableThongtinThuoc_DanhSach,tableDulieuThuoc_NhapHang_NhapDon;
 	private JTable tableThongTinNV;
 	public static DefaultTableModel tableModelThongTinthuoc ;
@@ -153,7 +155,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private JTextField txtTenNV_DanhSach_DanhSachNV;
 	private JTextField txtTimKiem_DanhSach_DanhSachNhanVien;
 	private JButton btnTim_DanhSach_DanhSachThuoc;
-	private JButton btnTrangChu;
 	private JPanel ThanhToolBar;
 	private JLabel lblNewLabel_20;
 	private JLabel lblSinThoi;
@@ -182,6 +183,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private JRadioButtonMenuItem chude9;
 	private JRadioButtonMenuItem chude10;
 	private JButton btnTim_DoanhthuvaBaoCao;
+	private JToggleButton btnTrangChu;
+	private JScrollPane jsclist;
 	public GiaoDienQuanLy() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienQuanLy.class.getResource("/ser/pill.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -310,6 +313,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		setResizable(false);
 		contentPane.setLayout(null);
 
+		groupDanhMuc=new ButtonGroup();
+
 		ThanhToolBar = new JPanel();
 		ThanhToolBar.setBounds(0, 0, 795, 80);
 		contentPane.add(ThanhToolBar);
@@ -320,7 +325,15 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		ThanhToolBar.add(toolBar);
 		toolBar.setVerifyInputWhenFocusTarget(false);
 
-		btnTrangChu = new JButton("Home");
+		btnTrangChu = new JToggleButton("Home");
+		btnTrangChu.setSelected(true);
+		btnTrangChu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Anpanel();
+				panelTrangChu.setVisible(true);
+			}
+		});
+		groupDanhMuc.add(btnTrangChu);
 		btnTrangChu.setMinimumSize(new Dimension(53, 23));
 		btnTrangChu.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnTrangChu.setVerticalAlignment(SwingConstants.TOP);
@@ -356,7 +369,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		toolBar.add(btnThmThuc);
 
 
-		groupDanhMuc=new ButtonGroup();
 
 		btnDanhSach = new JToggleButton("Danh Sách");
 		btnDanhSach.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -366,11 +378,11 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnDanhSach.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnDanhSach.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/file_manager.png")));
 		btnDanhSach.setFocusPainted(false);
-		btnDanhSach.setSelected(true);
 		btnDanhSach.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Anpanel();
 				panelDanhSach.setVisible(true);
+				panelTrangChu.setVisible(false);
 			}
 		});
 		groupDanhMuc.add(btnDanhSach);
@@ -390,6 +402,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				panelDanhSach.setVisible(false);
 				Anpanel();
 				panelNhapHang.setVisible(true);
+				panelTrangChu.setVisible(false);
 			}
 		});
 		groupDanhMuc.add(btnNhapHang);
@@ -408,6 +421,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				panelDanhSach.setVisible(false);
 				Anpanel();
 				panelDoanhThuvaBaoCao.setVisible(true);
+				panelTrangChu.setVisible(false);
 			}
 		});
 		groupDanhMuc.add(btnDaonhThu);
@@ -428,6 +442,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				panelDanhSach.setVisible(false);
 				Anpanel();
 				panelTinhTrang.setVisible(true);
+				panelTrangChu.setVisible(false);
 			}
 		});
 		groupDanhMuc.add(btnTinhTrang);
@@ -532,7 +547,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 
 		panelDanhSach = new JPanel();
-		layeredPane.setLayer(panelDanhSach, 1);
 
 		panelDanhSach.setBounds(0, 0, 795, 484);
 		layeredPane.add(panelDanhSach);
@@ -658,7 +672,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				{
 					txtTimkiem_DanhSach_DanhSachThuoc.setForeground(Color.GRAY);
 					txtTimkiem_DanhSach_DanhSachThuoc.setText("Tên thuốc....");
-					listTimKiem_DanhSach_DanhSachThuoc.setVisible(false);
+					jsclist.setVisible(false);
 				}
 			}
 		});
@@ -667,6 +681,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			public void keyReleased(KeyEvent e) {
 				if(txtTimkiem_DanhSach_DanhSachThuoc.getText().length()>0)
 				{
+					int m=-1;
 					if(!txtTimkiem_DanhSach_DanhSachThuoc.getText().trim().equals(""))
 					{
 						listModelTimKiem_DanhSach_DanhSachThuoc.removeAllElements();
@@ -682,12 +697,12 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 									else
 										break;
 								}
-								listTimKiem_DanhSach_DanhSachThuoc.setVisible(true);
+								jsclist.setVisible(true);
 							}
 							else
 							{
 								listModelTimKiem_DanhSach_DanhSachThuoc.removeAllElements();
-								listTimKiem_DanhSach_DanhSachThuoc.setVisible(false);
+								jsclist.setVisible(false);
 							}
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -697,14 +712,15 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 					}
 					else
 					{
-						listTimKiem_DanhSach_DanhSachThuoc.setVisible(false);
+					
+						jsclist.setVisible(false);
 						listModelTimKiem_DanhSach_DanhSachThuoc.removeAllElements();
 					}
 				}
 				else
 				{
 					listModelTimKiem_DanhSach_DanhSachThuoc.removeAllElements();
-					listTimKiem_DanhSach_DanhSachThuoc.setVisible(false);
+					jsclist.setVisible(false);
 				}
 			}
 		});
@@ -715,6 +731,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panelDanhSachThuoc.add(lblNewLabel_17);
 
 		btnSua_DanhSach_DanhSachThuoc = new JButton(" ");
+		btnSua_DanhSach_DanhSachThuoc.setToolTipText("Lưu chỉnh sửa");
 		btnSua_DanhSach_DanhSachThuoc.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnSua_DanhSach_DanhSachThuoc.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/package_editors (1).png")));
 		btnSua_DanhSach_DanhSachThuoc.addActionListener(this);
@@ -722,6 +739,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panelDanhSachThuoc.add(btnSua_DanhSach_DanhSachThuoc);
 
 		btnXoa_DanhSach_DanhSachThuoc = new JButton(" ");
+		btnXoa_DanhSach_DanhSachThuoc.setToolTipText("Xóa dữ liệu");
 		btnXoa_DanhSach_DanhSachThuoc.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnXoa_DanhSach_DanhSachThuoc.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/deletered.png")));
 		btnXoa_DanhSach_DanhSachThuoc.setBounds(747, 224, 35, 35);
@@ -747,9 +765,10 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnTim_DanhSach_DanhSachThuoc.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/search.png")));
 		btnTim_DanhSach_DanhSachThuoc.setBounds(747, 11, 33, 33);
 		panelDanhSachThuoc.add(btnTim_DanhSach_DanhSachThuoc);
-
 		listModelTimKiem_DanhSach_DanhSachThuoc =new DefaultListModel<String>();
+		
 		listTimKiem_DanhSach_DanhSachThuoc= new JList<String>(listModelTimKiem_DanhSach_DanhSachThuoc);
+		jsclist = new JScrollPane(listTimKiem_DanhSach_DanhSachThuoc);
 		listTimKiem_DanhSach_DanhSachThuoc.setSelectionBackground(Color.WHITE);
 		listTimKiem_DanhSach_DanhSachThuoc.addListSelectionListener(new ListSelectionListener() {
 
@@ -760,7 +779,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				if(data!=null)
 				{
 					txtTimkiem_DanhSach_DanhSachThuoc.setText(listTimKiem_DanhSach_DanhSachThuoc.getSelectedValue()+"");
-					listTimKiem_DanhSach_DanhSachThuoc.setVisible(false);
+					jsclist.setVisible(false);
 				}
 				else
 				{
@@ -769,10 +788,10 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 			}
 		});
-		listTimKiem_DanhSach_DanhSachThuoc.setVisible(false);
+		jsclist.setVisible(false);
 		listTimKiem_DanhSach_DanhSachThuoc.setVisibleRowCount(4);
-		listTimKiem_DanhSach_DanhSachThuoc.setBounds(551, 42, 186, 133);
-		panelDanhSachThuoc.add(listTimKiem_DanhSach_DanhSachThuoc);
+		jsclist.setBounds(551, 42, 186, 66);
+		panelDanhSachThuoc.add(jsclist);
 		panelDanhSachThuoc.add(scrollPane_ThongtinThuoc= new JScrollPane(tableThongtinThuoc_DanhSach=new JTable(tableModelThongTinthuoc)));
 		tableThongtinThuoc_DanhSach.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -892,7 +911,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		JButton btnSua_DanhSach_DanhSachNhanVien = new JButton(" ");
 		btnSua_DanhSach_DanhSachNhanVien.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnSua_DanhSach_DanhSachNhanVien.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/package_editors (1).png")));
-		btnSua_DanhSach_DanhSachNhanVien.setFocusPainted(false);
 		btnSua_DanhSach_DanhSachNhanVien.setBounds(747, 175, 33, 33);
 		panelDanhSachNhanVien.add(btnSua_DanhSach_DanhSachNhanVien);
 
@@ -901,12 +919,17 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnTim_DanhSach_DanhSachNV.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/search.png")));
 		btnTim_DanhSach_DanhSachNV.setBounds(747, 11, 33, 33);
 		panelDanhSachNhanVien.add(btnTim_DanhSach_DanhSachNV);
-
+		
 		GroupGioiTinh = new ButtonGroup();
 		GroupGioiTinh.add(rdbtnNam_DanhSach_DanhSachNV);
 		GroupGioiTinh.add(rdbtnNu_DanhSach_DanhSachNV);
 
+		panelTrangChu = new JPanel();
+		layeredPane.setLayer(panelTrangChu, 0);
+		panelTrangChu.setBounds(0, 0, 795, 484);
+		layeredPane.add(panelTrangChu);
 
+		
 		panelDoanhThuvaBaoCao = new JPanel();
 		layeredPane.setLayer(panelDoanhThuvaBaoCao, 0);
 		panelDoanhThuvaBaoCao.setBounds(0, 0, 795, 484);
@@ -943,7 +966,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		txtMaNV_DoanhThuvaBaoCao_BaoCao.setColumns(10);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 104, 795, 345);
+		tabbedPane.setBounds(10, 104, 785, 345);
 		panelDoanhThuvaBaoCao.add(tabbedPane);
 
 		JPanel panelDoanhThu_DoanhThuvaBaoCao = new JPanel();
@@ -1377,7 +1400,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		 */
 		duaDuLieuTuListVaoTable();
 		Anpanel();
-		
+
 		tableDulieuThuoc_NhapHang_NhapDon.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -1391,7 +1414,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 			}
 		});
-		
+
 		btnXemChiTiet_DoanhThuvaBaoCao_DoanhThu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int row = tableDoanhThu_Doanhthu_DoanhThuvaBaoCao.getSelectedRow();
@@ -1405,8 +1428,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			}
 		});
 	}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -1432,7 +1455,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 					}
 					else
 						JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập số lượng >0!");
-					
+
 				}
 				else
 					JOptionPane.showMessageDialog(contentPane, "Vui lòng nhập số lượng và hạn sử dụng!");
@@ -1630,6 +1653,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	 */
 	void Anpanel()
 	{
+		panelDanhSach.setVisible(false);
 		panelNhapHang.setVisible(false);
 		panelDoanhThuvaBaoCao.setVisible(false);
 		panelTinhTrang.setVisible(false);
@@ -1702,11 +1726,11 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		{
 			UIManager.setLookAndFeel(chude);
 			SwingUtilities.updateComponentTreeUI(GiaoDienQuanLy.this);
+			control.LuuChuDe(chude);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-
 }
