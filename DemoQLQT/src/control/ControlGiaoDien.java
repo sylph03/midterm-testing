@@ -10,12 +10,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+
+import javax.swing.UIManager;
+
 import javax.swing.table.DefaultTableModel;
 
 import entity.CTHoaDonBan;
@@ -25,7 +27,6 @@ import entity.HoaDonNhapHang;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.ThongTinThuoc;
-import giaodien.GiaoDienDangNhap;
 
 public class ControlGiaoDien {
 	DanhSachDuLieu ds = new DanhSachDuLieu();
@@ -253,9 +254,9 @@ public class ControlGiaoDien {
 			e.printStackTrace();
 			con.close();
 		}
-		
+
 	}
-	
+
 	//----------------------DL Hóa đơn Nhập-------------------
 
 	public void themHDNVaoSQL(HoaDonNhapHang hdn) throws SQLException
@@ -276,7 +277,7 @@ public class ControlGiaoDien {
 			con.close();
 		}
 	}
-	
+
 	public boolean xoaHDNtrongSQL(String maHDN) throws SQLException
 	{
 		Connection con =KetNoiSQL.getInstance().connect();
@@ -313,9 +314,9 @@ public class ControlGiaoDien {
 			e.printStackTrace();
 			con.close();
 		}
-		
+
 	}
-	
+
 	public boolean xoaCTHoaDonNhaptrongSQL(String maHDN) throws SQLException
 	{
 		Connection con =KetNoiSQL.getInstance().connect();
@@ -418,6 +419,7 @@ public class ControlGiaoDien {
 		String year = nam.getSelectedItem().toString();
 		return year;
 	}
+
 	public long kiemTraDulieuNhapSo(String s, JPanel cc, String tb) {
 		try {
 			long a = Long.parseLong(s);
@@ -436,4 +438,42 @@ public class ControlGiaoDien {
 		//-------------------Tim kiem doi tuong trong table ở SQL-----------------
 	
 	
+
+
+	//-------------------Lưu chủ đề-----------------
+	public String TaiChuDe()
+	{
+		BufferedReader br =null;
+		try
+		{
+			if(new File(filename).exists())
+			{
+				br = new BufferedReader(new FileReader(filename));
+				String line = br.readLine();
+				if(!line.equals(""))
+				{
+					br.close();
+					return line;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return "com.jtattoo.plaf.mcwin.McWinLookAndFeel";
+	}
+	//
+	public void LuuChuDe(String chude){
+		BufferedWriter bw;
+		try 
+		{
+			bw= new BufferedWriter(new FileWriter(filename));
+			bw.write(chude);
+			bw.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+		}
+	}
 }
