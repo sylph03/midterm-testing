@@ -31,6 +31,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.event.ActionListener;
 import java.security.AllPermission;
 import java.sql.SQLException;
@@ -44,6 +46,7 @@ import javax.swing.JTextField;
 import java.awt.ScrollPane;
 import java.awt.Panel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Label;
 import javax.swing.JLayeredPane;
@@ -53,6 +56,8 @@ import javax.swing.event.ListSelectionListener;
 
 import java.awt.SystemColor;
 import javax.swing.UIManager;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JToggleButton;
 
 public class GiaoDienNhanVien extends JFrame {
 
@@ -71,6 +76,11 @@ public class GiaoDienNhanVien extends JFrame {
 	private JTextField txtTongDoanhThu;
 	private JPanel panelCTHD,panelDSHD,panelDSThuoc,panelDoanhThu;
 	private JComboBox cbbNgay,cbbThang,cbbNam,comboBoxNgay_DoanhThu,comboBoxThang_DoanhThu,comboBoxNam_DoanhThu;
+	private JRadioButtonMenuItem chude1,chude2,chude3,chude4,chude5,chude6,chude7,chude8,chude9,chude10;
+	public JToggleButton btnNhanVien;
+	GiaoDienThongTinNhanVien thongtinnv = new GiaoDienThongTinNhanVien();
+	GiaoDienLapHoaDon laphoadon =new GiaoDienLapHoaDon();
+
 
 	public GiaoDienNhanVien() {
 		setResizable(false);
@@ -82,7 +92,6 @@ public class GiaoDienNhanVien extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 794, 21);
@@ -103,6 +112,89 @@ public class GiaoDienNhanVien extends JFrame {
 				}
 			}
 		});
+
+		JMenu menu = new JMenu("Đổi giao diện");
+		mnNewMenu.add(menu);
+
+		chude1 = new JRadioButtonMenuItem("McWin",true);
+		chude1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				doiGiaoDien("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+			}
+		});
+		menu.add(chude1);
+
+		chude2 = new JRadioButtonMenuItem("Luna");
+		chude2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.luna.LunaLookAndFeel");
+			}
+		});
+		menu.add(chude2);
+
+		chude3 = new JRadioButtonMenuItem("Areo");
+		chude3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.aero.AeroLookAndFeel");
+			}
+		});
+		menu.add(chude3);
+
+		chude4 = new JRadioButtonMenuItem("Texture");
+		chude4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.texture.TextureLookAndFeel");
+			}
+		});
+		menu.add(chude4);
+
+		chude5 = new JRadioButtonMenuItem("aluminium");
+		chude5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.aluminium.AluminiumLookAndFeel");
+			}
+		});
+		menu.add(chude5);
+
+		chude6 = new JRadioButtonMenuItem("NimBus");
+		chude6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
+			}
+		});
+		menu.add(chude6);
+
+		chude7 = new JRadioButtonMenuItem("Bernstein");
+		chude7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.bernstein.BernsteinLookAndFeel");
+			}
+		});
+		menu.add(chude7);
+
+		chude8 = new JRadioButtonMenuItem("Fast");
+		chude8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.fast.FastLookAndFeel");
+			}
+		});
+		menu.add(chude8);
+
+		chude9 = new JRadioButtonMenuItem("Graphite");
+		chude9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.graphite.GraphiteLookAndFeel");
+			}
+		});
+		menu.add(chude9);
+
+		chude10 = new JRadioButtonMenuItem("Mint");
+		chude10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				doiGiaoDien("com.jtattoo.plaf.mint.MintLookAndFeel");
+			}
+		});
+		menu.add(chude10);
 		mnNewMenu.add(mntmngXut);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Thoát");
@@ -126,6 +218,7 @@ public class GiaoDienNhanVien extends JFrame {
 		menuTroGiup.add(mntmHngDnS);
 
 		//----------------------------toolbar---------------------------------------
+		ButtonGroup groupToolBar =new ButtonGroup();
 		JPanel ThanhToolBar = new JPanel();
 		ThanhToolBar.setOpaque(false);
 		ThanhToolBar.setBounds(0, 24, 794, 80);
@@ -137,12 +230,8 @@ public class GiaoDienNhanVien extends JFrame {
 		ThanhToolBar.add(toolBar);
 		toolBar.setVerifyInputWhenFocusTarget(false);
 
-		JButton btnTrangDangNhap = new JButton("Trang chủ");
+		JToggleButton btnTrangDangNhap = new JToggleButton("Trang chủ");
 		btnTrangDangNhap.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnTrangDangNhap.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		btnTrangDangNhap.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnTrangDangNhap.setVerticalAlignment(SwingConstants.TOP);
 		btnTrangDangNhap.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -150,14 +239,24 @@ public class GiaoDienNhanVien extends JFrame {
 		btnTrangDangNhap.setPreferredSize(new Dimension(90, 75));
 		btnTrangDangNhap.setMaximumSize(new Dimension(100, 100));
 		toolBar.add(btnTrangDangNhap);
+		groupToolBar.add(btnTrangDangNhap);
 
-		JButton btnLapHoaDon = new JButton("Lập hóa đơn");
+		JToggleButton btnLapHoaDon =new JToggleButton("Lập hóa đơn");
 		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLapHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GiaoDienLapHoaDon().setVisible(true);
-				xoaDuLieuTrongTable();
-				duaDuLieuTuListVaoTable();
+				if(btnLapHoaDon.isSelected())
+				{
+					laphoadon.setVisible(true);
+					xoaDuLieuTrongTable();
+					duaDuLieuTuListVaoTable();
+				}
+				else
+				{
+					laphoadon.dispose();
+				}
+
+
 			}
 		});
 		toolBar.add(btnLapHoaDon);
@@ -168,15 +267,20 @@ public class GiaoDienNhanVien extends JFrame {
 		btnLapHoaDon.setMaximumSize(new Dimension(100, 100));
 		btnLapHoaDon.setHorizontalTextPosition(SwingConstants.CENTER);
 
-		JButton btnDanhSachThuoc = new JButton("DS thuốc");
+		JToggleButton btnDanhSachThuoc = new JToggleButton("DS thuốc",true);
 		btnDanhSachThuoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelCTHD.setVisible(false);
-				panelDoanhThu.setVisible(false);
-				panelDSHD.setVisible(false);
-				panelDSThuoc.setVisible(true);
+				if(btnDanhSachThuoc.isSelected())
+				{
+					panelCTHD.setVisible(false);
+					panelDoanhThu.setVisible(false);
+					panelDSHD.setVisible(false);
+					panelDSThuoc.setVisible(true);
+				}
+
 			}
 		});
+		groupToolBar.add(btnDanhSachThuoc);
 		btnDanhSachThuoc.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/death_list.png")));
 		btnDanhSachThuoc.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnDanhSachThuoc.setVerticalAlignment(SwingConstants.TOP);
@@ -186,16 +290,19 @@ public class GiaoDienNhanVien extends JFrame {
 		btnDanhSachThuoc.setFont(new Font("Tahoma", Font.BOLD, 11));
 		toolBar.add(btnDanhSachThuoc);
 
-		JButton btnDsHD = new JButton("DS hóa đơn");
+		JToggleButton btnDsHD = new JToggleButton("DS hóa đơn");
 		btnDsHD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				panelCTHD.setVisible(false);
-				panelDSThuoc.setVisible(false);
-				panelDoanhThu.setVisible(false);
-				panelDSHD.setVisible(true);
-
+				if(btnDsHD.isSelected())
+				{
+					panelCTHD.setVisible(false);
+					panelDSThuoc.setVisible(false);
+					panelDoanhThu.setVisible(false);
+					panelDSHD.setVisible(true);
+				}
 			}
 		});
+		groupToolBar.add(btnDsHD);
 		btnDsHD.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/list.png")));
 		btnDsHD.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnDsHD.setVerticalAlignment(SwingConstants.TOP);
@@ -205,15 +312,20 @@ public class GiaoDienNhanVien extends JFrame {
 		btnDsHD.setFont(new Font("Tahoma", Font.BOLD, 11));
 		toolBar.add(btnDsHD);
 
-		JButton btnDoanhThu = new JButton("Doanh thu");
+		JToggleButton btnDoanhThu = new JToggleButton("Doanh thu");
 		btnDoanhThu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelCTHD.setVisible(false);
-				panelDSThuoc.setVisible(false);
-				panelDSHD.setVisible(false);
-				panelDoanhThu.setVisible(true);
+				if(btnDoanhThu.isSelected())
+				{
+					panelCTHD.setVisible(false);
+					panelDSThuoc.setVisible(false);
+					panelDSHD.setVisible(false);
+					panelDoanhThu.setVisible(true);
+				}
+
 			}
 		});
+		groupToolBar.add(btnDoanhThu);
 		btnDoanhThu.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/report.png")));
 		btnDoanhThu.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnDoanhThu.setVerticalAlignment(SwingConstants.TOP);
@@ -223,7 +335,7 @@ public class GiaoDienNhanVien extends JFrame {
 		btnDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 11));
 		toolBar.add(btnDoanhThu);
 
-		JButton btnNhanVien = new JButton(IDNhanVien);
+		btnNhanVien= new JToggleButton(IDNhanVien);
 		btnNhanVien.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNhanVien.setVerticalAlignment(SwingConstants.TOP);
 		btnNhanVien.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -232,16 +344,15 @@ public class GiaoDienNhanVien extends JFrame {
 		btnNhanVien.setMaximumSize(new Dimension(100, 100));
 		toolBar.add(btnNhanVien);
 		btnNhanVien.setFont(new Font("Tahoma", Font.BOLD, 11));
-
-
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					new GiaoDienThongTinNhanVien().setVisible(true);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if(btnNhanVien.isSelected())
+				{
+					thongtinnv.setVisible(true);
 				}
+				else
+					thongtinnv.dispose();
+
 			}
 		});				
 
@@ -301,14 +412,14 @@ public class GiaoDienNhanVien extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(0, 115, 794, 430);
 		contentPane.add(layeredPane);
-		
-		
-				panelDSThuoc = new JPanel();
-				panelDSThuoc.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-				panelDSThuoc.setBounds(10, 11, 774, 408);
-				layeredPane.add(panelDSThuoc);
-				panelDSThuoc.add(scrollPaneDanhSachThuoc = new JScrollPane(tableDanhSachThuoc= new JTable(tablemodelThuoc)));
-				scrollPaneDanhSachThuoc.setPreferredSize(new Dimension(750, 380));
+
+
+		panelDSThuoc = new JPanel();
+		panelDSThuoc.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panelDSThuoc.setBounds(10, 11, 774, 408);
+		layeredPane.add(panelDSThuoc);
+		panelDSThuoc.add(scrollPaneDanhSachThuoc = new JScrollPane(tableDanhSachThuoc= new JTable(tablemodelThuoc)));
+		scrollPaneDanhSachThuoc.setPreferredSize(new Dimension(750, 380));
 
 		panelDSHD = new JPanel();
 		panelDSHD.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Danh s\u00E1ch h\u00F3a \u0111\u01A1n: ", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
@@ -849,5 +960,18 @@ public class GiaoDienNhanVien extends JFrame {
 			tablemodelDanhSachDon.removeRow(i);
 		for(int i = tablemodelDoanhThu.getRowCount()-1;i>=0;i--)
 			tablemodelDoanhThu.removeRow(i);
+	}
+	public void doiGiaoDien(String chude)
+	{
+		try
+		{
+			UIManager.setLookAndFeel(chude);
+			SwingUtilities.updateComponentTreeUI(GiaoDienNhanVien.this);
+			control.LuuChuDe(chude);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

@@ -19,11 +19,8 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTextField;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import java.sql.SQLException;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -34,9 +31,6 @@ import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
-import javax.swing.DropMode;
-import javax.swing.border.LineBorder;
-import javax.swing.JSeparator;
 
 
 public class GiaoDienDangNhap extends JFrame {
@@ -96,65 +90,49 @@ public class GiaoDienDangNhap extends JFrame {
 		contentPane.add(lblDiachi);
 
 		JLabel lblTaiKhoan = new JLabel("Tài Khoản: ");
-		lblTaiKhoan.setBounds(119, 357, 86, 24);
+		lblTaiKhoan.setBounds(137, 301, 75, 24);
 		contentPane.add(lblTaiKhoan);
 		lblTaiKhoan.setRequestFocusEnabled(false);
-		lblTaiKhoan.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTaiKhoan.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		txtTK = new JTextField();
-		txtTK.setBounds(225, 359, 238, 24);
+		txtTK.setBounds(222, 303, 211, 24);
 		contentPane.add(txtTK);
 		txtTK.requestFocus();
-		txtTK.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-				{
-					btnDangNhap.doClick();
-				}
-			}
-		});
-		txtTK.setActionCommand("DangNhap");
 		txtTK.setColumns(10);
 
 		JLabel lblMatKhau = new JLabel("Mật Khẩu: ");
-		lblMatKhau.setBounds(108, 392, 86, 24);
+		lblMatKhau.setBounds(136, 349, 75, 24);
 		contentPane.add(lblMatKhau);
-		lblMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblMatKhau.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		txtMK = new JPasswordField();
-		txtMK.setBounds(225, 395, 238, 24);
+		txtMK.setBounds(222, 351, 211, 24);
 		contentPane.add(txtMK);
-		txtMK.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-				{
-					btnDangNhap.doClick();
-				}
-			}
-		});
 		txtMK.setColumns(10);
 
 
 		btnDangNhap = new JButton("  Đăng Nhập");
-		btnDangNhap.setBounds(124, 448, 130, 30);
+		btnDangNhap.setToolTipText("Enter");
+		btnDangNhap.setBounds(128, 398, 140, 30);
 		contentPane.add(btnDangNhap);
 		btnDangNhap.setActionCommand("DangNhap");
 		btnDangNhap.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDangNhap.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/log_in.png")));
-		btnDangNhap.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnDangNhap.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		JButton btnThoat = new JButton("   Thoát");
-		btnThoat.setBounds(317, 449, 130, 30);
+		btnThoat.setToolTipText("Esc");
+		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnThoat.setBounds(278, 398, 143, 30);
 		contentPane.add(btnThoat);
 		btnThoat.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnThoat.setHorizontalAlignment(SwingConstants.LEFT);
 		btnThoat.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/exit.png")));
 
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/20160929154306.jpg")));
-		lblNewLabel.setBounds(0, 0, 800, 535);
+		lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/Background.jpg")));
+		lblNewLabel.setBounds(0, 0, 794, 535);
 		contentPane.add(lblNewLabel);
 		btnThoat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -204,6 +182,44 @@ public class GiaoDienDangNhap extends JFrame {
 		});
 		//
 		LoadTaiKhoan();
+		//--------------------phím tắt-------------
+		txtTK.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnDangNhap.doClick();
+				}
+			}
+		});
+		txtMK.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnDangNhap.doClick();
+				}
+			}
+		});
+		txtMK.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					btnThoat.doClick();
+				}
+			}
+		});
+		txtTK.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					btnThoat.doClick();
+				}
+			}
+		});
+		//-----------------------------------------
 
 	}
 	public void LoadTaiKhoan()

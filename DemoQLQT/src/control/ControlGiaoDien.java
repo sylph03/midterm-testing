@@ -7,9 +7,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -220,7 +222,7 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="insert into HoaDon values(?,?,?,?,?);";
+			String sql="insert into HoaDon values(?,?,?,?,?)";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, hdb.getMaHD());
 			pstmt.setString(2, hdb.getMaNVLap());
@@ -230,7 +232,6 @@ public class ControlGiaoDien {
 			pstmt.execute();
 		} catch (Exception e) {
 			// TODO: handle exception
-			e.printStackTrace();
 			con.close();
 		}
 	}
@@ -425,19 +426,19 @@ public class ControlGiaoDien {
 			long a = Long.parseLong(s);
 			return a;
 		}
-			catch (Exception e) {
-				// TODO: handle exception
-			}
-		 finally {
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally {
 			JOptionPane.showMessageDialog(cc, tb);
 			return -1;
 		}
-		
+
 	}
-	
-		//-------------------Tim kiem doi tuong trong table ở SQL-----------------
-	
-	
+
+	//-------------------Tim kiem doi tuong trong table ở SQL-----------------
+
+
 
 
 	//-------------------Lưu chủ đề-----------------
@@ -475,5 +476,51 @@ public class ControlGiaoDien {
 			// TODO: handle exception
 			e.getStackTrace();
 		}
+	}
+	public int KiemTraTinhTrang(ThongTinThuoc thuoc)
+	{
+		Date today=new Date(System.currentTimeMillis());
+		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String s=timeFormat.format(today.getTime());
+		if(thuoc.getSoLuong()>10 && !thuoc.getHsd().equals(s))
+		{
+			String[] ngayhientai=s.split("-");
+			String[] hsd=thuoc.getHsd().split("-");
+			int ngay,thang,nam;
+			int ngayhsd,thanghsd,namhsd;
+			ngay=Integer.parseInt(ngayhientai[0]);
+			thang=Integer.parseInt(ngayhientai[1]);
+			nam=Integer.parseInt(ngayhientai[2]);
+			ngayhsd=Integer.parseInt(hsd[0]);
+			thanghsd=Integer.parseInt(hsd[1]);
+			namhsd=Integer.parseInt(hsd[2]);
+			if(nam<=namhsd)
+			{
+				if(thang<=thanghsd)
+				{
+					if(ngay<=ngayhsd)
+					{
+						return 0;
+					}
+					else
+						return 1;
+				}
+				else
+					return 1;
+			}
+			else
+				return 1;
+		}
+		else
+		{
+			if(thuoc.getSoLuong()<10)
+				return 2;
+			return 0;
+		}
+		
+	}
+	public void Updatedulieuthuoc()
+	{
+		//Dùng hàm KiemTraTinhTrang trả về các thuốc hết hạn hoặc số lượng
 	}
 }

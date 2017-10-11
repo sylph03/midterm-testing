@@ -65,6 +65,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 	MaskFormatter formattextsl,formatextcmnd_sdt;
 	ControlGiaoDien control = new ControlGiaoDien() ;
 	DanhSachDuLieu ds = new DanhSachDuLieu();
+	private JCheckBox chkKeDon;
 	private JTextArea txtAMota;
 	private JTextField txtNguoiLap;
 	private JTextField txtMa;
@@ -159,7 +160,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		label.setBounds(111, 11, 258, 34);
 		panelDienThongTin.add(label);
 
-		JCheckBox chkKeDon = new JCheckBox("Có kê đơn");
+		chkKeDon = new JCheckBox("Có kê đơn");
 
 		chkKeDon.setToolTipText("Chọn nếu bán có kê đơn");
 		chkKeDon.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -207,12 +208,8 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThongTinNhanVien.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/user.png")));
 		btnThongTinNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
 					new GiaoDienThongTinNhanVien().setVisible(true);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 			}
 		});
 		btnThongTinNhanVien.setBounds(417, 60, 33, 29);
@@ -278,33 +275,28 @@ public class GiaoDienLapHoaDon extends JFrame {
 				String cmnd;
 				boolean kt=false;
 				cmnd = txtCMND.getText()+"";
-				long ktt = control.kiemTraDulieuNhapSo(cmnd, panelDienThongTin,"CMND không được nhập chữ!!!");
-				if (ktt!=-1) {
-					try {
-						ds.docBangKhachHang();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					for(KhachHang kh : ds.listKhachHang)
-					{
-						if(kh.getCMND().equalsIgnoreCase(cmnd))
-						{
-							String[] date=kh.getNgaySinh().split("-");
-							txtTenKH.setText(kh.getHoTenKH()+"");
-							txtSDT.setText(kh.getSdt()+"");
-							txtAMota.setText(kh.getMoTaKH()+"");
-							cbbThang.setSelectedItem(date[1]);
-							cbbNgay.setSelectedItem(date[2]);
-							cbbNam.setSelectedItem(date[0]);
-							kt= true;
-						}
-					}
-					if (kt==false)
-						JOptionPane.showMessageDialog(panelThongtinKH, "Khách hàng chưa có, vui lòng thêm mới !!");
+				try {
+					ds.docBangKhachHang();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-
-
+				for(KhachHang kh : ds.listKhachHang)
+				{
+					if(kh.getCMND().equalsIgnoreCase(cmnd))
+					{
+						String[] date=kh.getNgaySinh().split("-");
+						txtTenKH.setText(kh.getHoTenKH()+"");
+						txtSDT.setText(kh.getSdt()+"");
+						txtAMota.setText(kh.getMoTaKH()+"");
+						cbbThang.setSelectedItem(date[1]);
+						cbbNgay.setSelectedItem(date[2]);
+						cbbNam.setSelectedItem(date[0]);
+						kt= true;
+					}
+				}
+				if (kt==false)
+					JOptionPane.showMessageDialog(panelThongtinKH, "Khách hàng chưa có, vui lòng thêm mới !!");
 			}
 		});
 		btnKiemTra.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/search.png")));
@@ -685,9 +677,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 		btnXoq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				long kt = control.kiemTraDulieuNhapSo(txtSDT.getText(), panelThongtinKH, "SDT ko đc nhập chữ");
-				if (kt!=-1)
-					luuTTHoaDon();
+				luuTTHoaDon();
 			}	
 		});
 
@@ -798,6 +788,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 				}
 				setVisible(false);
 			}
+			dispose();
 		}
 		else
 			JOptionPane.showMessageDialog(panelDienThongTin, "Danh sách thuốc bán không được rỗng!");

@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 
 import control.ControlGiaoDien;
 import control.KetNoiSQL;
+import giaodien.NhanVien.GiaoDienNhanVien;
+import giaodien.QuanLy.GiaoDienQuanLy;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -43,8 +45,7 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 	private JRadioButton rbtnNam, rbtnNu;
 	GiaoDienDangNhap dn;
 	ControlGiaoDien control = new ControlGiaoDien();
-
-	public GiaoDienThongTinNhanVien() throws SQLException {
+	public GiaoDienThongTinNhanVien()  {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienThongTinNhanVien.class.getResource("/ser/user.png")));
 		setResizable(false);
 		setTitle("Thông Tin");
@@ -75,7 +76,7 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				setVisible(false);
+				dispose();
 			}
 		});
 		panel.add(btnOk);
@@ -239,7 +240,13 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 				txtSDT.setEnabled(true);
 			}
 		});
-		dienDuLieuVaoForm();
+
+		try {
+			dienDuLieuVaoForm();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 	}
 
