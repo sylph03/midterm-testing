@@ -816,6 +816,7 @@ public class GiaoDienNhanVien extends JFrame {
 							tablemodelDoanhThu.addRow(row);
 						}	
 					}
+					txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"");
 				}
 				else if(!comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--")
 						&& !comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
@@ -831,6 +832,7 @@ public class GiaoDienNhanVien extends JFrame {
 							}
 						}
 					}
+					txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"");
 				}
 				else if(!comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
 						&& !comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--")
@@ -850,6 +852,7 @@ public class GiaoDienNhanVien extends JFrame {
 							}
 						}
 					}
+					txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"");
 				}
 				else if(!comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--")
 						&&comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--")
@@ -885,6 +888,7 @@ public class GiaoDienNhanVien extends JFrame {
 							}
 						}
 					}
+					txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"");
 				}
 				else if(comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--") 
 						&& !comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
@@ -923,8 +927,10 @@ public class GiaoDienNhanVien extends JFrame {
 		lblbanquyen.setFont(new Font("Trebuchet MS", Font.BOLD, 13));
 
 		duaDuLieuTuListVaoTable();
+		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"");
 	}
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	void duaDuLieuTuListVaoTable()
 	{
 		try {

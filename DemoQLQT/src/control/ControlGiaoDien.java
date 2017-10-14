@@ -303,12 +303,13 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="insert into dbo.ChiTietHoaDonNhap values(?,?,?,?);";
+			String sql="insert into dbo.ChiTietHoaDonNhap values(?,?,?,?,?);";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ctHDN.getMaHDN());
 			pstmt.setString(2, ctHDN.getMaThuoc());
 			pstmt.setInt(3, ctHDN.getSoLuong());
 			pstmt.setString(4, ctHDN.getHsd());
+			pstmt.setInt(5, ctHDN.getTinhTrang());
 			pstmt.execute();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -433,9 +434,86 @@ public class ControlGiaoDien {
 			JOptionPane.showMessageDialog(cc, tb);
 			return -1;
 		}
-
 	}
-
+	public int KiemTraTinhTrang(ThongTinThuoc thuoc)
+	{
+		int quyDinhSoLuong = 0;
+		if(thuoc.getDonViTinh().equals("Vien"))
+			quyDinhSoLuong = 50;
+		if(thuoc.getDonViTinh().equals("Lo"))
+			quyDinhSoLuong = 5;
+		if(thuoc.getDonViTinh().equals("Hop"))
+			quyDinhSoLuong = 2;
+		if(thuoc.getDonViTinh().equals("Tupe"))
+			quyDinhSoLuong = 10;
+		if(thuoc.getDonViTinh().equals("Goi"))
+			quyDinhSoLuong = 5;
+		Date today=new Date(System.currentTimeMillis());
+		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String s=timeFormat.format(today.getTime());
+		if(thuoc.getSoLuong()>quyDinhSoLuong && !thuoc.getHsd().equals(s))
+		{
+			String[] ngayhientai=s.split("-");
+			String[] hsd=thuoc.getHsd().split("-");
+			int ngay,thang,nam;
+			int ngayhsd,thanghsd,namhsd;
+			ngay=Integer.parseInt(ngayhientai[0]);
+			thang=Integer.parseInt(ngayhientai[1]);
+			nam=Integer.parseInt(ngayhientai[2]);
+			ngayhsd=Integer.parseInt(hsd[0]);
+			thanghsd=Integer.parseInt(hsd[1]);
+			namhsd=Integer.parseInt(hsd[2]);
+			if(nam<=namhsd)
+			{
+				if(thang<=thanghsd)
+				{
+					if(ngay<=ngayhsd)
+					{
+						return 0;
+					}
+					else
+						return 1;
+				}
+				else
+					return 1;
+			}
+			else
+				return 1;
+		}
+		else
+		{
+			if(thuoc.getSoLuong()<quyDinhSoLuong)
+				return 2;
+			return 0;
+		}
+		
+	}
+	public void Updatedulieuthuoc()
+	{
+		//Dùng hàm KiemTraTinhTrang trả về các thuốc hết hạn hoặc số lượng
+	}
+	public void truSoLuongThuocDaBan(String maThuoc,int soLuong)
+	{
+		try {
+			ds.docThuoc();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ThongTinThuoc thuoc = new ThongTinThuoc();
+		thuoc=ds.TimThuocTheoMa(maThuoc);
+		int soLuongConLai = thuoc.getSoLuong()- soLuong;
+		thuoc.setSoLuong(soLuongConLai);
+		try {
+			SuaDuLieuThuocTrongSQL(thuoc);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+	}
+	
+	
 	//-------------------Tim kiem doi tuong trong table ở SQL-----------------
 
 
@@ -476,51 +554,5 @@ public class ControlGiaoDien {
 			// TODO: handle exception
 			e.getStackTrace();
 		}
-	}
-	public int KiemTraTinhTrang(ThongTinThuoc thuoc)
-	{
-		Date today=new Date(System.currentTimeMillis());
-		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String s=timeFormat.format(today.getTime());
-		if(thuoc.getSoLuong()>10 && !thuoc.getHsd().equals(s))
-		{
-			String[] ngayhientai=s.split("-");
-			String[] hsd=thuoc.getHsd().split("-");
-			int ngay,thang,nam;
-			int ngayhsd,thanghsd,namhsd;
-			ngay=Integer.parseInt(ngayhientai[0]);
-			thang=Integer.parseInt(ngayhientai[1]);
-			nam=Integer.parseInt(ngayhientai[2]);
-			ngayhsd=Integer.parseInt(hsd[0]);
-			thanghsd=Integer.parseInt(hsd[1]);
-			namhsd=Integer.parseInt(hsd[2]);
-			if(nam<=namhsd)
-			{
-				if(thang<=thanghsd)
-				{
-					if(ngay<=ngayhsd)
-					{
-						return 0;
-					}
-					else
-						return 1;
-				}
-				else
-					return 1;
-			}
-			else
-				return 1;
-		}
-		else
-		{
-			if(thuoc.getSoLuong()<10)
-				return 2;
-			return 0;
-		}
-		
-	}
-	public void Updatedulieuthuoc()
-	{
-		//Dùng hàm KiemTraTinhTrang trả về các thuốc hết hạn hoặc số lượng
 	}
 }

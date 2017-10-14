@@ -734,14 +734,16 @@ public class GiaoDienLapHoaDon extends JFrame {
 			{
 				String tenThuoc = tablemode.getValueAt(i, 0)+"";
 				String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
+				int soLuong = Integer.parseInt(tablemode.getValueAt(i, 1)+"");
 				CTHoaDonBan ctHDB = new CTHoaDonBan();
 				ctHDB.setMaHD(txtMa.getText()+"");
 				ctHDB.setMaThuoc(maThuoc);
 				ctHDB.setTenThuoc(tenThuoc);
-				ctHDB.setSoLuong(Integer.parseInt(tablemode.getValueAt(i, 1)+""));
+				ctHDB.setSoLuong(soLuong);
 				ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
 				try {
 					control.themCTHoaDonBanVaoSQL(ctHDB);
+					control.truSoLuongThuocDaBan(maThuoc,soLuong);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

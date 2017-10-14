@@ -124,7 +124,7 @@ public class DanhSachDuLieu {
 		return false;
 	}
 	
-	public NhanVien TimNVTheoMa(String ma)
+	public NhanVien timNVTheoMa(String ma)
 	{
 		for (NhanVien nv: listNV)
 			if(nv.getMaNv().equalsIgnoreCase(ma))
@@ -132,6 +132,7 @@ public class DanhSachDuLieu {
 		return null;
 
 	}
+	
 	
 	//----------------------List HD bán----------------
 	public  void docBangHDB() throws SQLException ///Đọc dữ liệu hóa đơn bán từ SQL vào list 
@@ -240,7 +241,8 @@ public class DanhSachDuLieu {
 				String maThuoc = rs.getString(2);
 				int soLuong = rs.getInt(3);
 				String hsd = rs.getString(4);
-				CTHoaDonNhap ctHDN = new CTHoaDonNhap(maHDN, maThuoc, soLuong, hsd);
+				int tinhTrang = rs.getInt(5);
+				CTHoaDonNhap ctHDN = new CTHoaDonNhap(maHDN, maThuoc, soLuong, hsd, tinhTrang);
 				listThuocNhap.add(ctHDN);
 			}
 		} catch (Exception e) {
@@ -250,13 +252,6 @@ public class DanhSachDuLieu {
 		}
 	}
 	//---------------
-	public NhanVien timNVTheoMa(String ma)
-	{
-		for(NhanVien nv : listNV)
-			if(nv.getMaNv().equalsIgnoreCase(ma))
-				return nv;
-		return null;
-	}
 
 	//------------------------List KH---------------------
 	public  void docBangKhachHang() throws SQLException ///Đọc dữ liệu KH từ SQL vào list 

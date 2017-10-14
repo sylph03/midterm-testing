@@ -1398,7 +1398,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		textField_1.setBounds(682, 275, 86, 20);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(textField_1);
 		textField_1.setColumns(10);
-		textField.setText(control.tongDoanhThu(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao)+"");
 
 
 
@@ -1423,6 +1422,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				}
 			}
 		});
+		
 
 
 		/*
@@ -1431,6 +1431,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		duaDuLieuTuListVaoTable();
 		Anpanel();
 		TaiTinhTrangThuoc();
+		textField.setText(control.tongDoanhThu(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao)+"");
 	}
 
 
@@ -1577,6 +1578,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				ctHDN.setMaThuoc(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 0)+"");
 				ctHDN.setSoLuong(Integer.parseInt(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 2)+""));
 				ctHDN.setHsd(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 3)+"");
+				ctHDN.setTinhTrang(1);
 				try {
 					control.themCTHoaDonNhapVaoSQL(ctHDN);
 				} catch (SQLException e1) {
@@ -1606,7 +1608,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				{
 					if(hdb.getMaNVLap().equals(maNV) && hdb.getNgayLap().equals(ngay))
 					{
-						Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(ds.TimNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
+						Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(ds.timNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
 						tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.addRow(row);
 					}
 				}
@@ -1619,7 +1621,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			}
 		}
 	}
-
+	
 	void duaDuLieuTuListVaoTable()
 	{
 		try {
@@ -1653,7 +1655,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 		for(HoaDonBanHang hdb : ds.listHDB)
 		{
-			Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(ds.TimNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
+			Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(ds.timNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
 			tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.addRow(row);
 		}
 	}
@@ -1692,14 +1694,14 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			txtTenNV_DanhSach_DanhSachNV.setText(tableThongTinNV.getValueAt(row, 1)+"");
 			txtNgaySinh_DanhSach_DanhSachNV.setText(tableThongTinNV.getValueAt(row, 2)+"");
 			txtDiaChi_DanhSach_DanhSachNV.setText(tableThongTinNV.getValueAt(row, 4)+"");
-			txtCMND_DanhSach_DanhSachNV.setText(ds.TimNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getCmnd());
+			txtCMND_DanhSach_DanhSachNV.setText(ds.timNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getCmnd());
 			if((tableThongTinNV.getValueAt(row, 3)+"").equalsIgnoreCase("Nam"))
 			{
 				rdbtnNam_DanhSach_DanhSachNV.setSelected(true);
 			}
 			else
 				rdbtnNu_DanhSach_DanhSachNV.setSelected(true);
-			txtSDT_DanhSach_DanhSachNV.setText(ds.TimNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getSdt());
+			txtSDT_DanhSach_DanhSachNV.setText(ds.timNVTheoMa(tableThongTinNV.getValueAt(row, 0)+"").getSdt());
 		}
 	}
 
