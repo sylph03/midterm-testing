@@ -512,12 +512,6 @@ public class ControlGiaoDien {
 		}		
 		
 	}
-	
-	
-	//-------------------Tim kiem doi tuong trong table ở SQL-----------------
-
-
-
 
 	//-------------------Lưu chủ đề-----------------
 	public String TaiChuDe()
