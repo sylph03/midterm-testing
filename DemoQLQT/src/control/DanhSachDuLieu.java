@@ -69,7 +69,7 @@ public class DanhSachDuLieu {
 		return null;
 
 	}
-	
+
 	public ThongTinThuoc TimThuocTheoTen(String tenThuoc)
 	{
 		for (ThongTinThuoc thuoc : listThuoc)
@@ -285,6 +285,12 @@ public class DanhSachDuLieu {
 		}
 	}
 
+	public KhachHang timKHTheoCMND (String CMND) {
+		for (KhachHang kh : listKhachHang)
+			if (kh.getCMND().equals(CMND))
+				return kh;
+		return null;
+	}
 	//-----------------------Danh Sach thuốc timg kiếm thông minh----------------------
 	//29-09-2017
 	public String Timtenthuoc(String tenthuoc) throws SQLException

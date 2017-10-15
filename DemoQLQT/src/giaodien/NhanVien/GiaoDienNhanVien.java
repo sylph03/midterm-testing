@@ -16,6 +16,7 @@ import control.ControlGiaoDien;
 import control.DanhSachDuLieu;
 import entity.CTHoaDonBan;
 import entity.HoaDonBanHang;
+import entity.KhachHang;
 import entity.ThongTinThuoc;
 import giaodien.GiaoDienDangNhap;
 import giaodien.GiaoDienThongTinNhanVien;
@@ -58,10 +59,11 @@ import java.awt.SystemColor;
 import javax.swing.UIManager;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToggleButton;
+import java.awt.TextArea;
 
 public class GiaoDienNhanVien extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane, panelTTKH;
 	private JScrollPane scrollPaneDanhSachThuoc,scrollPaneDanhSachDon,scrollPaneCTHD,scrollPaneDoanhThu;
 	private DefaultTableModel tablemodelThuoc,tablemodelDoanhThu,tablemodelCTHD,tablemodelDanhSachDon;
 	JTable tableDanhSachThuoc,tableDanhSachDon,tableCTHD,tableDoanhThu ;
@@ -80,7 +82,12 @@ public class GiaoDienNhanVien extends JFrame {
 	public JToggleButton btnNhanVien;
 	GiaoDienThongTinNhanVien thongtinnv = new GiaoDienThongTinNhanVien();
 	GiaoDienLapHoaDon laphoadon =new GiaoDienLapHoaDon();
-
+	private JTextField txtCMND_CTHD;
+	private JTextField txtTen_CTHD;
+	private JTextField txtSDT_CTHD;
+	private JTextField txtNgaySinh_CTHD;
+	private TextArea textAreaMoTa;
+	private JLabel lblCMND,lblSDT,lblNgaySinh,lblTen;
 
 	public GiaoDienNhanVien() {
 		setResizable(false);
@@ -409,7 +416,7 @@ public class GiaoDienNhanVien extends JFrame {
 		btnThoat.setMaximumSize(new Dimension(100, 100));
 		//-----------------------------------------header table---------------------
 
-		String[] headerDanhSachDon="Mã hóa đơn;Người lập;Ngày lập;Tổng tiền".split(";");
+		String[] headerDanhSachDon="Mã hóa đơn;Người lập;Ngày lập;Khách hàng;Tổng tiền".split(";");
 		tablemodelDanhSachDon = new DefaultTableModel(headerDanhSachDon,0);
 
 		String[] headerCTHD="Tên thuốc;Số lượng;Giá bán".split(";");
@@ -426,14 +433,16 @@ public class GiaoDienNhanVien extends JFrame {
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(0, 115, 794, 430);
 		contentPane.add(layeredPane);
-
-
-		panelDSThuoc = new JPanel();
-		panelDSThuoc.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panelDSThuoc.setBounds(10, 11, 774, 408);
-		layeredPane.add(panelDSThuoc);
-		panelDSThuoc.add(scrollPaneDanhSachThuoc = new JScrollPane(tableDanhSachThuoc= new JTable(tablemodelThuoc)));
-		scrollPaneDanhSachThuoc.setPreferredSize(new Dimension(750, 380));
+		
+		
+		
+		
+				panelDSThuoc = new JPanel();
+				panelDSThuoc.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+				panelDSThuoc.setBounds(10, 11, 774, 408);
+				layeredPane.add(panelDSThuoc);
+				panelDSThuoc.add(scrollPaneDanhSachThuoc = new JScrollPane(tableDanhSachThuoc= new JTable(tablemodelThuoc)));
+				scrollPaneDanhSachThuoc.setPreferredSize(new Dimension(750, 380));
 
 
 
@@ -445,37 +454,37 @@ public class GiaoDienNhanVien extends JFrame {
 		layeredPane.setLayer(panelCTHD, 0);
 		panelCTHD.setLayout(null);
 
-		JLabel lblMa = new JLabel("Mã hóa đơn:");
-		lblMa.setBounds(31, 34, 77, 14);
+		JLabel lblMa = new JLabel("Mã:");
+		lblMa.setBounds(31, 34, 36, 14);
 		lblMa.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panelCTHD.add(lblMa);
 
 		txtMaHD = new JTextField();
-		txtMaHD.setBounds(107, 30, 86, 20);
+		txtMaHD.setBounds(59, 31, 67, 20);
 		txtMaHD.setEditable(false);
 		txtMaHD.setEnabled(false);
 		panelCTHD.add(txtMaHD);
 		txtMaHD.setColumns(10);
 
-		JLabel lblNgay = new JLabel("Ngày lập:");
-		lblNgay.setBounds(206, 33, 62, 14);
+		JLabel lblNgay = new JLabel("Ngày:");
+		lblNgay.setBounds(136, 34, 52, 14);
 		lblNgay.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panelCTHD.add(lblNgay);
 
 		txtNgayLap = new JTextField();
-		txtNgayLap.setBounds(274, 28, 108, 20);
+		txtNgayLap.setBounds(178, 31, 108, 20);
 		txtNgayLap.setEnabled(false);
 		txtNgayLap.setEditable(false);
 		panelCTHD.add(txtNgayLap);
 		txtNgayLap.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Người lập:");
-		lblNewLabel_3.setBounds(399, 32, 67, 14);
+		lblNewLabel_3.setBounds(307, 34, 67, 14);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panelCTHD.add(lblNewLabel_3);
 
 		txtNguoiLap_timkiem = new JTextField();
-		txtNguoiLap_timkiem.setBounds(463, 28, 86, 20);
+		txtNguoiLap_timkiem.setBounds(373, 31, 86, 20);
 		txtNguoiLap_timkiem.setText(IDNhanVien);
 		txtNguoiLap_timkiem.setEditable(false);
 		txtNguoiLap_timkiem.setEnabled(false);
@@ -488,7 +497,7 @@ public class GiaoDienNhanVien extends JFrame {
 		panelCTHD.add(lblNewLabel);
 
 		txtTongTien_timkiem = new JTextField();
-		txtTongTien_timkiem.setBounds(346, 59, 203, 20);
+		txtTongTien_timkiem.setBounds(346, 59, 113, 20);
 		txtTongTien_timkiem.setEditable(false);
 		txtTongTien_timkiem.setEnabled(false);
 		panelCTHD.add(txtTongTien_timkiem);
@@ -500,26 +509,10 @@ public class GiaoDienNhanVien extends JFrame {
 		panelCTHD.add(lblNewLabel_2);
 		panelCTHD.add(scrollPaneCTHD = new JScrollPane(tableCTHD = new JTable(tablemodelCTHD)));
 
-		JButton btnBack = new JButton("");
-		btnBack.setContentAreaFilled(false);
-		btnBack.setBorder(null);
-		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelDSThuoc.setVisible(false);
-				panelDoanhThu.setVisible(false);
-				panelCTHD.setVisible(false);
-				panelDSHD.setVisible(true);
-			}
-		});
-		btnBack.setToolTipText("Nhấn vào để quay lại DS hóa đơn");
-		btnBack.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/beaver.gif")));
-		btnBack.setBounds(559, 121, 192, 124);
-		panelCTHD.add(btnBack);
-
 		JButton btnBack2 = new JButton("Quay lại");
 		btnBack2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//------2 dòng này để xóa hết bảng cũ và hiện cái mới lên, ko có thông tin chồng lên nhau
+				//------2 dòng này để xóa hết bảng cũ và hiện cái mới lên, ko có cái này thông tin chồng lên nhau
 				tablemodelCTHD.getDataVector().removeAllElements();
 				tablemodelCTHD.fireTableDataChanged();
 				//-----------------
@@ -533,14 +526,79 @@ public class GiaoDienNhanVien extends JFrame {
 		btnBack2.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnBack2.setVerticalAlignment(SwingConstants.TOP);
 		btnBack2.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/back4848.png")));
-		btnBack2.setBounds(622, 35, 77, 75);
+		btnBack2.setBounds(469, 11, 77, 75);
 		panelCTHD.add(btnBack2);
 
 		JLabel lblNewLabel_5 = new JLabel("");
 		lblNewLabel_5.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/banner3.png")));
 		lblNewLabel_5.setBounds(9, 293, 757, 110);
 		panelCTHD.add(lblNewLabel_5);
-		scrollPaneCTHD.setBounds(25, 84, 524, 198);
+
+		panelTTKH = new JPanel();
+		panelTTKH.setEnabled(false);
+		panelTTKH.setBorder(new TitledBorder(null, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		panelTTKH.setBounds(552, 11, 214, 271);
+		panelCTHD.add(panelTTKH);
+		panelTTKH.setLayout(null);
+
+		lblCMND = new JLabel("CMND:");
+		lblCMND.setEnabled(false);
+		lblCMND.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCMND.setBounds(10, 28, 46, 14);
+		panelTTKH.add(lblCMND);
+
+		txtCMND_CTHD = new JTextField();
+		txtCMND_CTHD.setEditable(false);
+		txtCMND_CTHD.setEnabled(false);
+		txtCMND_CTHD.setBounds(74, 25, 130, 20);
+		panelTTKH.add(txtCMND_CTHD);
+		txtCMND_CTHD.setColumns(10);
+
+		lblTen = new JLabel("Tên: ");
+		lblTen.setEnabled(false);
+		lblTen.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTen.setBounds(10, 59, 46, 14);
+		panelTTKH.add(lblTen);
+
+		txtTen_CTHD = new JTextField();
+		txtTen_CTHD.setEnabled(false);
+		txtTen_CTHD.setEditable(false);
+		txtTen_CTHD.setBounds(74, 56, 130, 20);
+		panelTTKH.add(txtTen_CTHD);
+		txtTen_CTHD.setColumns(10);
+
+		lblSDT = new JLabel("SDT:");
+		lblSDT.setEnabled(false);
+		lblSDT.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblSDT.setBounds(10, 90, 46, 14);
+		panelTTKH.add(lblSDT);
+
+		txtSDT_CTHD = new JTextField();
+		txtSDT_CTHD.setEditable(false);
+		txtSDT_CTHD.setEnabled(false);
+		txtSDT_CTHD.setBounds(74, 87, 130, 20);
+		panelTTKH.add(txtSDT_CTHD);
+		txtSDT_CTHD.setColumns(10);
+
+		lblNgaySinh = new JLabel("Ngày sinh:");
+		lblNgaySinh.setEnabled(false);
+		lblNgaySinh.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNgaySinh.setBounds(10, 121, 57, 14);
+		panelTTKH.add(lblNgaySinh);
+
+		txtNgaySinh_CTHD = new JTextField();
+		txtNgaySinh_CTHD.setEditable(false);
+		txtNgaySinh_CTHD.setEnabled(false);
+		txtNgaySinh_CTHD.setBounds(74, 118, 130, 20);
+		panelTTKH.add(txtNgaySinh_CTHD);
+		txtNgaySinh_CTHD.setColumns(10);
+
+		textAreaMoTa = new TextArea();
+		textAreaMoTa.setEditable(false);
+		textAreaMoTa.setEnabled(false);
+		textAreaMoTa.setBounds(10, 144, 194, 117);
+		panelTTKH.add(textAreaMoTa);
+		scrollPaneCTHD.setBounds(25, 90, 524, 192);
 
 		panelDSHD = new JPanel();
 		panelDSHD.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Danh s\u00E1ch h\u00F3a \u0111\u01A1n: ", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
@@ -573,38 +631,7 @@ public class GiaoDienNhanVien extends JFrame {
 		JButton btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row = tableDanhSachDon.getSelectedRow();
-				if (row!=-1) {
-					panelDSThuoc.setVisible(false);
-					panelDoanhThu.setVisible(false);
-					panelDSHD.setVisible(false);
-					panelCTHD.setVisible(true);
-
-					String maHD =(String) tableDanhSachDon.getValueAt(row, 0);
-					String ngay =(String) tableDanhSachDon.getValueAt(row, 2);
-					String tongTien = tableDanhSachDon.getValueAt(row, 3)+"";
-					try {
-						ds.docBangCTHoaDonBan();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					for (CTHoaDonBan cthd : ds.listThuocBan)
-					{
-						if (cthd.getMaHD().equalsIgnoreCase(maHD)) {
-							Object[] roww = {cthd.getTenThuoc(),cthd.getSoLuong(),cthd.getDonGia()};
-							tablemodelCTHD.addRow(roww);
-						}
-					}
-					txtMaHD.setText(maHD);
-					txtNgayLap.setText(ngay);
-					txtTongTien_timkiem.setText(tongTien);
-
-				}
-				else {
-					JOptionPane.showMessageDialog(panelDSHD, "Vui lòng chọn hóa đơn cần xem !!!");
-				}
-
+				xemChiTietHD();
 			}
 		});
 		btnXemChiTiet.setBounds(156, 372, 125, 25);
@@ -635,7 +662,7 @@ public class GiaoDienNhanVien extends JFrame {
 				{
 					for (HoaDonBanHang hd : ds.listHDB)
 					{
-						Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+						Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
 						tablemodelDanhSachDon.addRow(row);	
 					}
 				}
@@ -647,7 +674,7 @@ public class GiaoDienNhanVien extends JFrame {
 					{
 						if(hd.getNgayLap().equals(date))
 						{
-							Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+							Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
 							tablemodelDanhSachDon.addRow(row);	
 						}
 					}
@@ -663,7 +690,7 @@ public class GiaoDienNhanVien extends JFrame {
 						{
 							if(hd.getNgayLap().equals(date))
 							{
-								Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+								Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
 								tablemodelDanhSachDon.addRow(row);	
 							}
 						}
@@ -695,7 +722,7 @@ public class GiaoDienNhanVien extends JFrame {
 							{
 								if(hd.getNgayLap().equals(date))
 								{
-									Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+									Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
 									tablemodelDanhSachDon.addRow(row);	
 								}
 							}
@@ -852,7 +879,7 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 		for (HoaDonBanHang hd : ds.listHDB)
 		{
-			Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getTongTien()};
+			Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
 			tablemodelDanhSachDon.addRow(row);
 		}
 		for (HoaDonBanHang hd : ds.listHDB) {
@@ -883,6 +910,66 @@ public class GiaoDienNhanVien extends JFrame {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+
+	public void xemChiTietHD() {
+		int row = tableDanhSachDon.getSelectedRow();
+		if (row!=-1) {
+			panelDSThuoc.setVisible(false);
+			panelDoanhThu.setVisible(false);
+			panelDSHD.setVisible(false);
+			panelCTHD.setVisible(true);
+
+			String maHD =(String) tableDanhSachDon.getValueAt(row, 0);
+			String ngay =(String) tableDanhSachDon.getValueAt(row, 2);
+			String tongTien = tableDanhSachDon.getValueAt(row, 4)+"";
+			String CMND = tableDanhSachDon.getValueAt(row, 3)+"";
+			try {
+				ds.docBangCTHoaDonBan();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			for (CTHoaDonBan cthd : ds.listThuocBan)
+			{
+				if (cthd.getMaHD().equalsIgnoreCase(maHD)) {
+					Object[] roww = {cthd.getTenThuoc(),cthd.getSoLuong(),cthd.getDonGia()};
+					tablemodelCTHD.addRow(roww);
+				}
+			}
+			txtMaHD.setText(maHD);
+			txtNgayLap.setText(ngay);
+			txtTongTien_timkiem.setText(tongTien);
+			if (!CMND.equals("")) {
+				panelTTKH.setEnabled(true);
+				txtCMND_CTHD.setEnabled(true);
+				txtTen_CTHD.setEnabled(true);
+				txtSDT_CTHD.setEnabled(true);
+				txtNgaySinh_CTHD.setEnabled(true);
+				textAreaMoTa.setEnabled(true);
+				lblCMND.setEnabled(true);
+				lblSDT.setEnabled(true);
+				lblTen.setEnabled(true);
+				lblNgaySinh.setEnabled(true);
+				try {
+					ds.docBangKhachHang();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				KhachHang kh = new KhachHang();
+				kh = ds.timKHTheoCMND(CMND);
+				txtCMND_CTHD.setText(CMND);
+				txtTen_CTHD.setText(kh.getHoTenKH());
+				txtNgaySinh_CTHD.setText(kh.getNgaySinh());
+				txtSDT_CTHD.setText(kh.getSdt());
+				textAreaMoTa.setText(kh.getMoTaKH());
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(panelDSHD, "Vui lòng chọn hóa đơn cần xem !!!");
 		}
 	}
 	public void timKiem_DoanhThu() {
@@ -1001,3 +1088,4 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 	}
 }
+

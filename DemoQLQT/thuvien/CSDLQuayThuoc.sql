@@ -1,8 +1,8 @@
 create database QuanLyQuayThuoc
 on
-	primary (name = QuanLyQuayThuocdata, filename = 'D:\Database(do_an)\QuanLyQuayThuoc.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
+	primary (name = QuanLyQuayThuocdata, filename = 'E:\CSDL\QuanLyQuayThuoc.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
 log on
-	(name = QuanLyQuayThuoclog, filename = 'D:\Database(do_an)\QuanLyQuayThuoc.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
+	(name = QuanLyQuayThuoclog, filename = 'E:\CSDL\QuanLyQuayThuoc.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
 
 use QuanLyQuayThuoc
 
@@ -105,7 +105,7 @@ insert HoaDon values ('HD6','NV002','20/9/2017','15090901',20000)
 insert HoaDon values ('HD7','NV001','21/9/2017','15055421',20000)
 insert HoaDon values ('HD8','NV002','22/9/2017','15090902',20000)
 
-delete HoaDon
+
 
 insert ChiTietHoaDon values('HD1','A001','COTRIM STADA FORTE',10,2000)
 insert ChiTietHoaDon values('HD1','A002','COTTUF L100ML',20,3000)
@@ -159,4 +159,7 @@ insert ChiTietHoaDonNhap values('N002','A005',400,'26/10/2018')
 insert ChiTietHoaDonNhap values('N002','A006',500,'26/10/2018')
 insert ChiTietHoaDonNhap values('N002','A007',600,'26/10/2018')
 insert ChiTietHoaDonNhap values('N002','A008',700,'26/10/2018')
+
+select * from ChiTietHoaDonNhap
+delete ChiTietHoaDonNhap
 
