@@ -146,6 +146,7 @@ public class GiaoDienDangNhap extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				txtTK.setText(txtTK.getText().toUpperCase());
 				String Id=txtTK.getText();
 				char[] pass =txtMK.getPassword();
 				String mk=new String(pass);

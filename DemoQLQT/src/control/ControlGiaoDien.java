@@ -390,12 +390,12 @@ public class ControlGiaoDien {
 		}
 		return tong;
 	}
-	public double tongDoanhThu(DefaultTableModel tbm)
+	public double tongDoanhThu(DefaultTableModel tbm, int vitri)
 	{
 		double tong = 0;
 		for(int i=tbm.getRowCount()-1;i>=0;i--)
 		{
-			double tong2=Double.parseDouble(tbm.getValueAt(i, 3)+"");
+			double tong2=Double.parseDouble(tbm.getValueAt(i, vitri)+"");
 			tong+=tong2;
 		}
 		return tong;
@@ -488,9 +488,24 @@ public class ControlGiaoDien {
 		}
 		
 	}
-	public void Updatedulieuthuoc()
+	public void capNhatThemThuocHetHan(ThongTinThuoc thuocHetHan,JPanel panel) throws SQLException // Cập nhật số lượng và hsd cho các thuốc hết hạn (đưa thuốc từ kho lên)
 	{
-		//Dùng hàm KiemTraTinhTrang trả về các thuốc hết hạn hoặc số lượng
+		boolean kt = false;
+		ds.docBangCTHoaDonNhap();
+		if(KiemTraTinhTrang(thuocHetHan)>0)
+		{
+			for(CTHoaDonNhap ctHDN : ds.listThuocNhap)
+				if(thuocHetHan.getMaThuoc().equals(ctHDN.getMaThuoc()) && ctHDN.getTinhTrang() == 1)
+				{
+					thuocHetHan.setSoLuong(ctHDN.getSoLuong());
+					thuocHetHan.setHsd(ctHDN.getHsd());
+					ctHDN.setTinhTrang(2);
+					kt = true;
+				}
+			SuaDuLieuThuocTrongSQL(thuocHetHan);
+			if(kt = false)
+				JOptionPane.showMessageDialog(panel, "Chưa có nhập thuốc này về kho!");
+		}
 	}
 	public void truSoLuongThuocDaBan(String maThuoc,int soLuong)
 	{

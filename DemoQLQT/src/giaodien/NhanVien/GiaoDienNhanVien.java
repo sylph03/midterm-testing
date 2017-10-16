@@ -848,7 +848,7 @@ public class GiaoDienNhanVien extends JFrame {
 		lblNewLabel_6.setBounds(463, 39, 301, 315);
 		panelDoanhThu.add(lblNewLabel_6);
 		scrollPaneDoanhThu.setBounds(31, 97, 422, 288);
-		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"   VNĐ");
+		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"   VNĐ");
 
 
 
@@ -860,7 +860,7 @@ public class GiaoDienNhanVien extends JFrame {
 
 
 		duaDuLieuTuListVaoTable();
-		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"");
+		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"");
 	}
 
 	void duaDuLieuTuListVaoTable()
@@ -993,7 +993,7 @@ public class GiaoDienNhanVien extends JFrame {
 					tablemodelDoanhThu.addRow(row);
 				}	
 			}
-			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"   VNĐ");
+			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"   VNĐ");
 
 		}
 		else if(!comboBoxNgay_DoanhThu.getSelectedItem().toString().equals("All--")
@@ -1010,7 +1010,7 @@ public class GiaoDienNhanVien extends JFrame {
 					}
 				}
 			}
-			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"   VNĐ");
+			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"   VNĐ");
 		}
 		else if(!comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
 				&& !comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--")
@@ -1030,7 +1030,7 @@ public class GiaoDienNhanVien extends JFrame {
 					}
 				}
 			}
-			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"   VNĐ");
+			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"   VNĐ");
 		}
 		else if(!comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--")
 				&&comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--")
@@ -1066,7 +1066,7 @@ public class GiaoDienNhanVien extends JFrame {
 					}
 				}
 			}
-			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu)+"   VNĐ");
+			txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"   VNĐ");
 		}
 		else if(comboBoxNam_DoanhThu.getSelectedItem().toString().equals("All--") 
 				&& !comboBoxThang_DoanhThu.getSelectedItem().toString().equals("All--") 
