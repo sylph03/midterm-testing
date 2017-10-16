@@ -518,7 +518,8 @@ public class ControlGiaoDien {
 		ThongTinThuoc thuoc = new ThongTinThuoc();
 		thuoc=ds.TimThuocTheoMa(maThuoc);
 		int soLuongConLai = thuoc.getSoLuong()- soLuong;
-		thuoc.setSoLuong(soLuongConLai);
+		if(soLuongConLai>=0)
+			thuoc.setSoLuong(soLuongConLai);
 		try {
 			SuaDuLieuThuocTrongSQL(thuoc);
 		} catch (SQLException e) {

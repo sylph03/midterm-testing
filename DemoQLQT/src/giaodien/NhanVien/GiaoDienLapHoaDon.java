@@ -482,8 +482,13 @@ public class GiaoDienLapHoaDon extends JFrame {
 					{
 						if(ten.equals(thuoc.getTenThuoc()+""))
 						{
-							Object[] row = {ten,soluong,thuoc.getDonViTinh(),thuoc.getGiaBan(),soluong*thuoc.getGiaBan()};
-							tablemode.addRow(row);
+							if(soluong <= thuoc.getSoLuong())
+							{
+								Object[] row = {ten,soluong,thuoc.getDonViTinh(),thuoc.getGiaBan(),soluong*thuoc.getGiaBan()};
+								tablemode.addRow(row);
+							}
+							else 
+								JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
 						}
 					}
 					txtTongTien.setText(tongTien(tablemode)+"");
@@ -590,8 +595,13 @@ public class GiaoDienLapHoaDon extends JFrame {
 						if (sl<=0)
 							JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
 						else {
-							themThuocTuBangVaoHoaDon();
-							txtTongTien.setText(tongTien(tablemode)+"");
+							if(sl<=Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+""))
+							{
+								themThuocTuBangVaoHoaDon();
+								txtTongTien.setText(tongTien(tablemode)+"");
+							}
+							else
+								JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
 						}
 					}
 				}
