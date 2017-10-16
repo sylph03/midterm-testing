@@ -108,19 +108,19 @@ public class ControlGiaoDien {
 	}
 	//------------------------DL Nhân Viên--------------------
 
-	public boolean suaDuLieuNVTrongSQL(NhanVien nvmoi) throws SQLException
+	public boolean suaDuLieuNVTrongSQL(String maNV,String ngaySinh,String sdt,String diaChi,String CMND,String gioiTinh) throws SQLException
 	{
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="update dbo.NhanVien set NgaySinh= ? ,SDT= ? ,DiaChi= ? ,Pass= ? ,CMND= ? where MaNV = ?";
+			String sql="update dbo.NhanVien set NgaySinh= ? ,SDT= ? ,DiaChi= ? ,CMND= ?,GioiTinh=? where MaNV = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(6,nvmoi.getMaNv());
-			pstmt.setString(1,nvmoi.getNgaySinh());
-			pstmt.setString(2,nvmoi.getSdt());
-			pstmt.setString(3,nvmoi.getDiaChi());
-			pstmt.setString(4,nvmoi.getPass());
-			pstmt.setString(5,nvmoi.getCmnd());
+			pstmt.setString(6,maNV);
+			pstmt.setString(1,ngaySinh);
+			pstmt.setString(2,sdt);
+			pstmt.setString(3,diaChi);
+			pstmt.setString(4,CMND);
+			pstmt.setString(5,gioiTinh);
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) 
@@ -303,12 +303,13 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="insert into dbo.ChiTietHoaDonNhap values(?,?,?,?);";
+			String sql="insert into dbo.ChiTietHoaDonNhap values(?,?,?,?,?);";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ctHDN.getMaHDN());
 			pstmt.setString(2, ctHDN.getMaThuoc());
 			pstmt.setInt(3, ctHDN.getSoLuong());
 			pstmt.setString(4, ctHDN.getHsd());
+			pstmt.setInt(5, ctHDN.getTinhTrang());
 			pstmt.execute();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -389,12 +390,12 @@ public class ControlGiaoDien {
 		}
 		return tong;
 	}
-	public double tongDoanhThu(DefaultTableModel tbm)
+	public double tongDoanhThu(DefaultTableModel tbm, int vitri)
 	{
 		double tong = 0;
 		for(int i=tbm.getRowCount()-1;i>=0;i--)
 		{
-			double tong2=Double.parseDouble(tbm.getValueAt(i, 3)+"");
+			double tong2=Double.parseDouble(tbm.getValueAt(i, vitri)+"");
 			tong+=tong2;
 		}
 		return tong;
@@ -433,13 +434,100 @@ public class ControlGiaoDien {
 			JOptionPane.showMessageDialog(cc, tb);
 			return -1;
 		}
-
 	}
-
-	//-------------------Tim kiem doi tuong trong table ở SQL-----------------
-
-
-
+	public int KiemTraTinhTrang(ThongTinThuoc thuoc)
+	{
+		int quyDinhSoLuong = 0;
+		if(thuoc.getDonViTinh().equals("Vien"))
+			quyDinhSoLuong = 50;
+		if(thuoc.getDonViTinh().equals("Lo"))
+			quyDinhSoLuong = 5;
+		if(thuoc.getDonViTinh().equals("Hop"))
+			quyDinhSoLuong = 2;
+		if(thuoc.getDonViTinh().equals("Tupe"))
+			quyDinhSoLuong = 10;
+		if(thuoc.getDonViTinh().equals("Goi"))
+			quyDinhSoLuong = 5;
+		Date today=new Date(System.currentTimeMillis());
+		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String s=timeFormat.format(today.getTime());
+		if(thuoc.getSoLuong()>quyDinhSoLuong && !thuoc.getHsd().equals(s))
+		{
+			String[] ngayhientai=s.split("-");
+			String[] hsd=thuoc.getHsd().split("-");
+			int ngay,thang,nam;
+			int ngayhsd,thanghsd,namhsd;
+			ngay=Integer.parseInt(ngayhientai[0]);
+			thang=Integer.parseInt(ngayhientai[1]);
+			nam=Integer.parseInt(ngayhientai[2]);
+			ngayhsd=Integer.parseInt(hsd[0]);
+			thanghsd=Integer.parseInt(hsd[1]);
+			namhsd=Integer.parseInt(hsd[2]);
+			if(nam<=namhsd)
+			{
+				if(thang<=thanghsd)
+				{
+					if(ngay<=ngayhsd)
+					{
+						return 0;
+					}
+					else
+						return 1;
+				}
+				else
+					return 1;
+			}
+			else
+				return 1;
+		}
+		else
+		{
+			if(thuoc.getSoLuong()<quyDinhSoLuong)
+				return 2;
+			return 0;
+		}
+		
+	}
+	/*public void capNhatThemThuocHetHan(ThongTinThuoc thuocHetHan,JPanel panel) throws SQLException // Cập nhật số lượng và hsd cho các thuốc hết hạn (đưa thuốc từ kho lên)
+	{
+		boolean kt = false;
+		ds.docBangCTHoaDonNhap();
+		if(KiemTraTinhTrang(thuocHetHan)>0)
+		{
+			for(CTHoaDonNhap ctHDN : ds.listThuocNhap)
+				if(thuocHetHan.getMaThuoc().equals(ctHDN.getMaThuoc()) && ctHDN.getTinhTrang() == 1)
+				{
+					thuocHetHan.setSoLuong(ctHDN.getSoLuong());
+					thuocHetHan.setHsd(ctHDN.getHsd());
+					ctHDN.setTinhTrang(2);
+					kt = true;
+				}
+			SuaDuLieuThuocTrongSQL(thuocHetHan);
+			if(kt = false)
+				JOptionPane.showMessageDialog(panel, "Chưa có nhập thuốc này về kho!");
+		}
+	}*/
+	public void truSoLuongThuocDaBan(String maThuoc,int soLuong)
+	{
+		try {
+			ds.docThuoc();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ThongTinThuoc thuoc = new ThongTinThuoc();
+		thuoc=ds.TimThuocTheoMa(maThuoc);
+		int soLuongConLai = thuoc.getSoLuong()- soLuong;
+		if(soLuongConLai>=0)
+			thuoc.setSoLuong(soLuongConLai);
+		try {
+			SuaDuLieuThuocTrongSQL(thuoc);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		
+	}
 
 	//-------------------Lưu chủ đề-----------------
 	public String TaiChuDe()
@@ -476,51 +564,5 @@ public class ControlGiaoDien {
 			// TODO: handle exception
 			e.getStackTrace();
 		}
-	}
-	public int KiemTraTinhTrang(ThongTinThuoc thuoc)
-	{
-		Date today=new Date(System.currentTimeMillis());
-		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String s=timeFormat.format(today.getTime());
-		if(thuoc.getSoLuong()>10 && !thuoc.getHsd().equals(s))
-		{
-			String[] ngayhientai=s.split("-");
-			String[] hsd=thuoc.getHsd().split("-");
-			int ngay,thang,nam;
-			int ngayhsd,thanghsd,namhsd;
-			ngay=Integer.parseInt(ngayhientai[0]);
-			thang=Integer.parseInt(ngayhientai[1]);
-			nam=Integer.parseInt(ngayhientai[2]);
-			ngayhsd=Integer.parseInt(hsd[0]);
-			thanghsd=Integer.parseInt(hsd[1]);
-			namhsd=Integer.parseInt(hsd[2]);
-			if(nam<=namhsd)
-			{
-				if(thang<=thanghsd)
-				{
-					if(ngay<=ngayhsd)
-					{
-						return 0;
-					}
-					else
-						return 1;
-				}
-				else
-					return 1;
-			}
-			else
-				return 1;
-		}
-		else
-		{
-			if(thuoc.getSoLuong()<10)
-				return 2;
-			return 0;
-		}
-		
-	}
-	public void Updatedulieuthuoc()
-	{
-		//Dùng hàm KiemTraTinhTrang trả về các thuốc hết hạn hoặc số lượng
 	}
 }

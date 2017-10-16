@@ -1,8 +1,8 @@
 create database QuanLyQuayThuoc
 on
-	primary (name = QuanLyQuayThuocdata, filename = 'E:\CSDL\QuanLyQuayThuoc.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
+	primary (name = QuanLyQuayThuocdata, filename = 'D:\Database(do_an)\CSDLQuanLyQuayThuoc.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
 log on
-	(name = QuanLyQuayThuoclog, filename = 'E:\CSDL\QuanLyQuayThuoc.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
+	(name = QuanLyQuayThuoclog, filename = 'D:\Database(do_an)\QuanLyQuayThuoc.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
 
 use QuanLyQuayThuoc
 
@@ -64,6 +64,7 @@ create table ChiTietHoaDonNhap
 MaThuoc varchar(10) foreign key references DSThuoc(MaThuoc),
 SoLuong int not null,
 HSD date,
+TinhTrang int
 )
 
 
@@ -75,21 +76,21 @@ insert NhanVien values('NV002',N'Nguyễn Văn Mạnh Cường',N'Nam','21/09/19
 
 select * from DSThuoc
 
-insert DSThuoc values ('A001','COTRIM STADA FORTE','Khang Sinh',500,'Vien','alibaba',900,1500,'20/10/2018')
-insert DSThuoc values ('A002','COTTUF L100ML','Ho Hap',70,'Lo','alibaba',13000,20000,'20/10/2018')
-insert DSThuoc values ('A003','COVERSYL 5ML L30V','Tim mach',50,'Lo','alibaba',22000,25000,'20/10/2018')
-insert DSThuoc values ('A004','CURAM 625MG','Khang Sinh',1000,'Vien','alibaba',500,900,'20/10/2020')
-insert DSThuoc values ('A005','CURIOSIN T15G','Dung Ngoai',20,'Hop','alibaba',30000,35000,'20/12/2018')
-insert DSThuoc values ('A006','DAI DAM DUC THINH','Thuc Pham Chuc Nang',70,'Lo','alibaba',17000,22000,'20/10/2018')
-insert DSThuoc values ('A007','Dactarin T10G','Dung Ngoai',200,'Tupe','alibaba',5000,7000,'20/10/2018')
-insert DSThuoc values ('A008','Davic H10G x 10G','Vitamin',100,'Goi','alibaba',15000,20000,'20/10/2018')
-insert DSThuoc values ('A009','Decogen H25V x 4V','Ha Sot Giam Dau',500,'Vien','alibaba',300,500,'20/10/2018')
-insert DSThuoc values ('A010','Doctor Cool H3B','Ha Sot Giam Dau',70,'Lo','alibaba',10000,15000,'20/10/2018')
-insert DSThuoc values ('A011','Dogalic L100V','Thuc Pham Chuc Nang',70,'Lo','alibaba',10000,15000,'20/10/2018')
-insert DSThuoc values ('A012','Doctor Cool H3B','Ha Sot Giam Dau',70,'Lo','alibaba',10000,15000,'20/10/2018')
-insert DSThuoc values ('A013','Doctor Cool H5B','Ha Sot Giam Dau',70,'Lo','alibaba',10000,15000,'20/10/2018')
-insert DSThuoc values ('A014','Doctor Cool H9B','Ha Sot Giam Dau',70,'Lo','alibaba',10000,15000,'20/10/2018')
-insert DSThuoc values ('A015','Doctor Cool H17B','Ha Sot Giam Dau',70,'Lo','alibaba',10000,15000,'20/10/2018')
+insert DSThuoc values ('A001','COTRIM STADA FORTE','Khang Sinh',500,'Vien','cCc',900,1500,'20/10/2018')
+insert DSThuoc values ('A002','COTTUF L100ML','Ho Hap',70,'Lo','cCc',13000,20000,'20/10/2018')
+insert DSThuoc values ('A003','COVERSYL 5ML L30V','Tim mach',50,'Lo','cCc',22000,25000,'20/10/2018')
+insert DSThuoc values ('A004','CURAM 625MG','Khang Sinh',1000,'Vien','cCc',500,900,'20/10/2020')
+insert DSThuoc values ('A005','CURIOSIN T15G','Dung Ngoai',20,'Hop','cCc',30000,35000,'20/12/2018')
+insert DSThuoc values ('A006','DAI DAM DUC THINH','Thuc Pham Chuc Nang',70,'Lo','cCc',17000,22000,'20/10/2018')
+insert DSThuoc values ('A007','Dactarin T10G','Dung Ngoai',200,'Tupe','cCc',5000,7000,'20/10/2018')
+insert DSThuoc values ('A008','Davic H10G x 10G','Vitamin',100,'Goi','cCc',15000,20000,'20/10/2018')
+insert DSThuoc values ('A009','Decogen H25V x 4V','Ha Sot Giam Dau',500,'Vien','cCc',300,500,'20/10/2018')
+insert DSThuoc values ('A010','Doctor Cool H3B','Ha Sot Giam Dau',70,'Lo','cCc',10000,15000,'20/10/2018')
+insert DSThuoc values ('A011','Dogalic L100V','Thuc Pham Chuc Nang',70,'Lo','cCc',10000,15000,'20/10/2018')
+insert DSThuoc values ('A012','Doctor Cool H3B','Ha Sot Giam Dau',70,'Lo','cCc',10000,15000,'20/10/2018')
+insert DSThuoc values ('A013','Doctor Cool H5B','Ha Sot Giam Dau',70,'Lo','cCc',10000,15000,'20/10/2018')
+insert DSThuoc values ('A014','Doctor Cool H9B','Ha Sot Giam Dau',70,'Lo','cCc',10000,15000,'20/10/2018')
+insert DSThuoc values ('A015','Doctor Cool H17B','Ha Sot Giam Dau',70,'Lo','cCc',10000,15000,'20/10/2018')
 
 
 insert KhachHang values ('15090901',N'Nguyễn Đức Vũ','28/03/1997','0121354643',N'Bệnh trĩ mãn tính')
@@ -106,60 +107,55 @@ insert HoaDon values ('HD7','NV001','21/9/2017','15055421',20000)
 insert HoaDon values ('HD8','NV002','22/9/2017','15090902',20000)
 
 
+insert ChiTietHoaDon values('HD1','A001','COTRIM STADA FORTE',1,2000)
+insert ChiTietHoaDon values('HD1','A002','COTTUF L100ML',1,3000)
+insert ChiTietHoaDon values('HD1','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD1','A004','CURAM 625MG',1,5000)
 
-insert ChiTietHoaDon values('HD1','A001','COTRIM STADA FORTE',10,2000)
-insert ChiTietHoaDon values('HD1','A002','COTTUF L100ML',20,3000)
-insert ChiTietHoaDon values('HD1','A003','COVERSYL 5ML L30V',15,4000)
-insert ChiTietHoaDon values('HD1','A004','CURAM 625MG',16,5000)
+insert ChiTietHoaDon values('HD2','A001','COTRIM STADA FORTE',1,5000)
+insert ChiTietHoaDon values('HD2','A002','COTTUF L100ML',1,5000)
+insert ChiTietHoaDon values('HD2','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD2','A004','CURAM 625MG',1,6000)
 
-insert ChiTietHoaDon values('HD2','A001','COTRIM STADA FORTE',14,5000)
-insert ChiTietHoaDon values('HD2','A002','COTTUF L100ML',15,5000)
-insert ChiTietHoaDon values('HD2','A003','COVERSYL 5ML L30V',16,4000)
-insert ChiTietHoaDon values('HD2','A004','CURAM 625MG',18,6000)
+insert ChiTietHoaDon values('HD3','A001','COTRIM STADA FORTE',1,5000)
+insert ChiTietHoaDon values('HD3','A002','COTTUF L100ML',1,5000)
+insert ChiTietHoaDon values('HD3','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD3','A004','CURAM 625MG',1,6000)
 
-insert ChiTietHoaDon values('HD3','A001','COTRIM STADA FORTE',14,5000)
-insert ChiTietHoaDon values('HD3','A002','COTTUF L100ML',15,5000)
-insert ChiTietHoaDon values('HD3','A003','COVERSYL 5ML L30V',16,4000)
-insert ChiTietHoaDon values('HD3','A004','CURAM 625MG',18,6000)
+insert ChiTietHoaDon values('HD4','A001','COTRIM STADA FORTE',1,5000)
+insert ChiTietHoaDon values('HD4','A002','COTTUF L100ML',1,5000)
+insert ChiTietHoaDon values('HD4','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD4','A004','CURAM 625MG',1,6000)
 
-insert ChiTietHoaDon values('HD4','A001','COTRIM STADA FORTE',14,5000)
-insert ChiTietHoaDon values('HD4','A002','COTTUF L100ML',15,5000)
-insert ChiTietHoaDon values('HD4','A003','COVERSYL 5ML L30V',16,4000)
-insert ChiTietHoaDon values('HD4','A004','CURAM 625MG',18,6000)
+insert ChiTietHoaDon values('HD5','A001','COTRIM STADA FORTE',1,5000)
+insert ChiTietHoaDon values('HD5','A002','COTTUF L100ML',1,5000)
+insert ChiTietHoaDon values('HD5','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD5','A004','CURAM 625MG',1,6000)
 
-insert ChiTietHoaDon values('HD5','A001','COTRIM STADA FORTE',14,5000)
-insert ChiTietHoaDon values('HD5','A002','COTTUF L100ML',15,5000)
-insert ChiTietHoaDon values('HD5','A003','COVERSYL 5ML L30V',16,4000)
-insert ChiTietHoaDon values('HD5','A004','CURAM 625MG',18,6000)
+insert ChiTietHoaDon values('HD6','A001','COTRIM STADA FORTE',1,5000)
+insert ChiTietHoaDon values('HD6','A002','COTTUF L100ML',1,5000)
+insert ChiTietHoaDon values('HD6','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD6','A004','CURAM 625MG',1,6000)
 
-insert ChiTietHoaDon values('HD6','A001','COTRIM STADA FORTE',14,5000)
-insert ChiTietHoaDon values('HD6','A002','COTTUF L100ML',15,5000)
-insert ChiTietHoaDon values('HD6','A003','COVERSYL 5ML L30V',16,4000)
-insert ChiTietHoaDon values('HD6','A004','CURAM 625MG',18,6000)
+insert ChiTietHoaDon values('HD7','A001','COTRIM STADA FORTE',1,5000)
+insert ChiTietHoaDon values('HD7','A002','COTTUF L100ML',1,5000)
+insert ChiTietHoaDon values('HD7','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD7','A004','CURAM 625MG',1,6000)
 
-insert ChiTietHoaDon values('HD7','A001','COTRIM STADA FORTE',14,5000)
-insert ChiTietHoaDon values('HD7','A002','COTTUF L100ML',15,5000)
-insert ChiTietHoaDon values('HD7','A003','COVERSYL 5ML L30V',16,4000)
-insert ChiTietHoaDon values('HD7','A004','CURAM 625MG',18,6000)
-
-insert ChiTietHoaDon values('HD8','A001','COTRIM STADA FORTE',14,5000)
-insert ChiTietHoaDon values('HD8','A002','COTTUF L100ML',15,5000)
-insert ChiTietHoaDon values('HD8','A003','COVERSYL 5ML L30V',16,4000)
-insert ChiTietHoaDon values('HD8','A004','CURAM 625MG',18,6000)
+insert ChiTietHoaDon values('HD8','A001','COTRIM STADA FORTE',1,5000)
+insert ChiTietHoaDon values('HD8','A002','COTTUF L100ML',1,5000)
+insert ChiTietHoaDon values('HD8','A003','COVERSYL 5ML L30V',1,4000)
+insert ChiTietHoaDon values('HD8','A004','CURAM 625MG',1,6000)
 
 insert HoaDonNhap values('N001','27/6/1999',200000)
 insert HoaDonNhap values('N002','26/6/2015',300000)
 
-insert ChiTietHoaDonNhap values('N001','A001',100,'26/10/2018')
-insert ChiTietHoaDonNhap values('N001','A002',200,'26/10/2018')
-insert ChiTietHoaDonNhap values('N001','A003',300,'26/10/2018')
-insert ChiTietHoaDonNhap values('N001','A004',400,'26/10/2018')
+insert ChiTietHoaDonNhap values('N001','A001',100,'26/10/2018',1)
+insert ChiTietHoaDonNhap values('N001','A002',200,'26/10/2018',1)
+insert ChiTietHoaDonNhap values('N001','A003',300,'26/10/2018',1)
+insert ChiTietHoaDonNhap values('N001','A004',400,'26/10/2018',1)
 
-insert ChiTietHoaDonNhap values('N002','A005',400,'26/10/2018')
-insert ChiTietHoaDonNhap values('N002','A006',500,'26/10/2018')
-insert ChiTietHoaDonNhap values('N002','A007',600,'26/10/2018')
-insert ChiTietHoaDonNhap values('N002','A008',700,'26/10/2018')
-
-select * from ChiTietHoaDonNhap
-delete ChiTietHoaDonNhap
-
+insert ChiTietHoaDonNhap values('N002','A005',400,'26/10/2018',1)
+insert ChiTietHoaDonNhap values('N002','A006',500,'26/10/2018',1)
+insert ChiTietHoaDonNhap values('N002','A007',600,'26/10/2018',1)
+insert ChiTietHoaDonNhap values('N002','A008',700,'26/10/2018',1)

@@ -240,7 +240,8 @@ public class DanhSachDuLieu {
 				String maThuoc = rs.getString(2);
 				int soLuong = rs.getInt(3);
 				String hsd = rs.getString(4);
-				CTHoaDonNhap ctHDN = new CTHoaDonNhap(maHDN, maThuoc, soLuong, hsd);
+				int tinhTrang=rs.getInt(5);
+				CTHoaDonNhap ctHDN = new CTHoaDonNhap(maHDN, maThuoc, soLuong, hsd, tinhTrang);
 				listThuocNhap.add(ctHDN);
 			}
 		} catch (Exception e) {

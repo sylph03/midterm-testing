@@ -101,12 +101,22 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 
 		String[] headerBangThemThuoc="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá".split(";");
-		tablemodelBangThemThuoc = new DefaultTableModel(headerBangThemThuoc,0);
+		tablemodelBangThemThuoc = new DefaultTableModel(headerBangThemThuoc,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        };
 
 
 		String [] header="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá;Thành tiền".split(";");
 		JScrollPane scrollPane = new JScrollPane();
-		tablemode =new DefaultTableModel(header, 0);
+		tablemode =new DefaultTableModel(header, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        };
 
 		JLabel lblTongTien = new JLabel("Tổng tiền:");
 		lblTongTien.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -482,8 +492,13 @@ public class GiaoDienLapHoaDon extends JFrame {
 					{
 						if(ten.equals(thuoc.getTenThuoc()+""))
 						{
-							Object[] row = {ten,soluong,thuoc.getDonViTinh(),thuoc.getGiaBan(),soluong*thuoc.getGiaBan()};
-							tablemode.addRow(row);
+							if(soluong <= thuoc.getSoLuong())
+							{
+								Object[] row = {ten,soluong,thuoc.getDonViTinh(),thuoc.getGiaBan(),soluong*thuoc.getGiaBan()};
+								tablemode.addRow(row);
+							}
+							else 
+								JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
 						}
 					}
 					txtTongTien.setText(tongTien(tablemode)+"");
@@ -513,7 +528,6 @@ public class GiaoDienLapHoaDon extends JFrame {
 				if(chkKeDon.isSelected())
 				{
 					panelThongtinKH.setEnabled(true);
-					label_3.setEnabled(true);
 					label_4.setEnabled(true);
 					label_5.setEnabled(true);
 					label_6.setEnabled(true);
@@ -533,7 +547,6 @@ public class GiaoDienLapHoaDon extends JFrame {
 				}
 				else {
 					panelThongtinKH.setEnabled(false);
-					label_3.setEnabled(false);
 					label_4.setEnabled(false);
 					label_5.setEnabled(false);
 					label_6.setEnabled(false);
@@ -590,8 +603,13 @@ public class GiaoDienLapHoaDon extends JFrame {
 						if (sl<=0)
 							JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
 						else {
-							themThuocTuBangVaoHoaDon();
-							txtTongTien.setText(tongTien(tablemode)+"");
+							if(sl<=Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+""))
+							{
+								themThuocTuBangVaoHoaDon();
+								txtTongTien.setText(tongTien(tablemode)+"");
+							}
+							else
+								JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
 						}
 					}
 				}
@@ -734,14 +752,16 @@ public class GiaoDienLapHoaDon extends JFrame {
 			{
 				String tenThuoc = tablemode.getValueAt(i, 0)+"";
 				String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
+				int soLuong = Integer.parseInt(tablemode.getValueAt(i, 1)+"");
 				CTHoaDonBan ctHDB = new CTHoaDonBan();
 				ctHDB.setMaHD(txtMa.getText()+"");
 				ctHDB.setMaThuoc(maThuoc);
 				ctHDB.setTenThuoc(tenThuoc);
-				ctHDB.setSoLuong(Integer.parseInt(tablemode.getValueAt(i, 1)+""));
+				ctHDB.setSoLuong(soLuong);
 				ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
 				try {
 					control.themCTHoaDonBanVaoSQL(ctHDB);
+					control.truSoLuongThuocDaBan(maThuoc,soLuong);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

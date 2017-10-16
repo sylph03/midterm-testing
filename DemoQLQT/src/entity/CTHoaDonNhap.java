@@ -5,6 +5,7 @@ public class CTHoaDonNhap {
 	private String maThuoc;
 	private int soLuong;
 	private String hsd;
+	private int tinhTrang;
 	public String getMaHDN() {
 		return maHDN;
 	}
@@ -30,6 +31,12 @@ public class CTHoaDonNhap {
 		this.hsd = hsd;
 	}
 	
+	public int getTinhTrang() {
+		return tinhTrang;
+	}
+	public void setTinhTrang(int tinhTrang) {
+		this.tinhTrang = tinhTrang;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -38,12 +45,14 @@ public class CTHoaDonNhap {
 		result = prime * result + ((maThuoc == null) ? 0 : maThuoc.hashCode());
 		return result;
 	}
-	public CTHoaDonNhap(String maHDN, String maThuoc, int soLuong, String hsd) {
+	
+	public CTHoaDonNhap(String maHDN, String maThuoc, int soLuong, String hsd, int tinhTrang) {
 		super();
 		this.maHDN = maHDN;
 		this.maThuoc = maThuoc;
 		this.soLuong = soLuong;
 		this.hsd = hsd;
+		this.tinhTrang = tinhTrang;
 	}
 	public CTHoaDonNhap() {
 		super();

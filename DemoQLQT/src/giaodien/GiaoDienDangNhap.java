@@ -132,6 +132,7 @@ public class GiaoDienDangNhap extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/Background.jpg")));
+	//	lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/Background.jpg")));
 		lblNewLabel.setBounds(0, 0, 794, 535);
 		contentPane.add(lblNewLabel);
 		btnThoat.addActionListener(new ActionListener() {
@@ -145,6 +146,7 @@ public class GiaoDienDangNhap extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				txtTK.setText(txtTK.getText().toUpperCase());
 				String Id=txtTK.getText();
 				char[] pass =txtMK.getPassword();
 				String mk=new String(pass);
