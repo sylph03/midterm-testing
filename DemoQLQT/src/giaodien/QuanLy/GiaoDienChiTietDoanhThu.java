@@ -77,7 +77,12 @@ public class GiaoDienChiTietDoanhThu extends JFrame {
 		contentPane.add(lblNewLabel_3);
 		
 		String[] header="Mã thuốc;Tên thuốc;Số lượng bán; Đơn giá".split(";");
-		tablemodel =new DefaultTableModel(header, 0);
+		tablemodel =new DefaultTableModel(header, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		
 		contentPane.add(scrollPane =new JScrollPane(table=new JTable(tablemodel)));
 		scrollPane.setBounds(10, 111, 385, 340);

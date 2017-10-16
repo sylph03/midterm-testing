@@ -108,19 +108,19 @@ public class ControlGiaoDien {
 	}
 	//------------------------DL Nhân Viên--------------------
 
-	public boolean suaDuLieuNVTrongSQL(NhanVien nvmoi) throws SQLException
+	public boolean suaDuLieuNVTrongSQL(String maNV,String ngaySinh,String sdt,String diaChi,String CMND,String gioiTinh) throws SQLException
 	{
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="update dbo.NhanVien set NgaySinh= ? ,SDT= ? ,DiaChi= ? ,Pass= ? ,CMND= ? where MaNV = ?";
+			String sql="update dbo.NhanVien set NgaySinh= ? ,SDT= ? ,DiaChi= ? ,CMND= ?,GioiTinh=? where MaNV = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
-			pstmt.setString(6,nvmoi.getMaNv());
-			pstmt.setString(1,nvmoi.getNgaySinh());
-			pstmt.setString(2,nvmoi.getSdt());
-			pstmt.setString(3,nvmoi.getDiaChi());
-			pstmt.setString(4,nvmoi.getPass());
-			pstmt.setString(5,nvmoi.getCmnd());
+			pstmt.setString(6,maNV);
+			pstmt.setString(1,ngaySinh);
+			pstmt.setString(2,sdt);
+			pstmt.setString(3,diaChi);
+			pstmt.setString(4,CMND);
+			pstmt.setString(5,gioiTinh);
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) 

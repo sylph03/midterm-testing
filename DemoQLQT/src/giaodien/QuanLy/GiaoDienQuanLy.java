@@ -522,32 +522,77 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 		////	Tạo bảng trong "Danh sách"
 		String[] header = "Mã thuốc;Tên thuốc;Loại thuốc;Nhà cung cấp".split(";");  
-		tableModelThongTinthuoc = new DefaultTableModel(header,0);	
+		tableModelThongTinthuoc = new DefaultTableModel(header,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 	
 
 		////	Tạo bảng trong "Nhập hàng"
 		String[] header_1="Mã thuốc;Tên thuốc;Số lượng;HSD".split(";");
-		tableModelThuocNhap = new DefaultTableModel(header_1, 0);
+		tableModelThuocNhap = new DefaultTableModel(header_1, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		///		Tạo bảng trong "Nhập hàng"   
 		String[] header_2 ="Mã thuôc;Tên thuốc".split(";");
-		tableModelDulieuthuoc = new DefaultTableModel(header_2,0);
+		tableModelDulieuthuoc = new DefaultTableModel(header_2,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		/// Bảng danh sách đơn nhập hàng
 		String[] header_NhapHang_DanhSachDon="Mã đơn;Ngày lập;Tổng giá".split(";");
-		tableModel_NhapHang_DanhSachDon = new DefaultTableModel(header_NhapHang_DanhSachDon,0);
+		tableModel_NhapHang_DanhSachDon = new DefaultTableModel(header_NhapHang_DanhSachDon,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		///Bảng Chi tiết đơn nhập hàng
 		String[] header_NhapHang_ChitietDon="Tên thuốc;Số Lượng;HSD".split(";");
-		tableModel_NhapHang_ChitietDon= new DefaultTableModel(header_NhapHang_ChitietDon, 0);
+		tableModel_NhapHang_ChitietDon= new DefaultTableModel(header_NhapHang_ChitietDon, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		// BẢng doanh thu
 		String[] headerDaonhthu="Mã đơn;Mã nhân viên;Tên Nhân viên;Tổng doanh thu".split(";");
-		tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao=new DefaultTableModel(headerDaonhthu, 0);
+		tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao=new DefaultTableModel(headerDaonhthu, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		// Bảng  Báo cáo
 		String[] headerBaoCao="Mã thuốc;Tên thuốc;Số lượng bán;đơn vị tính;Tiền lời".split(";");
-		tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao=new DefaultTableModel(headerBaoCao, 0);
+		tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao=new DefaultTableModel(headerBaoCao, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		/// Bảng Tình Trạng Thuốc
 		String[] headerTinhTrang="Mã thuốc;Tên thuốc;Loại thuốc;NCC;HSD;Số Lượng;Đơn vị tính;Tình trạng".split(";");
-		tableModelTinhTrangThuoc_TinhTrang=new DefaultTableModel(headerTinhTrang,0);
+		tableModelTinhTrangThuoc_TinhTrang=new DefaultTableModel(headerTinhTrang,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 		// Bảng thông tin nhân viên
 		String[] headerThongTinNV="Mã;Tên;Ngày sinh;Giới tính;Địa chỉ".split(";");
-		tableModelThongTinNV =new DefaultTableModel(headerThongTinNV, 0);
+		tableModelThongTinNV =new DefaultTableModel(headerThongTinNV, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 
 		/*
 		 *  Panel Nhập hàng Chứa các thành phần giao diên của Button Nhập Hàng

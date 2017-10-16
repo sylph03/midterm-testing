@@ -417,17 +417,37 @@ public class GiaoDienNhanVien extends JFrame {
 		//-----------------------------------------header table---------------------
 
 		String[] headerDanhSachDon="Mã hóa đơn;Người lập;Ngày lập;Khách hàng;Tổng tiền".split(";");
-		tablemodelDanhSachDon = new DefaultTableModel(headerDanhSachDon,0);
+		tablemodelDanhSachDon = new DefaultTableModel(headerDanhSachDon,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 
 		String[] headerCTHD="Tên thuốc;Số lượng;Giá bán".split(";");
-		tablemodelCTHD = new DefaultTableModel(headerCTHD,0);
+		tablemodelCTHD = new DefaultTableModel(headerCTHD,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 
 		String[] headerDoanhThu="Mã đơn;Ngày lập;Người Lập;Tổng tiền".split(";");
-		tablemodelDoanhThu = new DefaultTableModel(headerDoanhThu,0);
+		tablemodelDoanhThu = new DefaultTableModel(headerDoanhThu,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 
 
 		String[] header="Mã thuốc;Tên thuốc;Loại thuốc;Nhà cung cấp;Số lượng còn;Giá bán".split(";");
-		tablemodelThuoc = new DefaultTableModel(header,0);
+		tablemodelThuoc = new DefaultTableModel(header,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        }; 
 
 		//----------------------------đa layer---------------------------------
 		JLayeredPane layeredPane = new JLayeredPane();
@@ -879,8 +899,11 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 		for (HoaDonBanHang hd : ds.listHDB)
 		{
-			Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
-			tablemodelDanhSachDon.addRow(row);
+			if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien))
+			{
+				Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
+				tablemodelDanhSachDon.addRow(row);
+			}	
 		}
 		for (HoaDonBanHang hd : ds.listHDB) {
 			if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {

@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import control.ControlGiaoDien;
 import control.KetNoiSQL;
+import entity.NhanVien;
 import giaodien.NhanVien.GiaoDienNhanVien;
 import giaodien.QuanLy.GiaoDienQuanLy;
 
@@ -70,12 +71,19 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 				String diaChiMoi = txtDiaChi.getText()+"";
 				String sdtMoi = txtSDT.getText()+"";
 				String maNV = dn.txtTK.getText()+"";
+				String hoTen = txtHoTen.getText()+"";
+				String cMND = txtCMND.getText()+"";
+				String ngaySinh = txtNgaySinh.getText()+"";
+				String gioiTinh = "Nữ";
+				if(rbtnNam.isSelected())
+					gioiTinh= "Nam";
 				try {
-					control.suaDiaChiVaSDT(diaChiMoi, sdtMoi, maNV);
+					control.suaDuLieuNVTrongSQL(maNV, ngaySinh, sdtMoi, diaChiMoi, cMND, gioiTinh);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				khoaMoCacTruong(false);
 				dispose();
 			}
 		});
@@ -208,13 +216,6 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		ButtonGroup gr = new ButtonGroup();
 		gr.add(rbtnNam);
 		gr.add(rbtnNu);
-		txtCMND.setEditable(false);
-		txtDiaChi.setEditable(false);
-		txtMatKhau.setEditable(false);
-		txtSDT.setEditable(false);
-		txtNgaySinh.setEditable(false);
-		rbtnNam.setEnabled(false);
-		rbtnNu.setEnabled(false);
 
 		JButton btnSua = new JButton("Sửa");
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -234,10 +235,7 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		panel.add(lblnh);
 		btnSua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				txtDiaChi.setEditable(true);
-				txtDiaChi.setEnabled(true);
-				txtSDT.setEditable(true);
-				txtSDT.setEnabled(true);
+				khoaMoCacTruong(true);
 			}
 		});
 
@@ -249,7 +247,8 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		}
 
 	}
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public  void dienDuLieuVaoForm() throws SQLException
 	{
 		String maNVa = dn.txtTK.getText();
@@ -287,5 +286,21 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 			e.printStackTrace();
 			con.close();
 		}
+	}
+	
+	public void khoaMoCacTruong(boolean a)
+	{
+		txtHoTen.setEditable(a);
+		txtHoTen.setEnabled(a);
+		txtCMND.setEditable(a);
+		txtCMND.setEnabled(a);
+		txtNgaySinh.setEditable(a);
+		txtNgaySinh.setEnabled(a);
+		txtDiaChi.setEditable(a);
+		txtDiaChi.setEnabled(a);
+		txtSDT.setEditable(a);
+		txtSDT.setEnabled(a);
+		rbtnNam.setEnabled(a);
+		rbtnNu.setEnabled(a);
 	}
 }

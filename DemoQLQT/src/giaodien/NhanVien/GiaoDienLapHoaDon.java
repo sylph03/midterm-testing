@@ -101,12 +101,22 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 
 		String[] headerBangThemThuoc="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá".split(";");
-		tablemodelBangThemThuoc = new DefaultTableModel(headerBangThemThuoc,0);
+		tablemodelBangThemThuoc = new DefaultTableModel(headerBangThemThuoc,0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        };
 
 
 		String [] header="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá;Thành tiền".split(";");
 		JScrollPane scrollPane = new JScrollPane();
-		tablemode =new DefaultTableModel(header, 0);
+		tablemode =new DefaultTableModel(header, 0){ 
+            @Override//Override lại phương thức isCellEditable 
+            public boolean isCellEditable(int row, int column) { 
+                return false;//Trả về false không cho edit. 
+            } 
+        };
 
 		JLabel lblTongTien = new JLabel("Tổng tiền:");
 		lblTongTien.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -518,7 +528,6 @@ public class GiaoDienLapHoaDon extends JFrame {
 				if(chkKeDon.isSelected())
 				{
 					panelThongtinKH.setEnabled(true);
-					label_3.setEnabled(true);
 					label_4.setEnabled(true);
 					label_5.setEnabled(true);
 					label_6.setEnabled(true);
@@ -538,7 +547,6 @@ public class GiaoDienLapHoaDon extends JFrame {
 				}
 				else {
 					panelThongtinKH.setEnabled(false);
-					label_3.setEnabled(false);
 					label_4.setEnabled(false);
 					label_5.setEnabled(false);
 					label_6.setEnabled(false);
