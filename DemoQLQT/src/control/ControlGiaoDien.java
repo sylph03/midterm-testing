@@ -488,7 +488,7 @@ public class ControlGiaoDien {
 		}
 		
 	}
-	public void capNhatThemThuocHetHan(ThongTinThuoc thuocHetHan,JPanel panel) throws SQLException // Cập nhật số lượng và hsd cho các thuốc hết hạn (đưa thuốc từ kho lên)
+	/*public void capNhatThemThuocHetHan(ThongTinThuoc thuocHetHan,JPanel panel) throws SQLException // Cập nhật số lượng và hsd cho các thuốc hết hạn (đưa thuốc từ kho lên)
 	{
 		boolean kt = false;
 		ds.docBangCTHoaDonNhap();
@@ -506,7 +506,7 @@ public class ControlGiaoDien {
 			if(kt = false)
 				JOptionPane.showMessageDialog(panel, "Chưa có nhập thuốc này về kho!");
 		}
-	}
+	}*/
 	public void truSoLuongThuocDaBan(String maThuoc,int soLuong)
 	{
 		try {
