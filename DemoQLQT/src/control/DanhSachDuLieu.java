@@ -69,7 +69,7 @@ public class DanhSachDuLieu {
 		return null;
 
 	}
-	
+
 	public ThongTinThuoc TimThuocTheoTen(String tenThuoc)
 	{
 		for (ThongTinThuoc thuoc : listThuoc)
@@ -124,7 +124,7 @@ public class DanhSachDuLieu {
 		return false;
 	}
 	
-	public NhanVien timNVTheoMa(String ma)
+	public NhanVien TimNVTheoMa(String ma)
 	{
 		for (NhanVien nv: listNV)
 			if(nv.getMaNv().equalsIgnoreCase(ma))
@@ -132,7 +132,6 @@ public class DanhSachDuLieu {
 		return null;
 
 	}
-	
 	
 	//----------------------List HD bán----------------
 	public  void docBangHDB() throws SQLException ///Đọc dữ liệu hóa đơn bán từ SQL vào list 
@@ -241,7 +240,7 @@ public class DanhSachDuLieu {
 				String maThuoc = rs.getString(2);
 				int soLuong = rs.getInt(3);
 				String hsd = rs.getString(4);
-				int tinhTrang = rs.getInt(5);
+				int tinhTrang=rs.getInt(5);
 				CTHoaDonNhap ctHDN = new CTHoaDonNhap(maHDN, maThuoc, soLuong, hsd, tinhTrang);
 				listThuocNhap.add(ctHDN);
 			}
@@ -252,6 +251,13 @@ public class DanhSachDuLieu {
 		}
 	}
 	//---------------
+	public NhanVien timNVTheoMa(String ma)
+	{
+		for(NhanVien nv : listNV)
+			if(nv.getMaNv().equalsIgnoreCase(ma))
+				return nv;
+		return null;
+	}
 
 	//------------------------List KH---------------------
 	public  void docBangKhachHang() throws SQLException ///Đọc dữ liệu KH từ SQL vào list 
@@ -280,6 +286,12 @@ public class DanhSachDuLieu {
 		}
 	}
 
+	public KhachHang timKHTheoCMND (String CMND) {
+		for (KhachHang kh : listKhachHang)
+			if (kh.getCMND().equals(CMND))
+				return kh;
+		return null;
+	}
 	//-----------------------Danh Sach thuốc timg kiếm thông minh----------------------
 	//29-09-2017
 	public String Timtenthuoc(String tenthuoc) throws SQLException
