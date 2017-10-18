@@ -102,21 +102,21 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 		String[] headerBangThemThuoc="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá".split(";");
 		tablemodelBangThemThuoc = new DefaultTableModel(headerBangThemThuoc,0){ 
-            @Override//Override lại phương thức isCellEditable 
-            public boolean isCellEditable(int row, int column) { 
-                return false;//Trả về false không cho edit. 
-            } 
-        };
+			@Override//Override lại phương thức isCellEditable 
+			public boolean isCellEditable(int row, int column) { 
+				return false;//Trả về false không cho edit. 
+			} 
+		};
 
 
 		String [] header="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá;Thành tiền".split(";");
 		JScrollPane scrollPane = new JScrollPane();
 		tablemode =new DefaultTableModel(header, 0){ 
-            @Override//Override lại phương thức isCellEditable 
-            public boolean isCellEditable(int row, int column) { 
-                return false;//Trả về false không cho edit. 
-            } 
-        };
+			@Override//Override lại phương thức isCellEditable 
+			public boolean isCellEditable(int row, int column) { 
+				return false;//Trả về false không cho edit. 
+			} 
+		};
 
 		JLabel lblTongTien = new JLabel("Tổng tiền:");
 		lblTongTien.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -218,8 +218,8 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThongTinNhanVien.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/user.png")));
 		btnThongTinNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					new GiaoDienThongTinNhanVien().setVisible(true);
-				
+				new GiaoDienThongTinNhanVien().setVisible(true);
+
 			}
 		});
 		btnThongTinNhanVien.setBounds(417, 60, 33, 29);
@@ -229,7 +229,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		panelThongtinKH.setLayout(null);
 		panelThongtinKH.setForeground(Color.RED);
 		panelThongtinKH.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:", TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(0, 128, 0)));
-		panelThongtinKH.setBounds(10, 104, 453, 133);
+		panelThongtinKH.setBounds(10, 104, 464, 133);
 		panelDienThongTin.add(panelThongtinKH);
 
 		JLabel label_4 = new JLabel("CMND: ");
@@ -283,30 +283,35 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnKiemTra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cmnd;
-				boolean kt=false;
+				boolean kt = false;
 				cmnd = txtCMND.getText()+"";
-				try {
-					ds.docBangKhachHang();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				for(KhachHang kh : ds.listKhachHang)
-				{
-					if(kh.getCMND().equalsIgnoreCase(cmnd))
-					{
-						String[] date=kh.getNgaySinh().split("-");
-						txtTenKH.setText(kh.getHoTenKH()+"");
-						txtSDT.setText(kh.getSdt()+"");
-						txtAMota.setText(kh.getMoTaKH()+"");
-						cbbThang.setSelectedItem(date[1]);
-						cbbNgay.setSelectedItem(date[2]);
-						cbbNam.setSelectedItem(date[0]);
-						kt= true;
+				boolean ktcmnd=control.kiemTraCMND(cmnd);
+				if (ktcmnd ==true) {
+					try {
+						ds.docBangKhachHang();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+					for(KhachHang kh : ds.listKhachHang)
+					{
+						if(kh.getCMND().equalsIgnoreCase(cmnd))
+						{
+							String[] date=kh.getNgaySinh().split("-");
+							txtTenKH.setText(kh.getHoTenKH()+"");
+							txtSDT.setText(kh.getSdt()+"");
+							txtAMota.setText(kh.getMoTaKH()+"");
+							cbbThang.setSelectedItem(date[1]);
+							cbbNgay.setSelectedItem(date[2]);
+							cbbNam.setSelectedItem(date[0]);
+							kt =true;
+						}
+					}
+					if (kt == false)
+						JOptionPane.showMessageDialog(panelThongtinKH, "Khách hàng chưa có, vui lòng thêm mới !!");
 				}
-				if (kt==false)
-					JOptionPane.showMessageDialog(panelThongtinKH, "Khách hàng chưa có, vui lòng thêm mới !!");
+				else
+					JOptionPane.showMessageDialog(panelThongtinKH, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 8 CHỮ SỐ !!");
 			}
 		});
 		btnKiemTra.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/search.png")));
@@ -318,7 +323,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		txtAMota = new JTextArea();
 		txtAMota.setEditable(false);
 		txtAMota.setBackground(Color.WHITE);
-		txtAMota.setBounds(264, 46, 179, 75);
+		txtAMota.setBounds(264, 46, 190, 75);
 		panelThongtinKH.add(txtAMota);
 
 		JLabel label_8 = new JLabel("Mô tả:");
@@ -479,32 +484,36 @@ public class GiaoDienLapHoaDon extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				String ten = txtTenThuoc_TimKiem.getText()+"";
-				int soluong = Integer.parseInt(txtSoLuong.getText());
-				if (soluong>0)
-				{
-					try {
-						ds.docThuoc();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					for(ThongTinThuoc thuoc : ds.listThuoc)
+				if (control.kiemTraDuLieuSo(txtSoLuong.getText()+"")==true) {
+					int soluong = Integer.parseInt(txtSoLuong.getText());
+					if (soluong>0)
 					{
-						if(ten.equals(thuoc.getTenThuoc()+""))
-						{
-							if(soluong <= thuoc.getSoLuong())
-							{
-								Object[] row = {ten,soluong,thuoc.getDonViTinh(),thuoc.getGiaBan(),soluong*thuoc.getGiaBan()};
-								tablemode.addRow(row);
-							}
-							else 
-								JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
+						try {
+							ds.docThuoc();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
+						for(ThongTinThuoc thuoc : ds.listThuoc)
+						{
+							if(ten.equals(thuoc.getTenThuoc()+""))
+							{
+								if(soluong <= thuoc.getSoLuong())
+								{
+									Object[] row = {ten,soluong,thuoc.getDonViTinh(),thuoc.getGiaBan(),soluong*thuoc.getGiaBan()};
+									tablemode.addRow(row);
+								}
+								else 
+									JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
+							}
+						}
+						txtTongTien.setText(tongTien(tablemode)+"");
 					}
-					txtTongTien.setText(tongTien(tablemode)+"");
+					else 
+						JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng không âm và phải khác 0 !! ");
 				}
-				else 
-					JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng không âm và phải khác 0 !! ");
+				else
+					JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng phải là CHỮ SỐ");
 
 			}
 		});
@@ -591,7 +600,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThem_BangThemThuoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int row = tableThemThuoc.getSelectedRow();
-				int sl = Integer.parseInt(txtSoLuong_BangThemThuoc.getText());
+				
 				if (row==-1)
 					JOptionPane.showMessageDialog(panelBangThemThuoc, "Vui lòng chọn thuốc cần thêm !!!");
 				else {
@@ -600,17 +609,22 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 					}
 					else {
-						if (sl<=0)
-							JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
-						else {
-							if(sl<=Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+""))
-							{
-								themThuocTuBangVaoHoaDon();
-								txtTongTien.setText(tongTien(tablemode)+"");
+						if (control.kiemTraDuLieuSo(txtSoLuong_BangThemThuoc.getText()+"")==true) {
+							int sl = Integer.parseInt(txtSoLuong_BangThemThuoc.getText());
+							if (sl<=0)
+								JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
+							else {
+								if(sl<=Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+""))
+								{
+									themThuocTuBangVaoHoaDon();
+									txtTongTien.setText(tongTien(tablemode)+"");
+								}
+								else
+									JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
 							}
-							else
-								JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
 						}
+						else
+							JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng phải bao gồm các CHỮ SỐ");
 					}
 				}
 			}
@@ -771,44 +785,56 @@ public class GiaoDienLapHoaDon extends JFrame {
 			{
 				boolean kt = false;
 				KhachHang kh = new KhachHang();
-				kh.setCMND(txtCMND.getText());
-				kh.setHoTenKH(txtTenKH.getText());
-				kh.setNgaySinh(control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam));
-				kh.setSdt(txtSDT.getText());
-				kh.setMoTaKH(txtAMota.getText());
-				try {
-					ds.docBangKhachHang();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				for(KhachHang kh1 : ds.listKhachHang)
-				{
-					if(kh1.getCMND().equals(txtCMND.getText()))
+				if ((control.kiemTraCMND(txtCMND.getText())==true) && (control.kiemTraSDT(txtSDT.getText())==true)) {
+					kh.setCMND(txtCMND.getText());
+					kh.setHoTenKH(txtTenKH.getText());
+					kh.setNgaySinh(control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam));
+					kh.setSdt(txtSDT.getText());
+					kh.setMoTaKH(txtAMota.getText());
+					try {
+						ds.docBangKhachHang();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					for(KhachHang kh1 : ds.listKhachHang)
 					{
+						if(kh1.getCMND().equals(txtCMND.getText()))
+						{
 
+							try {
+								control.suaDuLieuKhachHangTrongSQL(kh);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							kt = true;
+						}
+					}
+					if(kt == false)
+					{
 						try {
-							control.suaDuLieuKhachHangTrongSQL(kh);
+							control.themKHVaoSQL(kh);
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						kt = true;
-					}
-				}
-				if(kt == false)
-				{
-					try {
-						control.themKHVaoSQL(kh);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 
+					}
+					setVisible(false);
+					
 				}
-				setVisible(false);
+				
+				else {
+					if (control.kiemTraCMND(txtCMND.getText())==false)
+						JOptionPane.showMessageDialog(panelDienThongTin, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 8 CHỮ SỐ");
+					if(control.kiemTraSDT(txtSDT.getText())==false)
+						JOptionPane.showMessageDialog(panelDienThongTin, "SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ");
+				}
+				
 			}
 			dispose();
+			
 		}
 		else
 			JOptionPane.showMessageDialog(panelDienThongTin, "Danh sách thuốc bán không được rỗng!");

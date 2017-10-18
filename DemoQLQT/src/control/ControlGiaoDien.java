@@ -565,4 +565,93 @@ public class ControlGiaoDien {
 			e.getStackTrace();
 		}
 	}
+	public boolean kiemTraDuLieuSo(String s) {
+		int soKiTuSo = 0,soKiTuChu= 0;
+        for(int i=0;i<s.length();i++){
+        	if(Character.isLetter(s.charAt(i))) 
+        		soKiTuChu++; //đếm số chữ
+			else if(Character.isDigit(s.charAt(i))) 
+				soKiTuSo++;//đếm các số trong chuỗi                   
+            }
+        if (soKiTuChu==0 && soKiTuSo>=0)
+        	return true;
+		return false;
+	}
+	public boolean kiemTraDuLieuChu(String s) {
+		int soKiTuSo = 0,soKiTuChu= 0;
+        for(int i=0;i<s.length();i++){
+        	if(Character.isLetter(s.charAt(i))) 
+        		soKiTuChu++; //đếm số chữ
+			else if(Character.isDigit(s.charAt(i))) 
+				soKiTuSo++;//đếm các số trong chuỗi                   
+            }
+        if (soKiTuChu>=0 && soKiTuSo==0)
+        	return true;
+		return false;
+	}
+    public int demSoKiTuSo1Chuoi(String s) {
+        int soKiTuSo = 0,soKiTu= 0;
+        for(int i=0;i<s.length();i++){
+        	if(Character.isLetter(s.charAt(i))) 
+        		soKiTu++; //đếm số chữ
+			else if(Character.isDigit(s.charAt(i))) 
+				soKiTuSo++;//đếm các số trong chuỗi                   
+            }
+        return soKiTuSo;
+    }
+    public boolean kiemTraCMND(String cmnd) {
+    	if ((kiemTraDuLieuSo(cmnd)==true) && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==8))
+    		return true;
+    	return false;
+    }
+    public boolean kiemTraSDT(String sdt) {
+    	if ((kiemTraDuLieuSo(sdt)==true) && (demSoKiTuSo1Chuoi(sdt) == 11 || demSoKiTuSo1Chuoi(sdt)==10))
+    		return true;
+    	return false;
+    }
+//    public boolean kiemTraNgayThangNam(int ngay, int thang, int nam) {
+//    	int ngayMax;
+//    	switch (thang) {
+//		case 1:
+//			ngayMax=31;
+//			break;
+//		case 3:
+//			ngayMax=31;
+//			break;
+//		case 5:
+//			ngayMax=31;
+//			break;
+//		case 7:
+//			ngayMax=31;
+//			break;
+//		case 8:
+//			ngayMax=31;
+//			break;
+//		case 10:
+//			ngayMax=31;
+//			break;
+//		case 12:
+//			ngayMax=31;
+//			break;
+//		case 2:
+//			if (nam%4==0)
+//				ngayMax=29;
+//			else
+//				ngayMax=28;
+//			break;
+//		case 1:
+//			ngayMax=31;
+//			break;
+//		case 1:
+//			ngayMax=31;
+//			break;
+//		case 1:
+//			ngayMax=31;
+//			break;
+//		default:
+//			break;
+//		}
+//    	
+//    	return false;
+//    }
 }

@@ -7,6 +7,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import control.ControlGiaoDien;
 import control.KetNoiSQL;
@@ -19,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -28,17 +30,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 import java.awt.Toolkit;
+import javax.swing.JFormattedTextField;
 
 public class GiaoDienThongTinNhanVien extends JFrame {
 
+	private MaskFormatter formattext,formattextcmnd;
 	private JPanel panel;
 	private JTextField txtHoTen;
-	private JTextField txtNgaySinh;
+	private JFormattedTextField txtNgaySinh;
 	private JTextField txtSDT;
 	private JTextField txtDiaChi;
 	private JPasswordField txtMatKhau;
@@ -49,14 +53,28 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 	public GiaoDienThongTinNhanVien()  {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienThongTinNhanVien.class.getResource("/ser/user.png")));
 		setResizable(false);
-		setTitle("Thông Tin");
+		setTitle(dn.txtTK.getText());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(600, 200, 274, 396);
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panel);
 		panel.setLayout(null);
+		
+		try {
+			formattext = new MaskFormatter("####-##-##");
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		txtCMND = new JTextField();
+		txtCMND.setToolTipText("8 hoặc 12 chữ số");
+		txtCMND.setEnabled(false);
+		txtCMND.setBounds(76, 164, 175, 20);
+		panel.add(txtCMND);
+		txtCMND.setColumns(10);
 
+		
 		JButton btnOk = new JButton("OK");
 		btnOk.setMnemonic(KeyEvent.VK_ENTER);
 		btnOk.setToolTipText("Enter để lưu");
@@ -68,23 +86,7 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String diaChiMoi = txtDiaChi.getText()+"";
-				String sdtMoi = txtSDT.getText()+"";
-				String maNV = dn.txtTK.getText()+"";
-				String hoTen = txtHoTen.getText()+"";
-				String cMND = txtCMND.getText()+"";
-				String ngaySinh = txtNgaySinh.getText()+"";
-				String gioiTinh = "Nữ";
-				if(rbtnNam.isSelected())
-					gioiTinh= "Nam";
-				try {
-					control.suaDuLieuNVTrongSQL(maNV, ngaySinh, sdtMoi, diaChiMoi, cMND, gioiTinh);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				khoaMoCacTruong(false);
-				dispose();
+				luu();
 			}
 		});
 		panel.add(btnOk);
@@ -134,13 +136,15 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		lblSDT.setBounds(10, 242, 46, 14);
 		panel.add(lblSDT);
 
-		txtNgaySinh = new JTextField();
+		txtNgaySinh = new JFormattedTextField(formattext);
+		txtNgaySinh.setToolTipText("Nhập theo yyyy-mm-dd");
 		txtNgaySinh.setEnabled(false);
 		txtNgaySinh.setBounds(76, 189, 175, 20);
 		panel.add(txtNgaySinh);
 		txtNgaySinh.setColumns(10);
 
 		txtSDT = new JTextField();
+		txtSDT.setToolTipText("10 hoặc 11 chữ số");
 		txtSDT.setEnabled(false);
 		txtSDT.setBounds(76, 239, 175, 20);
 		panel.add(txtSDT);
@@ -168,10 +172,29 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		panel.add(txtMatKhau);
 		txtMatKhau.setColumns(10);
 
+		JLabel lblCMND = new JLabel("CMND:");
+		lblCMND.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCMND.setBounds(10, 167, 46, 14);
+		panel.add(lblCMND);
 
+
+
+
+		rbtnNam = new JRadioButton("Nam");
+		rbtnNam.setBounds(86, 213, 73, 23);
+		panel.add(rbtnNam);
+
+		rbtnNu = new JRadioButton("Nữ");
+		rbtnNu.setBounds(192, 213, 62, 23);
+		panel.add(rbtnNu);
+
+
+		ButtonGroup gr = new ButtonGroup();
+		gr.add(rbtnNam);
+		gr.add(rbtnNu);
 		
 		//-----------------phím tắt---------------------------
-		
+				//-----------nút ok--------------------
 		txtSDT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -190,32 +213,120 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 				}
 			}
 		});
+		txtHoTen.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnOk.doClick();
+				}
+			}
+		});
+		txtCMND.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnOk.doClick();
+				}
+			}
+		});
+		txtNgaySinh.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnOk.doClick();
+				}
+			}
+		});
+		rbtnNu.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnOk.doClick();
+				}
+			}
+		});
+		rbtnNam.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER)
+				{
+					btnOk.doClick();
+				}
+			}
+		});
+				//-------------------Thoát--------------
+		
+		txtSDT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					dispose();
+				}
+			}
+		});
+		txtHoTen.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					dispose();
+				}
+			}
+		});
+		txtNgaySinh.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					dispose();
+				}
+			}
+		});
+		txtDiaChi.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					dispose();
+				}
+			}
+		});
+		txtCMND.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					dispose();
+				}
+			}
+		});
+		rbtnNam.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					dispose();
+				}
+			}
+		});
+		rbtnNu.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+				{
+					dispose();
+				}
+			}
+		});
+
+			
 		//-----------------------------------------------------------
-		JLabel lblCMND = new JLabel("CMND:");
-		lblCMND.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCMND.setBounds(10, 167, 46, 14);
-		panel.add(lblCMND);
-
-		txtCMND = new JTextField();
-		txtCMND.setEnabled(false);
-		txtCMND.setBounds(76, 164, 175, 20);
-		panel.add(txtCMND);
-		txtCMND.setColumns(10);
-
-
-
-		rbtnNam = new JRadioButton("Nam");
-		rbtnNam.setBounds(86, 213, 73, 23);
-		panel.add(rbtnNam);
-
-		rbtnNu = new JRadioButton("Nữ");
-		rbtnNu.setBounds(192, 213, 62, 23);
-		panel.add(rbtnNu);
-
-
-		ButtonGroup gr = new ButtonGroup();
-		gr.add(rbtnNam);
-		gr.add(rbtnNu);
+		
 
 		JButton btnSua = new JButton("Sửa");
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -303,4 +414,34 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		rbtnNam.setEnabled(a);
 		rbtnNu.setEnabled(a);
 	}
+    public void luu() {
+    	String diaChiMoi = txtDiaChi.getText()+"";
+		String sdtMoi = txtSDT.getText()+"";
+		String maNV = dn.txtTK.getText()+"";
+		String hoTen = txtHoTen.getText()+"";
+		String cMND = txtCMND.getText()+"";
+		String ngaySinh = txtNgaySinh.getText()+"";
+		String gioiTinh = "Nữ";
+		if(rbtnNam.isSelected())
+			gioiTinh= "Nam";
+		int sokituCMND = control.demSoKiTuSo1Chuoi(cMND);
+		int sokituSDT = control.demSoKiTuSo1Chuoi(sdtMoi);
+		if ((control.kiemTraCMND(cMND)==true) && (control.kiemTraSDT(sdtMoi)==true)) {
+			try {
+				control.suaDuLieuNVTrongSQL(maNV, ngaySinh, sdtMoi, diaChiMoi, cMND, gioiTinh);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			khoaMoCacTruong(false);
+			dispose();
+		}
+		else {
+			if (control.kiemTraCMND(cMND)==false)
+				JOptionPane.showMessageDialog(panel, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 8 CHỮ SỐ");
+			if (control.kiemTraSDT(sdtMoi)==false)
+				JOptionPane.showMessageDialog(panel, "SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ");
+		}
+
+    }
 }

@@ -36,7 +36,7 @@ public class GiaoDienDoiMatKhau extends JFrame {
 	public GiaoDienDoiMatKhau() {
 		setResizable(false);
 		setTitle("Đổi Mật Khẩu");
-		setBounds(600, 400, 296, 149);
+		setBounds(600, 400, 274, 149);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -44,31 +44,31 @@ public class GiaoDienDoiMatKhau extends JFrame {
 		
 		JLabel lblMKCu = new JLabel("Mật khẩu cũ:");
 		lblMKCu.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMKCu.setBounds(10, 14, 104, 14);
+		lblMKCu.setBounds(10, 14, 88, 14);
 		contentPane.add(lblMKCu);
 		
 		txtMKCu = new JPasswordField();
-		txtMKCu.setBounds(124, 8, 156, 20);
+		txtMKCu.setBounds(102, 8, 156, 20);
 		contentPane.add(txtMKCu);
 		txtMKCu.setColumns(10);
 		
 		JLabel lblMKMoi = new JLabel("Mật khẩu mới:");
 		lblMKMoi.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMKMoi.setBounds(10, 39, 104, 14);
+		lblMKMoi.setBounds(10, 39, 88, 14);
 		contentPane.add(lblMKMoi);
 		
 		txtMKMoi = new JPasswordField();
-		txtMKMoi.setBounds(124, 33, 156, 20);
+		txtMKMoi.setBounds(102, 33, 156, 20);
 		contentPane.add(txtMKMoi);
 		txtMKMoi.setColumns(10);
 		
-		JLabel lblMKMoi2 = new JLabel("Nhập lại mật khẩu:");
+		JLabel lblMKMoi2 = new JLabel("Nhập lại MK:");
 		lblMKMoi2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMKMoi2.setBounds(10, 64, 104, 14);
+		lblMKMoi2.setBounds(10, 64, 88, 14);
 		contentPane.add(lblMKMoi2);
 		
 		txtXacNhan = new JPasswordField();
-		txtXacNhan.setBounds(124, 58, 156, 20);
+		txtXacNhan.setBounds(102, 58, 156, 20);
 		contentPane.add(txtXacNhan);
 		txtXacNhan.setColumns(10);
 		

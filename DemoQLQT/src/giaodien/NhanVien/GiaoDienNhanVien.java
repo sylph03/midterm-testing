@@ -79,7 +79,7 @@ public class GiaoDienNhanVien extends JFrame {
 	private JPanel panelCTHD,panelDSHD,panelDSThuoc,panelDoanhThu;
 	private JComboBox cbbNgay,cbbThang,cbbNam,comboBoxNgay_DoanhThu,comboBoxThang_DoanhThu,comboBoxNam_DoanhThu;
 	private JRadioButtonMenuItem chude1,chude2,chude3,chude4,chude5,chude6,chude7,chude8,chude9,chude10;
-	public JToggleButton btnNhanVien;
+	public JButton btnNhanVien,btnLapHoaDon;
 	GiaoDienThongTinNhanVien thongtinnv = new GiaoDienThongTinNhanVien();
 	GiaoDienLapHoaDon laphoadon =new GiaoDienLapHoaDon();
 	private JTextField txtCMND_CTHD;
@@ -249,7 +249,7 @@ public class GiaoDienNhanVien extends JFrame {
 		ThanhToolBar.add(toolBar);
 		toolBar.setVerifyInputWhenFocusTarget(false);
 
-		JToggleButton btnTrangDangNhap = new JToggleButton("Trang chủ");
+		JButton btnTrangDangNhap = new JButton("Trang chủ");
 		btnTrangDangNhap.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnTrangDangNhap.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnTrangDangNhap.setVerticalAlignment(SwingConstants.TOP);
@@ -260,24 +260,11 @@ public class GiaoDienNhanVien extends JFrame {
 		toolBar.add(btnTrangDangNhap);
 		groupToolBar.add(btnTrangDangNhap);
 
-		JToggleButton btnLapHoaDon =new JToggleButton("Lập hóa đơn");
+		btnLapHoaDon =new JButton("Lập hóa đơn");
 		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLapHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(btnLapHoaDon.isSelected())
-				{
-					laphoadon.setVisible(true);
-					xoaDuLieuTrongTable();
-					duaDuLieuTuListVaoTable();
-				}
-				else
-				{
-					dispose();
-					laphoadon.dispose();
-					new GiaoDienNhanVien().setVisible(true);
-				}
-
-
+				new GiaoDienLapHoaDon().setVisible(true);
 			}
 		});
 		toolBar.add(btnLapHoaDon);
@@ -288,18 +275,14 @@ public class GiaoDienNhanVien extends JFrame {
 		btnLapHoaDon.setMaximumSize(new Dimension(100, 100));
 		btnLapHoaDon.setHorizontalTextPosition(SwingConstants.CENTER);
 
-		JToggleButton btnDanhSachThuoc = new JToggleButton("DS thuốc",true);
+		JButton btnDanhSachThuoc = new JButton("DS thuốc");
 		btnDanhSachThuoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(btnDanhSachThuoc.isSelected())
-				{
 					panelCTHD.setVisible(false);
 					panelDoanhThu.setVisible(false);
 					panelDSHD.setVisible(false);
 					panelDSThuoc.setVisible(true);
 				}
-
-			}
 		});
 		groupToolBar.add(btnDanhSachThuoc);
 		btnDanhSachThuoc.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/death_list.png")));
@@ -311,16 +294,13 @@ public class GiaoDienNhanVien extends JFrame {
 		btnDanhSachThuoc.setFont(new Font("Tahoma", Font.BOLD, 11));
 		toolBar.add(btnDanhSachThuoc);
 
-		JToggleButton btnDsHD = new JToggleButton("DS hóa đơn");
+		JButton btnDsHD = new JButton("DS hóa đơn");
 		btnDsHD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(btnDsHD.isSelected())
-				{
 					panelCTHD.setVisible(false);
 					panelDSThuoc.setVisible(false);
 					panelDoanhThu.setVisible(false);
 					panelDSHD.setVisible(true);
-				}
 			}
 		});
 		groupToolBar.add(btnDsHD);
@@ -333,18 +313,14 @@ public class GiaoDienNhanVien extends JFrame {
 		btnDsHD.setFont(new Font("Tahoma", Font.BOLD, 11));
 		toolBar.add(btnDsHD);
 
-		JToggleButton btnDoanhThu = new JToggleButton("Doanh thu");
+		JButton btnDoanhThu = new JButton("Doanh thu");
 		btnDoanhThu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(btnDoanhThu.isSelected())
-				{
 					panelCTHD.setVisible(false);
 					panelDSThuoc.setVisible(false);
 					panelDSHD.setVisible(false);
 					panelDoanhThu.setVisible(true);
 				}
-
-			}
 		});
 		groupToolBar.add(btnDoanhThu);
 		btnDoanhThu.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/report.png")));
@@ -356,7 +332,7 @@ public class GiaoDienNhanVien extends JFrame {
 		btnDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 11));
 		toolBar.add(btnDoanhThu);
 
-		btnNhanVien= new JToggleButton(IDNhanVien);
+		btnNhanVien= new JButton(IDNhanVien);
 		btnNhanVien.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNhanVien.setVerticalAlignment(SwingConstants.TOP);
 		btnNhanVien.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -367,13 +343,7 @@ public class GiaoDienNhanVien extends JFrame {
 		btnNhanVien.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(btnNhanVien.isSelected())
-				{
 					thongtinnv.setVisible(true);
-				}
-				else
-					thongtinnv.dispose();
-
 			}
 		});				
 
