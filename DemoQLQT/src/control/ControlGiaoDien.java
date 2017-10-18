@@ -29,6 +29,10 @@ import entity.HoaDonNhapHang;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.ThongTinThuoc;
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 
 public class ControlGiaoDien {
 	DanhSachDuLieu ds = new DanhSachDuLieu();
@@ -654,4 +658,24 @@ public class ControlGiaoDien {
 //    	
 //    	return false;
 //    }
+    public void GhiEXECL(String fileName)
+	{
+		 WritableWorkbook workbook;
+		try {
+		
+			//Tạo file excel
+			 workbook = Workbook.createWorkbook(new File(fileName));
+			
+			// Tạo Sheel trong file
+			WritableSheet sheet1 = workbook.createSheet("Báo cáo thu chi",0);
+			// Đưa arraylisst báo cáo doanh thu vào
+			sheet1.addCell(new Label(0, 0, "Hello"));
+			 // write file
+            workbook.write();
+            // close
+            workbook.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }
