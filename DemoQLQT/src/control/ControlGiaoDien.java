@@ -239,6 +239,38 @@ public class ControlGiaoDien {
 			con.close();
 		}
 	}
+	
+	public HoaDonBanHang timHDBtheoMa(String maHDB) throws SQLException
+	{
+		HoaDonBanHang hdb = new HoaDonBanHang();
+		Connection con =  KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from HoaDon "+"where MaHD=?";
+			PreparedStatement pretamt = con.prepareStatement(sql);
+			pretamt.setString(1, maHDB);
+			ResultSet rs = pretamt.executeQuery();
+			while(rs.next())
+			{
+				String maHD = rs.getString(1);
+				String maNVLap = rs.getString(2);
+				String ngaylap= rs.getString(3);
+				String maKH = rs.getString(4);
+				Double tongTien = rs.getDouble(5);
+				hdb.setMaHD(maHD);
+				hdb.setMaKH(maKH);
+				hdb.setNgayLap(ngaylap);
+				hdb.setTongTien(tongTien);
+				hdb.setMaNVLap(maNVLap);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			con.close();
+		}
+		return hdb;
+		
+	}
 	//-------------------DL CT hóa đơn bán--------------------
 	public void themCTHoaDonBanVaoSQL(CTHoaDonBan ctHDB) throws SQLException
 	{
@@ -492,25 +524,46 @@ public class ControlGiaoDien {
 		}
 		
 	}
-	/*public void capNhatThemThuocHetHan(ThongTinThuoc thuocHetHan,JPanel panel) throws SQLException // Cập nhật số lượng và hsd cho các thuốc hết hạn (đưa thuốc từ kho lên)
+	public String layNgayHeThong()
 	{
-		boolean kt = false;
+		Date today=new Date(System.currentTimeMillis());
+		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
+		//SimpleDateFormat timeFormat= new SimpleDateFormat(“hh:mm:ss dd/MM/yyyy”);
+		String s=timeFormat.format(today.getTime());
+		return s;
+	}
+	public double tinhTienLoi(String maThuoc, int soLuong)
+	{
+		try {
+			ds.docThuoc();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		double giaBan=ds.TimThuocTheoMa(maThuoc).getGiaBan();
+		double giaMua=ds.TimThuocTheoMa(maThuoc).getGiaNhap();
+		double tongTienBan = giaBan*soLuong;
+		double tongTienMua = giaMua*soLuong;
+		double tienLoi = tongTienBan-tongTienMua;
+		return tienLoi;
+	}
+	public void autoCapNhatThuocHetHan(ThongTinThuoc thuocHetHan,JPanel panel) throws SQLException // Cập nhật số lượng và hsd cho các thuốc hết hạn (đưa thuốc từ kho lên)
+	{
 		ds.docBangCTHoaDonNhap();
 		if(KiemTraTinhTrang(thuocHetHan)>0)
 		{
 			for(CTHoaDonNhap ctHDN : ds.listThuocNhap)
 				if(thuocHetHan.getMaThuoc().equals(ctHDN.getMaThuoc()) && ctHDN.getTinhTrang() == 1)
 				{
+					String tenThuoc = ds.TimThuocTheoMa(ctHDN.getMaThuoc()).getTenThuoc();
 					thuocHetHan.setSoLuong(ctHDN.getSoLuong());
 					thuocHetHan.setHsd(ctHDN.getHsd());
 					ctHDN.setTinhTrang(2);
-					kt = true;
+					JOptionPane.showMessageDialog(panel, tenThuoc+" Hết số lượng hoặc HSD và đã được cập nhật!");
 				}
 			SuaDuLieuThuocTrongSQL(thuocHetHan);
-			if(kt = false)
-				JOptionPane.showMessageDialog(panel, "Chưa có nhập thuốc này về kho!");
 		}
-	}*/
+	}
 	public void truSoLuongThuocDaBan(String maThuoc,int soLuong)
 	{
 		try {

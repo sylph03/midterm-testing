@@ -694,7 +694,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 		//--------------------------------------
 
-		layNgayHeThong();
+		txtNgay.setText(control.layNgayHeThong());
 		try {
 			ds.docThuoc();
 		} catch (SQLException e1) {
@@ -717,14 +717,6 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 	}
 
-	public void layNgayHeThong()
-	{
-		Date today=new Date(System.currentTimeMillis());
-		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd");
-		//SimpleDateFormat timeFormat= new SimpleDateFormat(“hh:mm:ss dd/MM/yyyy”);
-		String s=timeFormat.format(today.getTime());
-		txtNgay.setText(s);
-	}
 	public void themThuocTuBangVaoHoaDon() {
 		int row = tableThemThuoc.getSelectedRow();
 		if (row!=-1) {

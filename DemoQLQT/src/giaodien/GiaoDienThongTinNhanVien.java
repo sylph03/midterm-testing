@@ -182,10 +182,12 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 
 		rbtnNam = new JRadioButton("Nam");
 		rbtnNam.setBounds(86, 213, 73, 23);
+		rbtnNam.setEnabled(false);
 		panel.add(rbtnNam);
 
 		rbtnNu = new JRadioButton("Nữ");
 		rbtnNu.setBounds(192, 213, 62, 23);
+		rbtnNu.setEnabled(false);
 		panel.add(rbtnNu);
 
 
