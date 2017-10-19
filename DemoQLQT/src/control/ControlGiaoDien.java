@@ -1,6 +1,5 @@
 package control;
 
-import java.awt.Panel;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,14 +10,13 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-
-import javax.swing.UIManager;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -39,7 +37,7 @@ public class ControlGiaoDien {
 	final String filename="data.txt";
 	//////Xử lý dữ liệu bên SQL
 	//---------------DL Thuốc------------------------------
-	public void themThuocVaoSQL(ThongTinThuoc thuoc) throws SQLException
+	public boolean themThuocVaoSQL(ThongTinThuoc thuoc) throws SQLException
 	{
 		int giaNhap = (int)Math.round(thuoc.getGiaNhap());
 		int giaBan = (int)Math.round(thuoc.getGiaBan());
@@ -58,10 +56,12 @@ public class ControlGiaoDien {
 			pstmt.setInt(8,giaBan);
 			pstmt.setString(9, thuoc.getHsd());
 			pstmt.execute();
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			con.close();
+			return false;
 		}
 	}
 
@@ -731,4 +731,109 @@ public class ControlGiaoDien {
 			// TODO: handle exception
 		}
 	}
+    public ArrayList<HoaDonNhapHang> TimHDNHangTheoThang(int Thang)
+    {
+    	ArrayList<HoaDonNhapHang> ds =new ArrayList<HoaDonNhapHang>();
+    	Connection con =KetNoiSQL.getInstance().connect();
+    	try 
+    	{
+    		String sql="select * from HoaDonNhap where MONTH(NgayLap) = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Thang);
+			ResultSet rs =pstmt.executeQuery();
+			while(rs.next())
+			{
+				String mahd = rs.getString(1);
+				String ngay = rs.getString(2);
+				Double gia =rs.getDouble(3);
+				HoaDonNhapHang hd = new HoaDonNhapHang(mahd, ngay, gia);
+				ds.add(hd);
+			}
+			return ds;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return null;
+    }
+    public ArrayList<HoaDonNhapHang> TimHDNHangTheoNam(int Nam)
+    {
+    	ArrayList<HoaDonNhapHang> ds =new ArrayList<HoaDonNhapHang>();
+    	Connection con =KetNoiSQL.getInstance().connect();
+    	try 
+    	{
+    		String sql="select * from HoaDonNhap where YEAR(NgayLap) = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, Nam);
+			ResultSet rs =pstmt.executeQuery();
+			while(rs.next())
+			{
+				String mahd = rs.getString(1);
+				String ngay = rs.getString(2);
+				Double gia =rs.getDouble(3);
+				HoaDonNhapHang hd = new HoaDonNhapHang(mahd, ngay, gia);
+				ds.add(hd);
+			}
+			return ds;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return null;
+    }
+    public String DSLoaithuoc()
+    {
+    	String loai="";
+    	Connection con =  KetNoiSQL.getInstance().connect();
+    	try 
+    	{
+    		String sql="select DISTINCT  Loai from dbo.DSThuoc";
+			Statement stmt =con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next())
+			{
+				loai+=rs.getString(1)+";";
+			}
+			return loai;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return null;
+    }
+    public String DSNCC()
+    {
+    	String NCC="";
+    	Connection con =  KetNoiSQL.getInstance().connect();
+    	try 
+    	{
+    		String sql="select DISTINCT  NCC from dbo.DSThuoc";
+			Statement stmt =con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next())
+			{
+				NCC+=rs.getString(1)+";";
+			}
+			return NCC;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return null;
+    }
+    public String DSDonViTinh()
+    {
+    	String dvt="";
+    	Connection con =  KetNoiSQL.getInstance().connect();
+    	try 
+    	{
+    		String sql="select DISTINCT DonViTinh from dbo.DSThuoc";
+			Statement stmt =con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next())
+			{
+				dvt+=rs.getString(1)+";";
+			}
+			return dvt;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+    	return null;
+    }
 }

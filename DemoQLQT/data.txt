@@ -1,1 +1,1 @@
-com.jtattoo.plaf.texture.TextureLookAndFeel
+com.jtattoo.plaf.graphite.GraphiteLookAndFeel
