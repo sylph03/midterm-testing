@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -835,5 +836,19 @@ public class ControlGiaoDien {
 			// TODO: handle exception
 		}
     	return null;
+    }
+    public boolean kiemTraNgayHopLe(String date) { //đưa vào chuỗi date yyyy-MM-dd đã định dạng 
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    	java.util.Date testDate = null;
+    	try {
+			testDate =sdf.parse(date);
+		}
+    	catch (ParseException e) {
+    		return false;
+    	}
+    	if (!sdf.format(testDate).equals(date)) {
+			return false;
+		}
+    	return true;
     }
 }

@@ -14,8 +14,7 @@ NgaySinh date not null,
 SDT varchar(15),
 DiaChi nvarchar(50),
 Pass varchar(30) not null,
-CMND varchar(30) not null
-)
+CMND varchar(30) not null)
 
 create table DSThuoc
 (MaThuoc varchar(10) primary key not null,
