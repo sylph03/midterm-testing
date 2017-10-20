@@ -1,1 +1,1 @@
-com.jtattoo.plaf.mcwin.McWinLookAndFeel
+com.jtattoo.plaf.graphite.GraphiteLookAndFeel
