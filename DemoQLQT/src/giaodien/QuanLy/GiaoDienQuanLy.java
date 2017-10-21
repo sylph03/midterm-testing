@@ -2192,26 +2192,49 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		}
 		else if(e.getSource()==btnTim_DoanhthuvaBaoCao)
 		{
-			String ngay = dateformat.format(datechooserNgay_DoanthuvaBaocao.getDate());
+			xoaRowtrongTable();
 			String mnv ="";
+			ArrayList<HoaDonBanHang> hoadon=null;
 			if(!txtMaNV_BaoCaovaDoanhThu.getText().equals("Nhập mã nv nếu muốn"))
 			{
 				mnv=txtMaNV_BaoCaovaDoanhThu.getText();
 			}
-			JOptionPane.showMessageDialog(panelDoanhThuvaBaoCao,mnv);
-			for(HoaDonBanHang hd : ds.listHDB)
+			if(rdbtnHientatca_Doanhthu.isSelected())
+			{
+				hoadon=ds.listHDB;
+			}
+			else if(rdbtnTimTheoNgay_Doanhthu.isSelected())
+			{
+				String ngay = dateformat.format(datechooserNgay_DoanthuvaBaocao.getDate());
+				hoadon=control.TimHDNBanTheoNgay(ngay);
+			}
+			else if(rdbtnTimtheoThang_Doanhthu.isSelected())
+			{
+				int thang = datechooserNgay_DoanthuvaBaocao.getDate().getMonth()+1;
+				hoadon=control.TimHDNBanTheoThang(thang);
+			}
+			else if(rdbtnTimTheoNam_Doanhthu.isSelected())
+			{
+				int nam = datechooserNgay_DoanthuvaBaocao.getDate().getYear()+1900;
+				hoadon=control.TimHDNBanTheoNam(nam);
+			}
+			for(HoaDonBanHang hd : hoadon)
 			{
 				if(mnv.equals(""))
 				{
-					if(hd.getNgayLap().equals(ngay))
+					Object[] row = {hd.getMaNVLap(),ds.TimNVTheoMa(hd.getMaNVLap()).getHoTenNV(),hd.getNgayLap(),hd.getTongTien()};
+					tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.addRow(row);
+				}
+				else
+				{
+					if(hd.getMaNVLap().equalsIgnoreCase(mnv))
 					{
-						Object[] row = {hd.getMaNVLap(),ds.TimNVTheoMa(hd.getMaNVLap()),hd.getNgayLap(),hd.getTongTien()};
-						tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao.addRow(row);
+						Object[] row = {hd.getMaNVLap(),ds.TimNVTheoMa(hd.getMaNVLap()).getHoTenNV(),hd.getNgayLap(),hd.getTongTien()};
+						tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.addRow(row);
 					}
 				}
-				
 			}
-		}
+		}	
 		else if(e.getSource()==btnLuu_DanhSach_DanhSachNhanVien)
 		{
 			String maNV = txtMaNV_DanhSach_DanhSachNV.getText();
@@ -2296,7 +2319,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 		for(HoaDonBanHang hdb : ds.listHDB)
 		{
-			Object[] row = {hdb.getMaHD(),hdb.getMaNVLap(),(ds.timNVTheoMa(hdb.getMaNVLap())).getHoTenNV(),hdb.getTongTien()};
+			Object[] row = {hdb.getMaNVLap(),ds.TimNVTheoMa(hdb.getMaNVLap()).getHoTenNV(),hdb.getNgayLap(),hdb.getTongTien()};
 			tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.addRow(row);
 		}
 		for(CTHoaDonBan ctHDB : ds.listThuocBan)
@@ -2477,5 +2500,5 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			CBModelDonViTinh_NhapHang_ThemThuoc.addElement(DVT[i]);
 		}
 	}
-	
+
 }

@@ -863,4 +863,109 @@ public class ControlGiaoDien {
 		}
 		return null;
 	}
+	public ArrayList<HoaDonBanHang> DanhSachDoanhThu(String ngay)
+	{
+		ArrayList<HoaDonBanHang> dshang =new ArrayList<HoaDonBanHang>();;
+		Connection con = KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sqltimnam="select * from [HoaDon] where year([NgayLap]) = ? order by [NgayLap]";
+			PreparedStatement pstmt = con.prepareStatement(sqltimnam);
+			pstmt.setString(1, ngay);
+			ResultSet rs =pstmt.executeQuery();
+			while(rs.next())
+			{
+				String maHD = rs.getString(1);
+				String ngayLap = rs.getString(3);
+				String maNVLap = rs.getString(2);
+				String maKH = rs.getString(4);
+				Double tongTien= rs.getDouble(5);
+				HoaDonBanHang hdb = new HoaDonBanHang(maHD, ngayLap, maNVLap, maKH, tongTien);
+				dshang.add(hdb);
+			}
+			return dshang;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+		
+	}
+	public ArrayList<HoaDonBanHang> TimHDNBanTheoNgay(String ngay)
+	{
+		ArrayList<HoaDonBanHang> ds =new ArrayList<HoaDonBanHang>();
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from HoaDon where NgayLap = ? order by NgayLap";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ngay);
+			ResultSet rs =pstmt.executeQuery();
+			while(rs.next())
+			{
+				String maHD = rs.getString(1);
+				String ngayLap = rs.getString(3);
+				String maNVLap = rs.getString(2);
+				String maKH = rs.getString(4);
+				Double tongTien= rs.getDouble(5);
+				HoaDonBanHang hdb = new HoaDonBanHang(maHD, ngayLap, maNVLap, maKH, tongTien);
+				ds.add(hdb);
+			}
+			return ds;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	public ArrayList<HoaDonBanHang> TimHDNBanTheoThang(int thang)
+	{
+		ArrayList<HoaDonBanHang> ds =new ArrayList<HoaDonBanHang>();
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from HoaDon where MONTH(NgayLap) = ? order by NgayLap";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, thang);
+			ResultSet rs =pstmt.executeQuery();
+			while(rs.next())
+			{
+				String maHD = rs.getString(1);
+				String ngayLap = rs.getString(3);
+				String maNVLap = rs.getString(2);
+				String maKH = rs.getString(4);
+				Double tongTien= rs.getDouble(5);
+				HoaDonBanHang hdb = new HoaDonBanHang(maHD, ngayLap, maNVLap, maKH, tongTien);
+				ds.add(hdb);
+			}
+			return ds;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	public ArrayList<HoaDonBanHang> TimHDNBanTheoNam(int nam)
+	{
+		ArrayList<HoaDonBanHang> ds =new ArrayList<HoaDonBanHang>();
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from HoaDon where YEAR(NgayLap) = ? order by NgayLap";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, nam);
+			ResultSet rs =pstmt.executeQuery();
+			while(rs.next())
+			{
+				String maHD = rs.getString(1);
+				String ngayLap = rs.getString(3);
+				String maNVLap = rs.getString(2);
+				String maKH = rs.getString(4);
+				Double tongTien= rs.getDouble(5);
+				HoaDonBanHang hdb = new HoaDonBanHang(maHD, ngayLap, maNVLap, maKH, tongTien);
+				ds.add(hdb);
+			}
+			return ds;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
 }
