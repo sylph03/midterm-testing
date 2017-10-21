@@ -61,8 +61,14 @@ public class DanhSachDuLieu {
 		return thuocmoi;
 	}
 
-	public ThongTinThuoc TimThuocTheoMa(String ma)
+	public ThongTinThuoc TimThuocTheoMa(String ma) 
 	{
+		try {
+			docThuoc();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (ThongTinThuoc thuoc : listThuoc)
 			if(thuoc.getMaThuoc().equalsIgnoreCase(ma))
 				return thuoc;

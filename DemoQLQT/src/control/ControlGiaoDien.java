@@ -334,6 +334,24 @@ public class ControlGiaoDien {
 		}
 		return false;
 	}
+	
+	public void suaTinhTrangHDN(String maHDN) throws SQLException
+	{
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="update ChiTietHoaDonNhap set TinhTrang=? where MaHDN = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "2");
+			pstmt.setString(2, maHDN);
+			pstmt.executeUpdate();
+		} catch (Exception e) 
+		{
+			// TODO: handle exception
+			e.printStackTrace();	
+			con.close();
+		}
+	}
 	//-------------------DL CT hóa đơn nhập--------------------
 	public void themCTHoaDonNhapVaoSQL(CTHoaDonNhap ctHDN) throws SQLException
 	{
@@ -494,27 +512,29 @@ public class ControlGiaoDien {
 			String[] hsd=thuoc.getHsd().split("-");
 			int ngay,thang,nam;
 			int ngayhsd,thanghsd,namhsd;
-			ngay=Integer.parseInt(ngayhientai[0]);
+			ngay=Integer.parseInt(ngayhientai[2]);
 			thang=Integer.parseInt(ngayhientai[1]);
-			nam=Integer.parseInt(ngayhientai[2]);
-			ngayhsd=Integer.parseInt(hsd[0]);
+			nam=Integer.parseInt(ngayhientai[0]);
+			ngayhsd=Integer.parseInt(hsd[2]);
 			thanghsd=Integer.parseInt(hsd[1]);
-			namhsd=Integer.parseInt(hsd[2]);
-			if(nam<=namhsd)
+			namhsd=Integer.parseInt(hsd[0]);
+			if(nam==namhsd)
 			{
-				if(thang<=thanghsd)
+				if(thang==thanghsd)
 				{
-					if(ngay<=ngayhsd)
-					{
+					if(ngay<ngayhsd)
 						return 0;
-					}
 					else
 						return 1;
-				}
+				}	
+				if(thang<thanghsd)
+					return 0;
 				else
 					return 1;
-			}
-			else
+			}		
+			if(nam<namhsd)
+				return 0;
+			else		//năm > năm hsd
 				return 1;
 		}
 		else
@@ -559,7 +579,7 @@ public class ControlGiaoDien {
 					String tenThuoc = ds.TimThuocTheoMa(ctHDN.getMaThuoc()).getTenThuoc();
 					thuocHetHan.setSoLuong(ctHDN.getSoLuong());
 					thuocHetHan.setHsd(ctHDN.getHsd());
-					ctHDN.setTinhTrang(2);
+					suaTinhTrangHDN(ctHDN.getMaHDN());
 					JOptionPane.showMessageDialog(panel, tenThuoc+" Hết số lượng hoặc HSD và đã được cập nhật!");
 				}
 			SuaDuLieuThuocTrongSQL(thuocHetHan);
