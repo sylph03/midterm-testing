@@ -64,6 +64,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 	GiaoDienDangNhap dn;
 	MaskFormatter formattextsl,formatextcmnd_sdt;
 	ControlGiaoDien control = new ControlGiaoDien() ;
+	GiaoDienThongTinNhanVien thongtinNV = new GiaoDienThongTinNhanVien();
 	DanhSachDuLieu ds = new DanhSachDuLieu();
 	private JCheckBox chkKeDon;
 	private JTextArea txtAMota;
@@ -145,6 +146,12 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnHuy.setToolTipText("Esc");
 		btnHuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				txtTenThuoc_TimKiem.setText("");
+				txtSoLuong.setText("");
+				txtSoLuong_BangThemThuoc.setText("");
+				txtTongTien.setText("");
+				for(int i = tablemode.getRowCount()-1;i>=0;i--)
+					tablemode.removeRow(i);
 				dispose();
 			}
 		});
@@ -218,7 +225,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThongTinNhanVien.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/user.png")));
 		btnThongTinNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new GiaoDienThongTinNhanVien().setVisible(true);
+				thongtinNV.setVisible(true);
 
 			}
 		});
@@ -339,7 +346,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		panelThongtinKH.add(cbbNgay);
 
 		cbbThang = new JComboBox(new Object[]{});
-		cbbThang.setModel(new DefaultComboBoxModel(new String[] {"All--", "01", "02", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
+		cbbThang.setModel(new DefaultComboBoxModel(new String[] {"All--", "01", "02","03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		cbbThang.setEnabled(false);
 		cbbThang.setEditable(false);
 		cbbThang.setBounds(143, 76, 46, 20);
@@ -435,13 +442,6 @@ public class GiaoDienLapHoaDon extends JFrame {
 		txtTenThuoc_TimKiem.setBounds(75, 249, 142, 21);
 		panelDienThongTin.add(txtTenThuoc_TimKiem);
 
-		try {
-			formattextsl = new MaskFormatter("###");
-		} catch (ParseException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-
 		txtSoLuong = new JTextField();
 		txtSoLuong.setToolTipText("Vui lòng nhập số: ");
 		txtSoLuong.setColumns(10);
@@ -460,6 +460,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 					if (sel == JOptionPane.YES_OPTION)
 						tablemode.removeRow(row);
 				}
+				txtTongTien.setText(tongTien(tablemode)+"");
 			}
 		});
 		btnXoa.setToolTipText("Xóa");
@@ -470,6 +471,11 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThemNangCao.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/more_01.png")));
 		btnThemNangCao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				for(ThongTinThuoc thuoc : ds.listThuoc)
+				{
+					Object[] row ={thuoc.getTenThuoc(),thuoc.getSoLuong(),thuoc.getDonViTinh(),thuoc.getGiaBan()};
+					tablemodelBangThemThuoc.addRow(row);
+				}
 				panelBangThemThuoc.setVisible(true);
 				panelDienThongTin.setVisible(false);
 			}
@@ -600,7 +606,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThem_BangThemThuoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int row = tableThemThuoc.getSelectedRow();
-				
+
 				if (row==-1)
 					JOptionPane.showMessageDialog(panelBangThemThuoc, "Vui lòng chọn thuốc cần thêm !!!");
 				else {
@@ -653,12 +659,13 @@ public class GiaoDienLapHoaDon extends JFrame {
 				panelDienThongTin.setVisible(true);
 			}
 		});
-		btnHuyBangThemThuoc.setToolTipText("Xong");
-		btnHuyBangThemThuoc.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/button_cancel.png")));
+		btnHuyBangThemThuoc.setToolTipText("Quay lại");
+		btnHuyBangThemThuoc.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/back4848.png")));
 		btnHuyBangThemThuoc.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnHuyBangThemThuoc.setBounds(390, 193, 64, 64);
 		panelBangThemThuoc.add(btnHuyBangThemThuoc);
 
+		//------tìm kiếm có gợi ý-------------
 		listmodel =new DefaultListModel<String>();
 		list = new JList<String>(listmodel);
 		list.setBounds(76, 280, 143, 107);
@@ -684,7 +691,6 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 			}
 		});
-
 		getContentPane().add(scrollPane_1 = new JScrollPane(table =new JTable(tablemode)));
 		scrollPane_1.setSize(464, 194);
 		scrollPane_1.setLocation(10, 290);
@@ -701,15 +707,9 @@ public class GiaoDienLapHoaDon extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		for(ThongTinThuoc thuoc : ds.listThuoc)
-		{
-			Object[] row ={thuoc.getTenThuoc(),thuoc.getSoLuong(),thuoc.getDonViTinh(),thuoc.getGiaBan()};
-			tablemodelBangThemThuoc.addRow(row);
-		}
-
 		btnXoq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				luuTTHoaDon();
+				luuToanBoTTHoaDon();
 			}	
 		});
 
@@ -739,96 +739,123 @@ public class GiaoDienLapHoaDon extends JFrame {
 		}
 		return tong;
 	}
-	public void luuTTHoaDon() {
+
+	//---------------------các hàm của lập hóa đơn--------------------
+	public void luuToanBoTTHoaDon() {
 		if(table.getRowCount()>=1)
 		{
-			HoaDonBanHang hdb = new HoaDonBanHang();
-			hdb.setMaHD(txtMa.getText()+"");
-			hdb.setMaNVLap(txtNguoiLap.getText()+"");
-			hdb.setNgayLap(txtNgay.getText()+"");
-			hdb.setMaKH(txtCMND.getText()+"");
-			hdb.setTongTien(Double.parseDouble(txtTongTien.getText()+""));
+			if(chkKeDon.isSelected())
+			{	
+				String date = control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam);
+				String sdt = txtSDT.getText()+"";
+				String cmnd = txtCMND.getText()+"";
+				if (kiemTraTTKH(sdt, cmnd, date)) {
+					luuHD();
+					luuCTHD();
+					luuKhachHang();
+					dispose();
+					JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (có lưu thông tin khách hàng)");
+				}
+				else {
+					if (!control.kiemTraCMND(txtCMND.getText()))
+						JOptionPane.showMessageDialog(panelDienThongTin, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 8 CHỮ SỐ");
+					if(!control.kiemTraSDT(txtSDT.getText()))
+						JOptionPane.showMessageDialog(panelDienThongTin, "SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ");
+					if (!control.kiemTraNgayHopLe(date))
+						JOptionPane.showMessageDialog(panelDienThongTin, "Ngày sinh của khách hàng không hợp lệ !! ");
+				}
+			}
+			else {
+				luuHD();
+				luuCTHD();
+				dispose();
+				JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (không lưu thông tin khách hàng)");
+			}
+		}
+		else
+			JOptionPane.showMessageDialog(panelDienThongTin, "Danh sách thuốc bán không được rỗng!");
+	}
+
+	public void luuHD() {
+		HoaDonBanHang hdb = new HoaDonBanHang();
+		hdb.setMaHD(txtMa.getText()+"");
+		hdb.setMaNVLap(txtNguoiLap.getText()+"");
+		hdb.setNgayLap(txtNgay.getText()+"");
+		hdb.setMaKH(txtCMND.getText()+"");
+		hdb.setTongTien(Double.parseDouble(txtTongTien.getText()+""));
+		try {
+			control.themHDBVaoSQL(hdb);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void luuCTHD() {
+		for(int i=table.getRowCount()-1;i>=0;i--)
+		{
+			String tenThuoc = tablemode.getValueAt(i, 0)+"";
+			String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
+			int soLuong = Integer.parseInt(tablemode.getValueAt(i, 1)+"");
+			CTHoaDonBan ctHDB = new CTHoaDonBan();
+			ctHDB.setMaHD(txtMa.getText()+"");
+			ctHDB.setMaThuoc(maThuoc);
+			ctHDB.setTenThuoc(tenThuoc);
+			ctHDB.setSoLuong(soLuong);
+			ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
 			try {
-				control.themHDBVaoSQL(hdb);
+				control.themCTHoaDonBanVaoSQL(ctHDB);
+				control.truSoLuongThuocDaBan(maThuoc,soLuong);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			for(int i=table.getRowCount()-1;i>=0;i--)
+		}
+	}
+
+	public void luuKhachHang() {
+		boolean kt = false;
+		KhachHang kh = new KhachHang();
+		kh.setCMND(txtCMND.getText());
+		kh.setHoTenKH(txtTenKH.getText());
+		kh.setNgaySinh( control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam));
+		kh.setSdt(txtSDT.getText());
+		kh.setMoTaKH(txtAMota.getText());
+		try {
+			ds.docBangKhachHang();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(KhachHang kh1 : ds.listKhachHang)
+		{
+			if(kh1.getCMND().equals(txtCMND.getText()))
 			{
-				String tenThuoc = tablemode.getValueAt(i, 0)+"";
-				String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
-				int soLuong = Integer.parseInt(tablemode.getValueAt(i, 1)+"");
-				CTHoaDonBan ctHDB = new CTHoaDonBan();
-				ctHDB.setMaHD(txtMa.getText()+"");
-				ctHDB.setMaThuoc(maThuoc);
-				ctHDB.setTenThuoc(tenThuoc);
-				ctHDB.setSoLuong(soLuong);
-				ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
+
 				try {
-					control.themCTHoaDonBanVaoSQL(ctHDB);
-					control.truSoLuongThuocDaBan(maThuoc,soLuong);
+					control.suaDuLieuKhachHangTrongSQL(kh);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				kt = true;
 			}
-			if(!(txtCMND.getText()).equals(""))
-			{
-				boolean kt = false;
-				KhachHang kh = new KhachHang();
-				if ((control.kiemTraCMND(txtCMND.getText())==true) && (control.kiemTraSDT(txtSDT.getText())==true)) {
-					kh.setCMND(txtCMND.getText());
-					kh.setHoTenKH(txtTenKH.getText());
-					kh.setNgaySinh(control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam));
-					kh.setSdt(txtSDT.getText());
-					kh.setMoTaKH(txtAMota.getText());
-					try {
-						ds.docBangKhachHang();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					for(KhachHang kh1 : ds.listKhachHang)
-					{
-						if(kh1.getCMND().equals(txtCMND.getText()))
-						{
-
-							try {
-								control.suaDuLieuKhachHangTrongSQL(kh);
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							kt = true;
-						}
-					}
-					if(kt == false)
-					{
-						try {
-							control.themKHVaoSQL(kh);
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					}
-					setVisible(false);
-					
-				}
-				
-				else {
-					if (control.kiemTraCMND(txtCMND.getText())==false)
-						JOptionPane.showMessageDialog(panelDienThongTin, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 8 CHỮ SỐ");
-					if(control.kiemTraSDT(txtSDT.getText())==false)
-						JOptionPane.showMessageDialog(panelDienThongTin, "SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ");
-				}
-				
-			}
-			dispose();
-			
 		}
-		else
-			JOptionPane.showMessageDialog(panelDienThongTin, "Danh sách thuốc bán không được rỗng!");
+		if(kt == false)
+		{
+			try {
+				control.themKHVaoSQL(kh);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+	//------------------kết thúc các hàm của lâp hóa đơn--------------------------------
+	public boolean kiemTraTTKH(String sdt, String cmnd,String ngaysinh) {
+		if ((control.kiemTraCMND(cmnd)) && (control.kiemTraSDT(sdt)) && (control.kiemTraNgayHopLe(ngaysinh)))
+			return true;
+		return false;
 	}
 }

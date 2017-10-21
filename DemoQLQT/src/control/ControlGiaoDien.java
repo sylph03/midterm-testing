@@ -11,13 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import entity.CTHoaDonBan;
@@ -239,7 +240,7 @@ public class ControlGiaoDien {
 			con.close();
 		}
 	}
-	
+
 	public HoaDonBanHang timHDBtheoMa(String maHDB) throws SQLException
 	{
 		HoaDonBanHang hdb = new HoaDonBanHang();
@@ -269,7 +270,7 @@ public class ControlGiaoDien {
 			con.close();
 		}
 		return hdb;
-		
+
 	}
 	//-------------------DL CT hóa đơn bán--------------------
 	public void themCTHoaDonBanVaoSQL(CTHoaDonBan ctHDB) throws SQLException
@@ -522,7 +523,7 @@ public class ControlGiaoDien {
 				return 2;
 			return 0;
 		}
-		
+
 	}
 	public String layNgayHeThong()
 	{
@@ -583,7 +584,7 @@ public class ControlGiaoDien {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
-		
+
 	}
 
 	//-------------------Lưu chủ đề-----------------
@@ -624,122 +625,102 @@ public class ControlGiaoDien {
 	}
 	public boolean kiemTraDuLieuSo(String s) {
 		int soKiTuSo = 0,soKiTuChu= 0;
-        for(int i=0;i<s.length();i++){
-        	if(Character.isLetter(s.charAt(i))) 
-        		soKiTuChu++; //đếm số chữ
+		for(int i=0;i<s.length();i++){
+			if(Character.isLetter(s.charAt(i))) 
+				soKiTuChu++; //đếm số chữ
 			else if(Character.isDigit(s.charAt(i))) 
 				soKiTuSo++;//đếm các số trong chuỗi                   
-            }
-        if (soKiTuChu==0 && soKiTuSo>=0)
-        	return true;
+		}
+		if (soKiTuChu==0 && soKiTuSo>=0)
+			return true;
 		return false;
 	}
 	public boolean kiemTraDuLieuChu(String s) {
 		int soKiTuSo = 0,soKiTuChu= 0;
-        for(int i=0;i<s.length();i++){
-        	if(Character.isLetter(s.charAt(i))) 
-        		soKiTuChu++; //đếm số chữ
+		for(int i=0;i<s.length();i++){
+			if(Character.isLetter(s.charAt(i))) 
+				soKiTuChu++; //đếm số chữ
 			else if(Character.isDigit(s.charAt(i))) 
 				soKiTuSo++;//đếm các số trong chuỗi                   
-            }
-        if (soKiTuChu>=0 && soKiTuSo==0)
-        	return true;
+		}
+		if (soKiTuChu>=0 && soKiTuSo==0)
+			return true;
 		return false;
 	}
-    public int demSoKiTuSo1Chuoi(String s) {
-        int soKiTuSo = 0,soKiTu= 0;
-        for(int i=0;i<s.length();i++){
-        	if(Character.isLetter(s.charAt(i))) 
-        		soKiTu++; //đếm số chữ
+	public int demSoKiTuSo1Chuoi(String s) {
+		int soKiTuSo = 0,soKiTu= 0;
+		for(int i=0;i<s.length();i++){
+			if(Character.isLetter(s.charAt(i))) 
+				soKiTu++; //đếm số chữ
 			else if(Character.isDigit(s.charAt(i))) 
 				soKiTuSo++;//đếm các số trong chuỗi                   
-            }
-        return soKiTuSo;
-    }
-    public boolean kiemTraCMND(String cmnd) {
-    	if ((kiemTraDuLieuSo(cmnd)==true) && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==8))
-    		return true;
-    	return false;
-    }
-    public boolean kiemTraSDT(String sdt) {
-    	if ((kiemTraDuLieuSo(sdt)==true) && (demSoKiTuSo1Chuoi(sdt) == 11 || demSoKiTuSo1Chuoi(sdt)==10))
-    		return true;
-    	return false;
-    }
-//    public boolean kiemTraNgayThangNam(int ngay, int thang, int nam) {
-//    	int ngayMax;
-//    	switch (thang) {
-//		case 1:
-//			ngayMax=31;
-//			break;
-//		case 3:
-//			ngayMax=31;
-//			break;
-//		case 5:
-//			ngayMax=31;
-//			break;
-//		case 7:
-//			ngayMax=31;
-//			break;
-//		case 8:
-//			ngayMax=31;
-//			break;
-//		case 10:
-//			ngayMax=31;
-//			break;
-//		case 12:
-//			ngayMax=31;
-//			break;
-//		case 2:
-//			if (nam%4==0)
-//				ngayMax=29;
-//			else
-//				ngayMax=28;
-//			break;
-//		case 1:
-//			ngayMax=31;
-//			break;
-//		case 1:
-//			ngayMax=31;
-//			break;
-//		case 1:
-//			ngayMax=31;
-//			break;
-//		default:
-//			break;
-//		}
-//    	
-//    	return false;
-//    }
-    public void GhiEXECL(String fileName)
-	{
-		 WritableWorkbook workbook;
+		}
+		return soKiTuSo;
+	}
+	public boolean kiemTraCMND(String cmnd) {
+		if ((kiemTraDuLieuSo(cmnd)==true) && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==8))
+			return true;
+		return false;
+	}
+	public boolean kiemTraSDT(String sdt) {
+		if ((kiemTraDuLieuSo(sdt)==true) && (demSoKiTuSo1Chuoi(sdt) == 11 || demSoKiTuSo1Chuoi(sdt)==10))
+			return true;
+		return false;
+	}
+
+	//
+	public boolean kiemTraNgayHopLe(String date) { //đưa vào chuỗi date yyyy-MM-dd đã định dạng 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		java.util.Date testDate = null;
 		try {
-		
+			testDate =sdf.parse(date);
+		}
+		catch (ParseException e) {
+			return false;
+		}
+		if (!sdf.format(testDate).equals(date)) {
+			return false;
+		}
+		return true;
+	}
+	//
+	public void GhiEXECL(String fileName,String chuoi)
+	{	 
+		WritableWorkbook workbook;
+		try {
+
 			//Tạo file excel
-			 workbook = Workbook.createWorkbook(new File(fileName));
-			
+			workbook = Workbook.createWorkbook(new File(fileName));
 			// Tạo Sheel trong file
 			WritableSheet sheet1 = workbook.createSheet("Báo cáo thu chi",0);
-			// Đưa arraylisst báo cáo doanh thu vào
-			sheet1.addCell(new Label(0, 0, "Hello"));
-			 // write file
-            workbook.write();
-            // close
-            workbook.close();
+			// Cắt chuỗi
+			String[] data=chuoi.split(";");
+			for(int row=0,run=0;run<=data.length-1;run++,row++)
+			{
+				for(int col=0;col<=1;col++)
+				{
+					sheet1.addCell(new Label(row,col,data[run]));
+				}
+
+			}
+			// write file
+			workbook.write();
+			// close
+			workbook.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-    public ArrayList<HoaDonNhapHang> TimHDNHangTheoThang(int Thang)
-    {
-    	ArrayList<HoaDonNhapHang> ds =new ArrayList<HoaDonNhapHang>();
-    	Connection con =KetNoiSQL.getInstance().connect();
-    	try 
-    	{
-    		String sql="select * from HoaDonNhap where MONTH(NgayLap) = ?";
+	public ArrayList<HoaDonNhapHang> TimHDNHangTheoThang(int Thang,int Nam)
+	{
+		ArrayList<HoaDonNhapHang> ds =new ArrayList<HoaDonNhapHang>();
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from HoaDonNhap where MONTH(NgayLap) = ? and YEAR(NgayLap) = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Thang);
+			pstmt.setInt(2, Nam);
 			ResultSet rs =pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -753,15 +734,15 @@ public class ControlGiaoDien {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-    	return null;
-    }
-    public ArrayList<HoaDonNhapHang> TimHDNHangTheoNam(int Nam)
-    {
-    	ArrayList<HoaDonNhapHang> ds =new ArrayList<HoaDonNhapHang>();
-    	Connection con =KetNoiSQL.getInstance().connect();
-    	try 
-    	{
-    		String sql="select * from HoaDonNhap where YEAR(NgayLap) = ?";
+		return null;
+	}
+	public ArrayList<HoaDonNhapHang> TimHDNHangTheoNam(int Nam)
+	{
+		ArrayList<HoaDonNhapHang> ds =new ArrayList<HoaDonNhapHang>();
+		Connection con =KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from HoaDonNhap where YEAR(NgayLap) = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Nam);
 			ResultSet rs =pstmt.executeQuery();
@@ -777,15 +758,15 @@ public class ControlGiaoDien {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-    	return null;
-    }
-    public String DSLoaithuoc()
-    {
-    	String loai="";
-    	Connection con =  KetNoiSQL.getInstance().connect();
-    	try 
-    	{
-    		String sql="select DISTINCT  Loai from dbo.DSThuoc";
+		return null;
+	}
+	public String DSLoaithuoc()
+	{
+		String loai="";
+		Connection con =  KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select DISTINCT  Loai from dbo.DSThuoc";
 			Statement stmt =con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
@@ -796,15 +777,15 @@ public class ControlGiaoDien {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-    	return null;
-    }
-    public String DSNCC()
-    {
-    	String NCC="";
-    	Connection con =  KetNoiSQL.getInstance().connect();
-    	try 
-    	{
-    		String sql="select DISTINCT  NCC from dbo.DSThuoc";
+		return null;
+	}
+	public String DSNCC()
+	{
+		String NCC="";
+		Connection con =  KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select DISTINCT  NCC from dbo.DSThuoc";
 			Statement stmt =con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
@@ -815,15 +796,15 @@ public class ControlGiaoDien {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-    	return null;
-    }
-    public String DSDonViTinh()
-    {
-    	String dvt="";
-    	Connection con =  KetNoiSQL.getInstance().connect();
-    	try 
-    	{
-    		String sql="select DISTINCT DonViTinh from dbo.DSThuoc";
+		return null;
+	}
+	public String DSDonViTinh()
+	{
+		String dvt="";
+		Connection con =  KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select DISTINCT DonViTinh from dbo.DSThuoc";
 			Statement stmt =con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
@@ -834,6 +815,6 @@ public class ControlGiaoDien {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-    	return null;
-    }
+		return null;
+	}
 }
