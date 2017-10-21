@@ -340,7 +340,7 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="update ChiTietHoaDonNhap set TinhTrang=? where MaHDN = ?";
+			String sql="update ChiTietHoaDonNhap set TinhTrang=? where MaThuoc = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "2");
 			pstmt.setString(2, maHDN);
@@ -579,7 +579,7 @@ public class ControlGiaoDien {
 					String tenThuoc = ds.TimThuocTheoMa(ctHDN.getMaThuoc()).getTenThuoc();
 					thuocHetHan.setSoLuong(ctHDN.getSoLuong());
 					thuocHetHan.setHsd(ctHDN.getHsd());
-					suaTinhTrangHDN(ctHDN.getMaHDN());
+					suaTinhTrangHDN(ctHDN.getMaThuoc());
 					JOptionPane.showMessageDialog(panel, tenThuoc+" Hết số lượng hoặc HSD và đã được cập nhật!");
 				}
 			SuaDuLieuThuocTrongSQL(thuocHetHan);
