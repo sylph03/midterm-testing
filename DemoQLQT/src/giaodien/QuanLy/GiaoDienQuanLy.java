@@ -795,8 +795,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		});
 		btnXuatBaoCao_DoanhThu_BaoCao.setBounds(10, 290, 141, 23);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(btnXuatBaoCao_DoanhThu_BaoCao);
-		TongDoanhThu_DoanhThu_DoanhThu.setText(control.tongDoanhThu(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao,3)+"");
-		TongTienLoi_DoanhThu_BaoCao.setText(control.tongDoanhThu(tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao, 4)+"");
 
 
 		panelNhapHang = new JPanel();
@@ -1967,6 +1965,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		TaiTinhTrangThuoc();
 		MoKhoaTextFeilDanhSachThuoc(false);
 		MoKhoaTextFeilDanhSachNV(false);
+		TongDoanhThu_DoanhThu_DoanhThu.setText(control.tongDoanhThu(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao,3)+"");
+		TongTienLoi_DoanhThu_BaoCao.setText(control.tongDoanhThu(tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao, 4)+"");
 		for(int i = tableTinhTrangThuoc_TinhTrang.getRowCount()-1;i>=0;i--)
 		{
 			ThongTinThuoc thuoc = new ThongTinThuoc();

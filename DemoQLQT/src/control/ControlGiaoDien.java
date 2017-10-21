@@ -692,7 +692,7 @@ public class ControlGiaoDien {
 		return soKiTuSo;
 	}
 	public boolean kiemTraCMND(String cmnd) {
-		if ((kiemTraDuLieuSo(cmnd)==true) && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==8))
+		if ((kiemTraDuLieuSo(cmnd)==true) && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==9))
 			return true;
 		return false;
 	}
