@@ -335,4 +335,8 @@ public class DanhSachDuLieu {
 		}
 		return -1;
 	}
+	public void LocbangDoanhthu(String ngay )
+	{
+		
+	}
 }

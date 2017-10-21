@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ import entity.HoaDonNhapHang;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.ThongTinThuoc;
+import jxl.CellType;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
@@ -549,7 +552,6 @@ public class ControlGiaoDien {
 	{
 		Date today=new Date(System.currentTimeMillis());
 		SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd");
-		//SimpleDateFormat timeFormat= new SimpleDateFormat(“hh:mm:ss dd/MM/yyyy”);
 		String s=timeFormat.format(today.getTime());
 		return s;
 	}
@@ -570,20 +572,32 @@ public class ControlGiaoDien {
 	}
 	public void autoCapNhatThuocHetHan(ThongTinThuoc thuocHetHan,JPanel panel) throws SQLException // Cập nhật số lượng và hsd cho các thuốc hết hạn (đưa thuốc từ kho lên)
 	{
+		String dsthuoc="";
 		ds.docBangCTHoaDonNhap();
 		if(KiemTraTinhTrang(thuocHetHan)>0)
 		{
 			for(CTHoaDonNhap ctHDN : ds.listThuocNhap)
-				if(thuocHetHan.getMaThuoc().equals(ctHDN.getMaThuoc()) && ctHDN.getTinhTrang() == 1)
+			{
+				if(ctHDN.getTinhTrang()==1)
 				{
-					String tenThuoc = ds.TimThuocTheoMa(ctHDN.getMaThuoc()).getTenThuoc();
-					thuocHetHan.setSoLuong(ctHDN.getSoLuong());
-					thuocHetHan.setHsd(ctHDN.getHsd());
-					suaTinhTrangHDN(ctHDN.getMaThuoc());
-					JOptionPane.showMessageDialog(panel, tenThuoc+" Hết số lượng hoặc HSD và đã được cập nhật!");
+					if(thuocHetHan.getMaThuoc().equals(ctHDN.getMaThuoc()) && ctHDN.getTinhTrang() == 1 || ctHDN.getTinhTrang() == 2)
+					{
+					
+						String tenThuoc = ds.TimThuocTheoMa(ctHDN.getMaThuoc()).getTenThuoc();
+						thuocHetHan.setSoLuong(ctHDN.getSoLuong());
+						thuocHetHan.setHsd(ctHDN.getHsd());
+						suaTinhTrangHDN(ctHDN.getMaThuoc());
+						SuaDuLieuThuocTrongSQL(thuocHetHan);
+						dsthuoc+=tenThuoc+"\n";
+					}
 				}
-			SuaDuLieuThuocTrongSQL(thuocHetHan);
+			}
 		}
+		if(!dsthuoc.equals(""))
+		{
+			JOptionPane.showMessageDialog(panel,"Các thuốc sau : \n"+dsthuoc+"đã hết số lượng hoặc HSD và đã được cập nhật!");
+		}
+		
 	}
 	public void truSoLuongThuocDaBan(String maThuoc,int soLuong)
 	{
@@ -714,14 +728,26 @@ public class ControlGiaoDien {
 			// Tạo Sheel trong file
 			WritableSheet sheet1 = workbook.createSheet("Báo cáo thu chi",0);
 			// Cắt chuỗi
+			// row bắt đầu và col bắt đầu
+			int rowstart=1,colstart =0;
 			String[] data=chuoi.split(";");
-			for(int row=0,run=0;run<=data.length-1;run++,row++)
+			String[] header ="Mã;Tên;Số lượng;Đơn vị tính;Tiền lời;".split(";");
+			for(int run =0,col=0;run<header.length;run++,col++)
 			{
-				for(int col=0;col<=1;col++)
+				sheet1.addCell(new Label(col,0,header[run]));	
+			}
+			for(int run=0;run<=data.length-1;run++,colstart++)
+			{
+				if ((run+1)%6!=0) 
 				{
-					sheet1.addCell(new Label(row,col,data[run]));
+				
 				}
-
+				else
+				{
+					rowstart++;
+					colstart=0;
+				}
+				sheet1.addCell(new Label(colstart,rowstart,data[run]));
 			}
 			// write file
 			workbook.write();
