@@ -615,7 +615,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 
 		panelDanhSach = new JPanel();
-		layeredPane.setLayer(panelDanhSach, 1);
+		layeredPane.setLayer(panelDanhSach, 0);
 
 		panelDanhSach.setBounds(0, 0, 795, 484);
 		layeredPane.add(panelDanhSach);
@@ -1504,8 +1504,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				}
 				else if(rdbtnTimTheoThang_NhapHang_DanhSachDon.isSelected())
 				{
-					ArrayList<HoaDonNhapHang> ds = control.TimHDNHangTheoThang(dateChoosertNgay_NhapHang_DanhSachDon.getDate().getMonth()+1,
-							dateChoosertNgay_NhapHang_DanhSachDon.getDate().getYear()+1900);
+					ArrayList<HoaDonNhapHang> ds = control.TimHDNHangTheoThang(dateChoosertNgay_NhapHang_DanhSachDon.getDate().getMonth()+1);
 					for(HoaDonNhapHang hd : ds)
 					{
 						Object[] row = {hd.getMaHDN(),hd.getNgayNhap(),hd.getTongGiaNhap()};
@@ -2017,7 +2016,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		});
 
 		panelTrangChu = new JPanel();
-		layeredPane.setLayer(panelTrangChu, 0);
+		layeredPane.setLayer(panelTrangChu, 1);
 		panelTrangChu.setBounds(0, 0, 795, 484);
 		layeredPane.add(panelTrangChu);
 		panelTrangChu.setLayout(null);
@@ -2314,8 +2313,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			else if(rdbtnTimtheoThang_Doanhthu.isSelected())
 			{
 				int thang = datechooserNgay_DoanthuvaBaocao.getDate().getMonth()+1;
-				int nam = datechooserNgay_DoanthuvaBaocao.getDate().getYear()+1900;
-				hoadon=control.TimHDNBanTheoThang(thang,nam);
+				hoadon=control.TimHDNBanTheoThang(thang);
 			}
 			else if(rdbtnTimTheoNam_Doanhthu.isSelected())
 			{

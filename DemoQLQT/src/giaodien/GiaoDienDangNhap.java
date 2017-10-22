@@ -54,28 +54,37 @@ public class GiaoDienDangNhap extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblTieuDe = new JLabel("HỆ THỐNG QUẢN LÝ QUẦY THUỐC");
+		JLabel lblTieuDe = new JLabel("HỆ THỐNG QUẢN LÝ");
 		lblTieuDe.setForeground(new Color(139, 0, 0));
 		lblTieuDe.setBackground(Color.WHITE);
 		lblTieuDe.setToolTipText("");
 		lblTieuDe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTieuDe.setFont(new Font("Times New Roman", Font.BOLD, 30));
-		lblTieuDe.setBounds(10, 23, 627, 85);
+		lblTieuDe.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		lblTieuDe.setBounds(0, 11, 428, 64);
 		contentPane.add(lblTieuDe);
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/logobv.png")));
-		lblLogo.setBounds(28, 87, 200, 154);
+		lblLogo.setBounds(24, 135, 155, 154);
 		contentPane.add(lblLogo);
 
 		JLabel lblSDT = new JLabel("Điện thoại: (028) 9234675");
 		lblSDT.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		lblSDT.setBounds(38, 252, 132, 20);
+		lblSDT.setBounds(34, 292, 132, 20);
 		contentPane.add(lblSDT);
+		
+		JLabel labeltieude2 = new JLabel("QUẦY THUỐC");
+		labeltieude2.setToolTipText("");
+		labeltieude2.setHorizontalAlignment(SwingConstants.CENTER);
+		labeltieude2.setForeground(new Color(139, 0, 0));
+		labeltieude2.setFont(new Font("Times New Roman", Font.BOLD, 40));
+		labeltieude2.setBackground(Color.WHITE);
+		labeltieude2.setBounds(70, 60, 291, 64);
+		contentPane.add(labeltieude2);
 
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/logo_iuh.png")));
-		lblNewLabel_1.setBounds(679, 466, 105, 44);
+		lblNewLabel_1.setBounds(499, 338, 105, 44);
 		contentPane.add(lblNewLabel_1);
 
 		JLabel lblbanquyen = new JLabel("Made by cCc ");
@@ -86,35 +95,37 @@ public class GiaoDienDangNhap extends JFrame {
 
 		JLabel lblDiachi = new JLabel("766 Võ Văn Kiệt, Phường 1, Quận 5, TP. HCM");
 		lblDiachi.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		lblDiachi.setBounds(10, 228, 232, 26);
+		lblDiachi.setBounds(0, 272, 232, 26);
 		contentPane.add(lblDiachi);
 
 		JLabel lblTaiKhoan = new JLabel("Tài Khoản: ");
-		lblTaiKhoan.setBounds(137, 301, 75, 24);
+		lblTaiKhoan.setBounds(53, 378, 75, 24);
 		contentPane.add(lblTaiKhoan);
 		lblTaiKhoan.setRequestFocusEnabled(false);
 		lblTaiKhoan.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		txtTK = new JTextField();
-		txtTK.setBounds(222, 303, 211, 24);
+		txtTK.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtTK.setBounds(138, 378, 206, 30);
 		contentPane.add(txtTK);
 		txtTK.requestFocus();
 		txtTK.setColumns(10);
 
 		JLabel lblMatKhau = new JLabel("Mật Khẩu: ");
-		lblMatKhau.setBounds(136, 349, 75, 24);
+		lblMatKhau.setBounds(53, 419, 75, 24);
 		contentPane.add(lblMatKhau);
 		lblMatKhau.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		txtMK = new JPasswordField();
-		txtMK.setBounds(222, 351, 211, 24);
+		txtMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtMK.setBounds(138, 417, 206, 30);
 		contentPane.add(txtMK);
 		txtMK.setColumns(10);
 
 
 		btnDangNhap = new JButton("  Đăng Nhập");
 		btnDangNhap.setToolTipText("Enter");
-		btnDangNhap.setBounds(128, 398, 140, 30);
+		btnDangNhap.setBounds(53, 463, 140, 30);
 		contentPane.add(btnDangNhap);
 		btnDangNhap.setActionCommand("DangNhap");
 		btnDangNhap.setHorizontalAlignment(SwingConstants.LEFT);
@@ -124,14 +135,14 @@ public class GiaoDienDangNhap extends JFrame {
 		JButton btnThoat = new JButton("   Thoát");
 		btnThoat.setToolTipText("Esc");
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnThoat.setBounds(278, 398, 143, 30);
+		btnThoat.setBounds(203, 463, 143, 30);
 		contentPane.add(btnThoat);
 		btnThoat.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnThoat.setHorizontalAlignment(SwingConstants.LEFT);
 		btnThoat.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/exit.png")));
 
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/Background.jpg")));
+		lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/dangnhap22.jpg")));
 	//	lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/Background.jpg")));
 		lblNewLabel.setBounds(0, 0, 794, 535);
 		contentPane.add(lblNewLabel);

@@ -68,7 +68,7 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 			e2.printStackTrace();
 		}
 		txtCMND = new JTextField();
-		txtCMND.setToolTipText("8 hoặc 12 chữ số");
+		txtCMND.setToolTipText("9 hoặc 12 chữ số");
 		txtCMND.setEnabled(false);
 		txtCMND.setBounds(76, 164, 175, 20);
 		panel.add(txtCMND);

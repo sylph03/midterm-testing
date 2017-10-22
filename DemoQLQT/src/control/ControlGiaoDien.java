@@ -768,16 +768,15 @@ public class ControlGiaoDien {
 			// TODO: handle exception
 		}
 	}
-	public ArrayList<HoaDonNhapHang> TimHDNHangTheoThang(int Thang,int Nam)
+	public ArrayList<HoaDonNhapHang> TimHDNHangTheoThang(int Thang)
 	{
 		ArrayList<HoaDonNhapHang> ds =new ArrayList<HoaDonNhapHang>();
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="select * from HoaDonNhap where MONTH(NgayLap) = ? and YEAR(NgayLap) = ?";
+			String sql="select * from HoaDonNhap where MONTH(NgayLap) = ? ";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, Thang);
-			pstmt.setInt(2, Nam);
 			ResultSet rs =pstmt.executeQuery();
 			while(rs.next())
 			{
@@ -927,16 +926,15 @@ public class ControlGiaoDien {
 		}
 		return null;
 	}
-	public ArrayList<HoaDonBanHang> TimHDNBanTheoThang(int thang,int nam)
+	public ArrayList<HoaDonBanHang> TimHDNBanTheoThang(int thang)
 	{
 		ArrayList<HoaDonBanHang> ds =new ArrayList<HoaDonBanHang>();
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="select * from HoaDon where MONTH(NgayLap) = ? and YEAR(NgayLap) = ? order by NgayLap,MaNVLap";
+			String sql="select * from HoaDon where MONTH(NgayLap) = ?  order by NgayLap,MaNVLap";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, thang);
-			pstmt.setInt(2, nam);
 			ResultSet rs =pstmt.executeQuery();
 			while(rs.next())
 			{

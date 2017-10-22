@@ -354,9 +354,8 @@ public class GiaoDienLapHoaDon extends JFrame {
 		panelThongtinKH.add(cbbThang);
 
 		cbbNam = new JComboBox();
-		cbbNam.setModel(new DefaultComboBoxModel(new String[] {"All--", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2017", "2018"}));
 		cbbNam.setEnabled(false);
-		cbbNam.setEditable(true);
+		cbbNam.setModel(new DefaultComboBoxModel(new String[] {"All--", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2017", "2018"}));
 		cbbNam.setBounds(199, 76, 55, 20);
 		panelThongtinKH.add(cbbNam);
 
