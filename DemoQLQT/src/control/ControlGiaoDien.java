@@ -755,7 +755,7 @@ public class ControlGiaoDien {
 				if(colstart%4==0)
 				{
 					
-					new Number(colstart, rowstart,Double.parseDouble(data[run2]));
+					sheet1.addCell(new Label(colstart, rowstart,data[run2]));
 				}
 				else
 					sheet1.addCell(new Label(colstart,rowstart,data[run2]));
