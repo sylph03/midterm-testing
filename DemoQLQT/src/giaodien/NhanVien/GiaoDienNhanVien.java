@@ -104,7 +104,7 @@ public class GiaoDienNhanVien extends JFrame {
 	private JRadioButton rdbtnHienhet_Doanhthu,rdbtnTheoThang_Doanhthu,rdbtnChinhXac_Doanhthu,rdbtnTheonam_Doanhthu;
 	private ButtonGroup GroupTimdon,GroupTimdoanhthu;
 	private DateFormat dateformat =new SimpleDateFormat("yyyy-MM-dd");
-	private JDateChooser dateChooser_DSHD;
+	private JDateChooser dateChooser_DSHD,dateChooser_DoanhThu;
 
 	public GiaoDienNhanVien() {
 		setResizable(false);
@@ -499,7 +499,7 @@ public class GiaoDienNhanVien extends JFrame {
 		layeredPane.setBounds(0, 115, 794, 456);
 		contentPane.add(layeredPane);
 		panelTrangChu = new JPanel();
-		layeredPane.setLayer(panelTrangChu, 1);
+		layeredPane.setLayer(panelTrangChu, 0);
 		panelTrangChu.setForeground(new Color(173, 255, 47));
 		panelTrangChu.setBounds(0, 11, 794, 445);
 		layeredPane.add(panelTrangChu);
@@ -788,7 +788,6 @@ public class GiaoDienNhanVien extends JFrame {
 		scrollPaneDanhSachDon.setBounds(22, 99, 439, 262);
 		panelDoanhThu = new JPanel();
 		panelDoanhThu.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u1ED1ng k\u00EA doanh thu:", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		layeredPane.setLayer(panelDoanhThu, 1);
 		panelDoanhThu.setBounds(10, 11, 774, 408);
 		layeredPane.add(panelDoanhThu);
 		panelDoanhThu.setLayout(null);
@@ -834,11 +833,11 @@ public class GiaoDienNhanVien extends JFrame {
 		scrollPaneDoanhThu.setBounds(10, 97, 443, 288);
 		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"");
 
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setDateFormatString("dd / MM /yyyy");
-		dateChooser.setLocale(new Locale("vi", "VN"));
-		dateChooser.setBounds(10, 36, 156, 20);
-		panelDoanhThu.add(dateChooser);
+		dateChooser_DoanhThu = new JDateChooser();
+		dateChooser_DoanhThu.setDateFormatString("dd / MM /yyyy");
+		dateChooser_DoanhThu.setLocale(new Locale("vi", "VN"));
+		dateChooser_DoanhThu.setBounds(10, 36, 156, 20);
+		panelDoanhThu.add(dateChooser_DoanhThu);
 
 		GroupTimdoanhthu=new ButtonGroup();
 		
@@ -987,8 +986,9 @@ public class GiaoDienNhanVien extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		ArrayList<HoaDonBanHang> dshdban=null;
-		Date ngay = dateChooser_DSHD.getDate();
+		Date ngay = dateChooser_DoanhThu.getDate();
 		if(rdbtnHienhet_Doanhthu.isSelected())
 		{
 			dshdban=ds.listHDB;
@@ -999,12 +999,13 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 		else if(rdbtnTheoThang_Doanhthu.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1);
+			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1,ngay.getYear()+1900);
 		}
 		else if(rdbtnTheonam_Doanhthu.isSelected())
 		{
 			dshdban=control.TimHDNBanTheoNam(ngay.getYear()+1900);
 		}
+		
 		for(HoaDonBanHang hd : dshdban)
 		{
 			if(hd.getMaNVLap().equals(IDNhanVien))
@@ -1038,7 +1039,7 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 		else if(rdbtnTheoThang_DSHD.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1);
+			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1,ngay.getYear()+1900);
 		}
 		else if(rdbtnTheoNam_DSHD.isSelected())
 		{

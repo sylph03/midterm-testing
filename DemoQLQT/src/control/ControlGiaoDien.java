@@ -927,15 +927,16 @@ public class ControlGiaoDien {
 		}
 		return null;
 	}
-	public ArrayList<HoaDonBanHang> TimHDNBanTheoThang(int thang)
+	public ArrayList<HoaDonBanHang> TimHDNBanTheoThang(int thang,int nam)
 	{
 		ArrayList<HoaDonBanHang> ds =new ArrayList<HoaDonBanHang>();
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="select * from HoaDon where MONTH(NgayLap) = ? order by NgayLap,MaNVLap";
+			String sql="select * from HoaDon where MONTH(NgayLap) = ? and YEAR(NgayLap) = ? order by NgayLap,MaNVLap";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, thang);
+			pstmt.setInt(2, nam);
 			ResultSet rs =pstmt.executeQuery();
 			while(rs.next())
 			{
