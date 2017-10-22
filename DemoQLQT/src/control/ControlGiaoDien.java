@@ -32,7 +32,16 @@ import entity.NhanVien;
 import entity.ThongTinThuoc;
 import jxl.CellType;
 import jxl.Workbook;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.format.CellFormat;
+import jxl.format.Colour;
+import jxl.format.Orientation;
+import jxl.format.Pattern;
+import jxl.format.VerticalAlignment;
 import jxl.write.Label;
+import jxl.write.Number;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 
@@ -732,18 +741,24 @@ public class ControlGiaoDien {
 			int rowstart=1,colstart =0;
 			String[] data=chuoi.split(";");
 			String[] header ="Mã;Tên;Số lượng;Đơn vị tính;Tiền lời;".split(";");
-			for(int run =0,col=0;run<header.length;run++,col++)
+			for(int run1 =0,col=0;run1<header.length;run1++,col++)
 			{
-				sheet1.addCell(new Label(col,0,header[run]));	
+				sheet1.addCell(new Label(col,1,header[run1]));	
 			}
-			for(int run=0;run<=data.length-1;run++,colstart++)
+			for(int run2=0;run2<=data.length-1;run2++,colstart++)
 			{
-				if ((run+1)%7==0) 
+				if ((colstart)%5==0) 
 				{
 					rowstart++;
 					colstart=0;
 				}
-				sheet1.addCell(new Label(colstart,rowstart,data[run]));
+				if(colstart%4==0)
+				{
+					
+					new Number(colstart, rowstart,Double.parseDouble(data[run2]));
+				}
+				else
+					sheet1.addCell(new Label(colstart,rowstart,data[run2]));
 			}
 			// write file
 			workbook.write();
@@ -964,4 +979,65 @@ public class ControlGiaoDien {
 		}
 		return null;
 	}
+	public  ArrayList<NhanVien> LocDuLieuNhanVientheoten(String Ten) 
+	{
+		ArrayList<NhanVien> dsnv=new ArrayList<NhanVien>();
+		Connection con =  KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from NhanVien "+"where HoTen like ?";
+			PreparedStatement pretamt = con.prepareStatement(sql);
+			pretamt.setString(1, Ten+"%");
+			ResultSet rs = pretamt.executeQuery();
+				while(rs.next())
+				{
+					String ma = rs.getString(1);
+					String ten = rs.getString(2);
+					String gioiTinh= rs.getString(3);
+					String ngaySinh = rs.getString(4);
+					String sDT = rs.getString(5);
+					String diaChi = rs.getString(6);
+					String mk = rs.getString(7);
+					String cmnd = rs.getString(8);
+					NhanVien nv = new NhanVien(ma, ten, ngaySinh, gioiTinh, sDT, diaChi, mk,cmnd);
+					dsnv.add(nv);
+				}
+			return  dsnv;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public  ArrayList<NhanVien> LocDuLieuNhanVientheoma(String maNV) 
+	{
+		ArrayList<NhanVien> dsnv=new ArrayList<NhanVien>();
+		Connection con =  KetNoiSQL.getInstance().connect();
+		try 
+		{
+			String sql="select * from NhanVien "+"where MaNV like ?";
+			PreparedStatement pretamt = con.prepareStatement(sql);
+			pretamt.setString(1, maNV+"%");
+			ResultSet rs = pretamt.executeQuery();
+			while(rs.next())
+			{
+				String ma = rs.getString(1);
+				String ten = rs.getString(2);
+				String gioiTinh= rs.getString(3);
+				String ngaySinh = rs.getString(4);
+				String sDT = rs.getString(5);
+				String diaChi = rs.getString(6);
+				String mk = rs.getString(7);
+				String cmnd = rs.getString(8);
+				NhanVien nv = new NhanVien(ma, ten, ngaySinh, gioiTinh, sDT, diaChi, mk,cmnd);
+				dsnv.add(nv);
+			}
+			return  dsnv;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

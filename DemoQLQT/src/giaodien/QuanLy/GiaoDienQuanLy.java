@@ -134,7 +134,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private JButton btnLuu_DanhSach_DanhSachThuoc;
 	private JButton btnXoa_DanhSach_DanhSachThuoc;
 	private JButton btnTim_DanhSach_DanhSachThuoc;	
-	private JButton btnTim_DanhSach_DanhSachNV;
 	private JButton btnChinhSua_DanhSach_DanhSachThuoc ;
 	private JButton btnLuu_DanhSach_DanhSachNhanVien;
 	private JRadioButton rdbtnNam_DanhSach_DanhSachNV,rdbtnNu_DanhSach_DanhSachNV;
@@ -616,7 +615,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 
 		panelDanhSach = new JPanel();
-		layeredPane.setLayer(panelDanhSach, 0);
+		layeredPane.setLayer(panelDanhSach, 1);
 
 		panelDanhSach.setBounds(0, 0, 795, 484);
 		layeredPane.add(panelDanhSach);
@@ -736,8 +735,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		txtTimkiem_DanhSach_DanhSachThuoc.setForeground(Color.GRAY);
 		txtTimkiem_DanhSach_DanhSachThuoc.setBounds(551, 18, 186, 20);
 		panelDanhSachThuoc.add(txtTimkiem_DanhSach_DanhSachThuoc);
-		txtTimkiem_DanhSach_DanhSachThuoc.setColumns(10);
-
+		txtTimkiem_DanhSach_DanhSachThuoc.setColumns(100);
 		txtTimkiem_DanhSach_DanhSachThuoc.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -869,9 +867,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		listModelTimKiem_DanhSach_DanhSachThuoc =new DefaultListModel<String>();
 		listTimKiem_DanhSach_DanhSachThuoc= new JList<String>(listModelTimKiem_DanhSach_DanhSachThuoc);
 		jsclist = new JScrollPane(listTimKiem_DanhSach_DanhSachThuoc);
-		listTimKiem_DanhSach_DanhSachThuoc.setSelectionBackground(Color.WHITE);
-
-
 		listTimKiem_DanhSach_DanhSachThuoc.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -883,7 +878,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			}
 		});
 		jsclist = new JScrollPane(listTimKiem_DanhSach_DanhSachThuoc);
-		listTimKiem_DanhSach_DanhSachThuoc.setSelectionBackground(Color.WHITE);
 		listTimKiem_DanhSach_DanhSachThuoc.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -978,6 +972,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panelThongTinNV.add(lblTnNv_1);
 
 		txtMaNV_DanhSach_DanhSachNV = new JTextField();
+		txtMaNV_DanhSach_DanhSachNV.setEnabled(false);
 		txtMaNV_DanhSach_DanhSachNV.setEditable(false);
 		txtMaNV_DanhSach_DanhSachNV.setColumns(10);
 		txtMaNV_DanhSach_DanhSachNV.setBounds(80, 25, 176, 20);
@@ -1037,9 +1032,68 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		txtCMND_DanhSach_DanhSachNV.setColumns(10);
 
 		txtTimKiem_DanhSach_DanhSachNhanVien = new JTextField();
+		txtTimKiem_DanhSach_DanhSachNhanVien.setText("Nhập mã hoặc tên vn cần tìm");
+		txtTimkiem_DanhSach_DanhSachThuoc.setFont(new Font("Tahoma", Font.BOLD, 12));
+		txtTimKiem_DanhSach_DanhSachNhanVien.setForeground(Color.GRAY);
+		txtTimKiem_DanhSach_DanhSachNhanVien.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				txtTimKiem_DanhSach_DanhSachNhanVien.setText("");
+				txtTimkiem_DanhSach_DanhSachThuoc.setFont(new Font("Tahoma", Font.PLAIN, 11));
+				txtTimKiem_DanhSach_DanhSachNhanVien.setForeground(Color.BLACK);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				if(!txtTimKiem_DanhSach_DanhSachNhanVien.getText().trim().equals(""))
+				{
+					
+				}
+				else
+				{
+					txtTimKiem_DanhSach_DanhSachNhanVien.setText("Nhập mã hoặc tên vn cần tìm");
+					txtTimkiem_DanhSach_DanhSachThuoc.setFont(new Font("Tahoma", Font.BOLD, 12));
+					txtTimKiem_DanhSach_DanhSachNhanVien.setForeground(Color.GRAY);
+				}
+				
+			}
+		});
+		txtTimKiem_DanhSach_DanhSachNhanVien.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
+				for(int i=tableThongTinNV.getRowCount()-1;i>=0;i--)
+				{
+					tableModelThongTinNV.removeRow(i);
+				}
+				String txt =txtTimKiem_DanhSach_DanhSachNhanVien.getText();
+				if(txt.equals("Nhập mã hoặc tên vn cần tìm"))
+				{
+					txt="";
+				}
+				if(control.LocDuLieuNhanVientheoten(txt).size()>0)
+				{
+					dsnv =control.LocDuLieuNhanVientheoten(txt);
+				}
+				else if(control.LocDuLieuNhanVientheoma(txt).size()>0)
+					dsnv =control.LocDuLieuNhanVientheoma(txt);
+				
+				try 
+				{
+					
+					for (NhanVien nv : dsnv) 
+					{
+						Object[] row = {nv.getMaNv(),nv.getHoTenNV(),nv.getNgaySinh(),nv.getGioiTinh(),nv.getDiaChi()};
+						tableModelThongTinNV.addRow(row);
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+
+				}	
+			}
+		});
 		txtTimKiem_DanhSach_DanhSachNhanVien.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtTimKiem_DanhSach_DanhSachNhanVien.setColumns(10);
-		txtTimKiem_DanhSach_DanhSachNhanVien.setBounds(582, 18, 155, 20);
+		txtTimKiem_DanhSach_DanhSachNhanVien.setBounds(582, 18, 198, 20);
 		panelDanhSachNhanVien.add(txtTimKiem_DanhSach_DanhSachNhanVien);
 
 		JLabel lblThngTinNhn = new JLabel("Danh sách nhân viên");
@@ -1055,12 +1109,6 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnLuu_DanhSach_DanhSachNhanVien.setBounds(747, 175, 33, 33);
 		panelDanhSachNhanVien.add(btnLuu_DanhSach_DanhSachNhanVien);
 		btnLuu_DanhSach_DanhSachNhanVien.addActionListener(this);
-
-		btnTim_DanhSach_DanhSachNV = new JButton(" ");
-		btnTim_DanhSach_DanhSachNV.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnTim_DanhSach_DanhSachNV.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/search.png")));
-		btnTim_DanhSach_DanhSachNV.setBounds(747, 11, 33, 33);
-		panelDanhSachNhanVien.add(btnTim_DanhSach_DanhSachNV);
 		GroupGioiTinh = new ButtonGroup();
 		GroupGioiTinh.add(rdbtnNam_DanhSach_DanhSachNV);
 		GroupGioiTinh.add(rdbtnNu_DanhSach_DanhSachNV);
@@ -1093,7 +1141,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panelDanhSachNhanVien.add(btnSua_DanhSach_DanhSachNhanVien);
 
 		panelDoanhThuvaBaoCao = new JPanel();
-		layeredPane.setLayer(panelDoanhThuvaBaoCao, 1);
+		layeredPane.setLayer(panelDoanhThuvaBaoCao, 0);
 		panelDoanhThuvaBaoCao.setBounds(0, 0, 795, 484);
 		layeredPane.add(panelDoanhThuvaBaoCao);
 		panelDoanhThuvaBaoCao.setLayout(null);
@@ -1279,7 +1327,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		});
 		btnXuatBaoCao_DoanhThu_BaoCao.setBounds(10, 290, 141, 23);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(btnXuatBaoCao_DoanhThu_BaoCao);
-		
+
 		panelNhapHang = new JPanel();
 		layeredPane.setLayer(panelNhapHang, 0);
 		panelNhapHang.setBounds(0, 0, 795, 484);
@@ -1947,7 +1995,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 			}
 		});
-	
+
 		btnTim_DanhSach_DanhSachThuoc = new JButton(" ");
 		btnTim_DanhSach_DanhSachThuoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1973,7 +2021,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panelTrangChu.setBounds(0, 0, 795, 484);
 		layeredPane.add(panelTrangChu);
 		panelTrangChu.setLayout(null);
-		
+
 		textArea = new JTextArea();
 		textArea.setBounds(432, 29, 352, 190);
 		panelTrangChu.add(textArea);
@@ -1988,12 +2036,12 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		textArea.setFocusTraversalKeysEnabled(false);
 		textArea.setEditable(false);
 		textArea.setBackground(new Color(0, 0, 0, 0));
-		
+
 		label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/baner2222.png")));
 		label_1.setBounds(0, 223, 794, 222);
 		panelTrangChu.add(label_1);
-		
+
 		label_2 = new JLabel("");
 		label_2.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/ccccccc.png")));
 		label_2.setBounds(10, 38, 412, 158);
