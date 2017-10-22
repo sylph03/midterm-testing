@@ -1,10 +1,10 @@
-create database QuanLyQuayThuoc
+create database QuanLyQuayThuoc_Nhom09
 on
-	primary (name = QuanLyQuayThuocdata, filename = 'D:\CSDL\QuanLyQuayThuoc.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
+	primary (name = QuanLyQuayThuocdata, filename = 'E:\CSDL\QuanLyQuayThuoc_Nhom09.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
 log on
-	(name = QuanLyQuayThuoclog, filename = 'D:\CSDL\QuanLyQuayThuoc.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
+	(name = QuanLyQuayThuoclog, filename = 'E:\CSDL\QuanLyQuayThuoc_Nhom09.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
 
-use QuanLyQuayThuoc
+use QuanLyQuayThuoc_Nhom09
 
 create table NhanVien
 (MaNV varchar(10) primary key not null, 
@@ -74,8 +74,6 @@ insert NhanVien values('QL001',N'Trần Đình Chiến',N'Nam','26/03/1997','097
 insert NhanVien values('NV001',N'Trần Hùng Cường',N'Nam','10/02/1997','0987212312',N'Nguyễn Oanh','1','023344567')
 insert NhanVien values('NV002',N'Nguyễn Văn Mạnh Cường',N'Nam','21/09/1997','01221212121',N'Bình Tân','1','025528124')
 
-select * from DSThuoc
-
 insert DSThuoc values ('A001','COTRIM STADA FORTE','Khang Sinh',500,'Vien','cCc',900,1500,'20/10/2018')
 insert DSThuoc values ('A002','COTTUF L100ML','Ho Hap',70,'Lo','cCc',13000,20000,'20/10/2018')
 insert DSThuoc values ('A003','COVERSYL 5ML L30V','Tim mach',50,'Lo','cCc',22000,25000,'20/10/2018')
@@ -108,14 +106,14 @@ insert KhachHang values ('123456789',N'Nguyễn Đức Vũ','28/03/1997','012135
 insert KhachHang values ('987654321',N'Nguyễn Tấn Đạt','17/8/1996','0904758375',N'Xi đa thời kì cuối')
 insert KhachHang values ('111111111',N'Tùng Văn Sơn','27/6/1999','0908564664',N'Đau đầu rùa')
 
-insert HoaDon values ('HD1','NV001','15/9/2017','15090901',14000)
-insert HoaDon values ('HD2','NV002','16/9/2017','15090901',20000)
-insert HoaDon values ('HD3','NV001','17/9/2017','15055421',20000)
-insert HoaDon values ('HD4','NV002','18/9/2017','15055421',20000)
-insert HoaDon values ('HD5','NV001','19/9/2017','15090902',20000)
-insert HoaDon values ('HD6','NV002','20/9/2017','15090901',20000)
-insert HoaDon values ('HD7','NV001','21/9/2017','15055421',20000)
-insert HoaDon values ('HD8','NV002','22/9/2017','15090902',20000)
+insert HoaDon values ('HD1','NV001','15/9/2017','123456789',14000)
+insert HoaDon values ('HD2','NV002','16/9/2017','123456789',20000)
+insert HoaDon values ('HD3','NV001','17/9/2017','123456789',20000)
+insert HoaDon values ('HD4','NV002','18/9/2017','987654321',20000)
+insert HoaDon values ('HD5','NV001','19/9/2017','987654321',20000)
+insert HoaDon values ('HD6','NV002','20/9/2017','987654321',20000)
+insert HoaDon values ('HD7','NV001','21/9/2017','111111111',20000)
+insert HoaDon values ('HD8','NV002','22/9/2017','111111111',20000)
 
 
 insert ChiTietHoaDon values('HD1','A001','COTRIM STADA FORTE',1,2000)

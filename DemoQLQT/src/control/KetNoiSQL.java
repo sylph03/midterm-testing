@@ -13,7 +13,7 @@ public class KetNoiSQL {
 	}
 	public Connection connect()
 	{
-		final String url="jdbc:sqlserver://localhost:1433;DatabaseName=QuanLyQuayThuoc";
+		final String url="jdbc:sqlserver://localhost:1433;DatabaseName=QuanLyQuayThuoc_Nhom09";
 		String user ="sa";
 		String pass ="sapassword";
 		try 
