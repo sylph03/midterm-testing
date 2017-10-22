@@ -2314,7 +2314,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			else if(rdbtnTimtheoThang_Doanhthu.isSelected())
 			{
 				int thang = datechooserNgay_DoanthuvaBaocao.getDate().getMonth()+1;
-				hoadon=control.TimHDNBanTheoThang(thang);
+				int nam = datechooserNgay_DoanthuvaBaocao.getDate().getYear()+1900;
+				hoadon=control.TimHDNBanTheoThang(thang,nam);
 			}
 			else if(rdbtnTimTheoNam_Doanhthu.isSelected())
 			{
