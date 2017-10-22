@@ -499,7 +499,7 @@ public class GiaoDienNhanVien extends JFrame {
 		layeredPane.setBounds(0, 115, 794, 456);
 		contentPane.add(layeredPane);
 		panelTrangChu = new JPanel();
-		layeredPane.setLayer(panelTrangChu, 0);
+		layeredPane.setLayer(panelTrangChu, 1);
 		panelTrangChu.setForeground(new Color(173, 255, 47));
 		panelTrangChu.setBounds(0, 11, 794, 445);
 		layeredPane.add(panelTrangChu);
@@ -788,7 +788,7 @@ public class GiaoDienNhanVien extends JFrame {
 		scrollPaneDanhSachDon.setBounds(22, 99, 439, 262);
 		panelDoanhThu = new JPanel();
 		panelDoanhThu.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u1ED1ng k\u00EA doanh thu:", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		layeredPane.setLayer(panelDoanhThu, 1);
+		layeredPane.setLayer(panelDoanhThu, 0);
 		panelDoanhThu.setBounds(10, 11, 774, 408);
 		layeredPane.add(panelDoanhThu);
 		panelDoanhThu.setLayout(null);
@@ -1000,7 +1000,7 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 		else if(rdbtnTheoThang_Doanhthu.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1,ngay.getYear()+1900);
+			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1);
 		}
 		else if(rdbtnTheonam_Doanhthu.isSelected())
 		{
@@ -1040,7 +1040,7 @@ public class GiaoDienNhanVien extends JFrame {
 		}
 		else if(rdbtnTheoThang_DSHD.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1,ngay.getYear()+1900);
+			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1);
 		}
 		else if(rdbtnTheoNam_DSHD.isSelected())
 		{
