@@ -738,11 +738,7 @@ public class ControlGiaoDien {
 			}
 			for(int run=0;run<=data.length-1;run++,colstart++)
 			{
-				if ((run+1)%6!=0) 
-				{
-				
-				}
-				else
+				if ((run+1)%7==0) 
 				{
 					rowstart++;
 					colstart=0;
@@ -896,7 +892,7 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="select * from HoaDon where NgayLap = ? order by NgayLap";
+			String sql="select * from HoaDon where NgayLap = ? order by NgayLap,MaNVLap";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ngay);
 			ResultSet rs =pstmt.executeQuery();
@@ -922,7 +918,7 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="select * from HoaDon where MONTH(NgayLap) = ? order by NgayLap";
+			String sql="select * from HoaDon where MONTH(NgayLap) = ? order by NgayLap,MaNVLap";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, thang);
 			ResultSet rs =pstmt.executeQuery();
@@ -948,7 +944,7 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="select * from HoaDon where YEAR(NgayLap) = ? order by NgayLap";
+			String sql="select * from HoaDon where YEAR(NgayLap) = ? order by NgayLap,MaNVLap";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, nam);
 			ResultSet rs =pstmt.executeQuery();
