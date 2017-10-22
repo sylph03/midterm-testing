@@ -70,9 +70,9 @@ TinhTrang int
 
 set dateformat dMy
 
-insert NhanVien values('QL001',N'Trần Đình Chiến',N'Nam','26/03/1997','0977621504',N'312 Quang Trung','1','025534575')
-insert NhanVien values('NV001',N'Trần Hùng Cường',N'Nam','10/02/1997','0987212312',N'Nguyễn Oanh','1','023344567')
-insert NhanVien values('NV002',N'Nguyễn Văn Mạnh Cường',N'Nam','21/09/1997','01221212121',N'Bình Tân','1','025528124')
+insert NhanVien values('QL001',N'Trần Đình Chiến',N'Nam','26/03/1997','0977621504',N'312 Quang Trung','1','150917611')
+insert NhanVien values('NV001',N'Trần Hùng Cường',N'Nam','10/02/1997','0987212312',N'Nguyễn Oanh','1','150569211')
+insert NhanVien values('NV002',N'Nguyễn Văn Mạnh Cường',N'Nam','21/09/1997','01221212121',N'Bình Tân','1','150514311')
 
 insert DSThuoc values ('A001','COTRIM STADA FORTE','Khang Sinh',500,'Vien','cCc',900,1500,'20/10/2018')
 insert DSThuoc values ('A002','COTTUF L100ML','Ho Hap',70,'Lo','cCc',13000,20000,'20/10/2018')
