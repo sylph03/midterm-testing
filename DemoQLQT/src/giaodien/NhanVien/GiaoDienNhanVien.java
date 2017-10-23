@@ -972,6 +972,24 @@ public class GiaoDienNhanVien extends JFrame {
                 txtSDT_CTHD.setText(kh.getSdt());
                 textAreaMoTa.setText(kh.getMoTaKH());
             }
+            else
+            {
+            	panelTTKH.setEnabled(false);
+                txtCMND_CTHD.setEnabled(false);
+                txtTen_CTHD.setEnabled(false);
+                txtSDT_CTHD.setEnabled(false);
+                txtNgaySinh_CTHD.setEnabled(false);
+                textAreaMoTa.setEnabled(false);
+                lblCMND.setEnabled(false);
+                lblSDT.setEnabled(false);
+                lblTen.setEnabled(false);
+                lblNgaySinh.setEnabled(false);
+                txtCMND_CTHD.setText("");
+                txtTen_CTHD.setText("");
+                txtNgaySinh_CTHD.setText("");
+                txtSDT_CTHD.setText("");
+                textAreaMoTa.setText("");
+            }
         }
         else {
             JOptionPane.showMessageDialog(panelDSHD, "Vui lòng chọn hóa đơn cần xem !!!");

@@ -429,10 +429,13 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="update dbo.KhachHang set MoTa=? where CMND = ?";
+			String sql="update dbo.KhachHang set MoTa=?, TenKH=?, NgaySinh=?, SDT=? where CMND = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,khmoi.getMoTaKH());
-			pstmt.setString(2,khmoi.getCMND());
+			pstmt.setString(5,khmoi.getCMND());
+			pstmt.setString(2, khmoi.getHoTenKH());
+			pstmt.setString(3, khmoi.getNgaySinh());
+			pstmt.setString(4, khmoi.getSdt());
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) 

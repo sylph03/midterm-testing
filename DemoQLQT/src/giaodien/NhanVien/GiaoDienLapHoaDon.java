@@ -523,6 +523,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 					label_5.setEnabled(true);
 					label_6.setEnabled(true);
 					label_7.setEnabled(true);
+					label_8.setEnabled(true);
 					txtCMND.setEditable(true);
 					cbbNgay.setEnabled(true);
 					cbbNgay.setEditable(true);
@@ -542,6 +543,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 					label_5.setEnabled(false);
 					label_6.setEnabled(false);
 					label_7.setEnabled(false);
+					label_8.setEnabled(false);
 					txtCMND.setEditable(false);
 					cbbNgay.setEnabled(false);
 					cbbNgay.setEditable(false);

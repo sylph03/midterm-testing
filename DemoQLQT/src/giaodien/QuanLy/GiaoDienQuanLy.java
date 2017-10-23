@@ -184,6 +184,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 	private JPanel panelDoanhThuvaBaoCao;
 	private JPanel panelThuChiDoanhthu_DoanhThuvaBaoCao;
+	private JPanel panel;
 	private JButton btnTim_DoanhthuvaBaoCao;
 	public JTable tableDoanhThu_Doanhthu_DoanhThuvaBaoCao,tableBaoCao_DoanhThuvaBaoCao;
 	public DefaultTableModel tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao,tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao;
@@ -431,6 +432,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				Anpanel();
 				panelNhapHang.setVisible(true);
+				tabbedPane_NhapHang.setSelectedIndex(0);
 				panelTrangChu.setVisible(false);
 				KhoiTaoCBBoxNhapHang();
 			}
@@ -475,6 +477,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				Anpanel();
 				panelTinhTrang.setVisible(true);
 				panelTrangChu.setVisible(false);
+				
 			}
 		});
 		groupDanhMuc.add(btnTinhTrang);
@@ -1146,7 +1149,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		layeredPane.add(panelDoanhThuvaBaoCao);
 		panelDoanhThuvaBaoCao.setLayout(null);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(10, 11, 770, 98);
 		panelDoanhThuvaBaoCao.add(panel);
@@ -1273,6 +1276,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		TongTienLoi_DoanhThu_BaoCao.setBounds(632, 291, 136, 20);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(TongTienLoi_DoanhThu_BaoCao);
 		TongTienLoi_DoanhThu_BaoCao.setColumns(10);
+		
+		
 
 		btnXemChiTiet_DoanhThuvaBaoCao_DoanhThu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1284,6 +1289,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 					double tongTien = Double.parseDouble(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.getValueAt(row, 4)+"");
 					new GiaoDienChiTietDoanhThu(maHD,maNV,tenNV,tongTien).setVisible(true);
 				}
+				else
+					JOptionPane.showMessageDialog(panelDoanhThu_DoanhThuvaBaoCao, "Vui lòng chọn đơn hàng cần xem!");
 			}
 		});
 
@@ -2072,6 +2079,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			thuoc = ds.TimThuocTheoMa(tableModelTinhTrangThuoc_TinhTrang.getValueAt(i, 0)+"");
 			try {
 				control.autoCapNhatThuocHetHan(thuoc, panelTinhTrang);
+				ds.docBangCTHoaDonNhap();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -2229,6 +2237,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 							tableModelThuocNhap.removeRow(i);
 						}
 						duaDuLieuTuListVaoTable();
+						JOptionPane.showMessageDialog(panel_NhapHang_ThemThuoc, "Thêm thuốc thành công!");
 
 						txtmathuoc_NhapHang_Themthuoc.setText("");
 						txtTenThuoc_NhapHang_Themthuoc.setText("");
@@ -2254,40 +2263,45 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnHoanTat_NhapHang_NhapDon)
 		{
-			HoaDonNhapHang hdn = new HoaDonNhapHang();
-			hdn.setMaHDN(txtMaDon_NhapHang.getText());
-			hdn.setNgayNhap(dateformat.format(datechooserNgayLap_NhapHang.getDate()));
-			hdn.setTongGiaNhap(Double.parseDouble(txtTongGia_NhapHang.getText()));
-			try {
-				control.themHDNVaoSQL(hdn);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			for(int i=tableModelThuocNhap.getRowCount()-1;i>=0;i--)
+			if(tableThuocNhap_NhapHang_NhapDon.getRowCount()>0)
 			{
-				CTHoaDonNhap ctHDN = new CTHoaDonNhap();
-				ctHDN.setMaHDN(txtMaDon_NhapHang.getText());
-				ctHDN.setMaThuoc(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 0)+"");
-				ctHDN.setSoLuong(Integer.parseInt(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 2)+""));
-				ctHDN.setHsd(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 3)+"");
-				ctHDN.setTinhTrang(1);
+				HoaDonNhapHang hdn = new HoaDonNhapHang();
+				hdn.setMaHDN(txtMaDon_NhapHang.getText());
+				hdn.setNgayNhap(dateformat.format(datechooserNgayLap_NhapHang.getDate()));
+				hdn.setTongGiaNhap(Double.parseDouble(txtTongGia_NhapHang.getText()));
 				try {
-					control.themCTHoaDonNhapVaoSQL(ctHDN);
+					control.themHDNVaoSQL(hdn);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+
+				for(int i=tableModelThuocNhap.getRowCount()-1;i>=0;i--)
+				{
+					CTHoaDonNhap ctHDN = new CTHoaDonNhap();
+					ctHDN.setMaHDN(txtMaDon_NhapHang.getText());
+					ctHDN.setMaThuoc(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 0)+"");
+					ctHDN.setSoLuong(Integer.parseInt(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 2)+""));
+					ctHDN.setHsd(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 3)+"");
+					ctHDN.setTinhTrang(1);
+					try {
+						control.themCTHoaDonNhapVaoSQL(ctHDN);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				for(int i=tableThuocNhap_NhapHang_NhapDon.getRowCount()-1;i>=0;i--)
+				{
+					tableModelThuocNhap.removeRow(i);
+				}
+				xoaRowtrongTable();
+				duaDuLieuTuListVaoTable();
+				txtMaDon_NhapHang.setText("");
+				txtTongGia_NhapHang.setText("");
 			}
-			for(int i=tableThuocNhap_NhapHang_NhapDon.getRowCount()-1;i>=0;i--)
-			{
-				tableModelThuocNhap.removeRow(i);
-			}
-			xoaRowtrongTable();
-			duaDuLieuTuListVaoTable();
-			txtMaDon_NhapHang.setText("");
-			txtTongGia_NhapHang.setText("");
+			else
+				JOptionPane.showMessageDialog(panelNhapHang, "Danh sách thuốc nhập không được rỗng!");
 		}
 		else if(e.getSource()==btnTim_DoanhthuvaBaoCao)
 		{
