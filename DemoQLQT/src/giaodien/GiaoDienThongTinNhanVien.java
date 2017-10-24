@@ -107,6 +107,15 @@ public class GiaoDienThongTinNhanVien extends JFrame {
 		btnDoiMK.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		btnDoiMK.setBounds(223, 288, 28, 23);
 		btnDoiMK.setBackground(Color.decode("#EEEEEE"));
+	      btnDoiMK.addKeyListener(new KeyAdapter() {
+	            @Override
+	            public void keyPressed(KeyEvent e) {
+	                if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
+	                {
+	                    dispose();
+	                }
+	            }
+	        });
 		panel.add(btnDoiMK);
 
 		txtHoTen = new JTextField();

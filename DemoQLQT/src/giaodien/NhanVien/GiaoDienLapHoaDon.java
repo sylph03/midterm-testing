@@ -82,6 +82,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 	private JScrollPane scrollPaneBangThemThuoc_1;
 	private DefaultListModel<String> listmodel;
 	private JList list;
+	private JScrollPane jsc;
 	public GiaoDienLapHoaDon() {
 		setResizable(false);
 		initialize();
@@ -386,7 +387,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 				{
 					txtTenThuoc_TimKiem.setForeground(Color.GRAY);
 					txtTenThuoc_TimKiem.setText("Tên thuốc....");
-					list.setVisible(false);
+					jsc.setVisible(false);
 				}
 			}
 		});
@@ -411,12 +412,12 @@ public class GiaoDienLapHoaDon extends JFrame {
 									else
 										break;
 								}
-								list.setVisible(true);
+								jsc.setVisible(true);
 							}
 							else
 							{
 								listmodel.removeAllElements();
-								list.setVisible(false);
+								jsc.setVisible(false);
 							}
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
@@ -426,14 +427,14 @@ public class GiaoDienLapHoaDon extends JFrame {
 					}
 					else
 					{
-						list.setVisible(false);
+					    jsc.setVisible(false);
 						listmodel.removeAllElements();
 					}
 				}
 				else
 				{
 					listmodel.removeAllElements();
-					list.setVisible(false);
+					jsc.setVisible(false);
 				}
 			}
 		});
@@ -619,9 +620,10 @@ public class GiaoDienLapHoaDon extends JFrame {
 		//------tìm kiếm có gợi ý-------------
 		listmodel =new DefaultListModel<String>();
 		list = new JList<String>(listmodel);
-		list.setBounds(76, 280, 143, 107);
-		getContentPane().add(list);
-		list.setVisible(false);
+		jsc =new JScrollPane(list);
+		jsc.setBounds(76, 280, 143, 107);
+		getContentPane().add(jsc);
+		jsc.setVisible(false);
 		list.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -631,7 +633,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 				if(data!=null)
 				{
 					txtTenThuoc_TimKiem.setText(list.getSelectedValue()+"");
-					list.setVisible(false);
+					    jsc.setVisible(false);
 					ThongTinThuoc thuoc2 = ds.TimThuocTheoTen(txtTenThuoc_TimKiem.getText());
 					txtLoai.setText(thuoc2.getDonViTinh()+"");
 				}
@@ -715,13 +717,13 @@ public class GiaoDienLapHoaDon extends JFrame {
 					luuCTHD();
 					luuKhachHang();
 					dispose();
-					JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (có lưu thông tin khách hàng)");
+					JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (CÓ lưu thông tin khách hàng)");
 				}
 				else {
 					if (!control.kiemTraCMND(txtCMND.getText()))
-						JOptionPane.showMessageDialog(panelDienThongTin, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 9 CHỮ SỐ");
+						JOptionPane.showMessageDialog(panelDienThongTin, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 9 CHỮ SỐ không âm");
 					if(!control.kiemTraSDT(txtSDT.getText()))
-						JOptionPane.showMessageDialog(panelDienThongTin, "SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ");
+						JOptionPane.showMessageDialog(panelDienThongTin, "SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ không âm");
 					if (!control.kiemTraNgayHopLe(date))
 						JOptionPane.showMessageDialog(panelDienThongTin, "Ngày sinh của khách hàng không hợp lệ !! ");
 				}
@@ -730,7 +732,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 				luuHD();
 				luuCTHD();
 				dispose();
-				JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (không lưu thông tin khách hàng)");
+				JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (KHÔNG lưu thông tin khách hàng)");
 			}
 		}
 		else

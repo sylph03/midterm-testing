@@ -32,6 +32,7 @@ import entity.NhanVien;
 import entity.ThongTinThuoc;
 import jxl.CellType;
 import jxl.Workbook;
+import jxl.biff.drawing.ComboBox;
 import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
@@ -704,12 +705,24 @@ public class ControlGiaoDien {
 		return soKiTuSo;
 	}
 	public boolean kiemTraCMND(String cmnd) {
-		if ((kiemTraDuLieuSo(cmnd)==true) && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==9))
+	       boolean soAm = false;
+	    try {
+	        if (Long.parseLong(cmnd)>0)
+                soAm=true;
+	    }catch (Exception e) {
+	    }
+		if ((kiemTraDuLieuSo(cmnd)==true) && soAm==true && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==9))
 			return true;
 		return false;
 	}
 	public boolean kiemTraSDT(String sdt) {
-		if ((kiemTraDuLieuSo(sdt)==true) && (demSoKiTuSo1Chuoi(sdt) == 11 || demSoKiTuSo1Chuoi(sdt)==10))
+        boolean soAm = false;
+     try {
+         if (Long.parseLong(sdt)>0)
+             soAm=true;
+     }catch (Exception e) {
+     }
+		if ((kiemTraDuLieuSo(sdt)==true) && soAm==true && (demSoKiTuSo1Chuoi(sdt) == 11 || demSoKiTuSo1Chuoi(sdt)==10))
 			return true;
 		return false;
 	}
@@ -724,10 +737,30 @@ public class ControlGiaoDien {
 		catch (ParseException e) {
 			return false;
 		}
-		if (!sdf.format(testDate).equals(date)) {
-			return false;
+		if (sdf.format(testDate).equals(date)  && kiemTraNgaySoVoiHienTai(date, layNgayHeThong())) {
+			return true;
 		}
-		return true;
+		return false;
+	}
+	public boolean kiemTraNgaySoVoiHienTai(String date1,String heThong) {
+	    java.util.Date testDate = null;
+	    java.util.Date testDate2 = null;
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    try {
+            testDate = sdf.parse(date1);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    try {
+            testDate2=sdf.parse(heThong);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    if ( testDate .before(testDate2))
+	        return true;
+	    return false;
 	}
 	//
 	public void GhiEXECL(String fileName,String chuoi)
