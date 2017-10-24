@@ -70,6 +70,9 @@ import java.awt.TextArea;
 import javax.swing.JTextArea;
 import javax.swing.DropMode;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JMonthChooser;
+import com.toedter.calendar.JYearChooser;
+
 import javax.swing.JRadioButton;
 
 import java.util.ArrayList;
@@ -109,7 +112,12 @@ public class GiaoDienNhanVien extends JFrame {
 	private DateFormat dateformat =new SimpleDateFormat("yyyy-MM-dd");
 	private JDateChooser dateChooser_DSHD,dateChooser_DoanhThu;
 	private JLabel label;
-
+	private JPanel panelTim_DSDon;
+	private JMonthChooser monthChooser_DSHD,monthChooser_DoanhThu;
+	private JYearChooser  yearChooser_DSHD,yearChooser_DoanhThu;
+	private JLabel lblNewLabel_10;
+	private JPanel panel_DoanhThu;
+	private JLabel lblNewLabel_12;
 	public GiaoDienNhanVien() {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienNhanVien.class.getResource("/ser/pill.png")));
@@ -790,33 +798,57 @@ public class GiaoDienNhanVien extends JFrame {
 		lblNewLabel_7.setBounds(471, 31, 280, 350);
 		panelDSHD.add(lblNewLabel_7);
 
-		dateChooser_DSHD = new JDateChooser();
-		dateChooser_DSHD.setDateFormatString("dd/MM/yyyy");
-		dateChooser_DSHD.setLocale(new Locale("vi", "VN"));
-		dateChooser_DSHD.setBounds(22, 43, 159, 20);
-		panelDSHD.add(dateChooser_DSHD);
 
 		GroupTimdon = new ButtonGroup();
-		rdbtnHienHet_DSHD = new JRadioButton("Hiện hết");
+		rdbtnHienHet_DSHD = new JRadioButton("Hiện hết đơn");
+		rdbtnHienHet_DSHD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoadJCalender_DSDon(true, false, false, false);
+			}
+		});
 		rdbtnHienHet_DSHD.setSelected(true);
-		rdbtnHienHet_DSHD.setBounds(191, 25, 90, 23);
+		rdbtnHienHet_DSHD.setBounds(191, 25, 101, 23);
 		panelDSHD.add(rdbtnHienHet_DSHD);
 		GroupTimdon.add(rdbtnHienHet_DSHD);
 
 		rdbtnTheoThang_DSHD = new JRadioButton("Theo tháng");
+		rdbtnTheoThang_DSHD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoadJCalender_DSDon(false, false,true, false);
+			}
+		});
 		rdbtnTheoThang_DSHD.setBounds(191, 49, 101, 23);
 		panelDSHD.add(rdbtnTheoThang_DSHD);
 		GroupTimdon.add(rdbtnTheoThang_DSHD);
 
 		rdbtnChinhXac_DSHD = new JRadioButton("Chính xác");
+		rdbtnChinhXac_DSHD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoadJCalender_DSDon(false,true,false, false);
+			}
+		});
 		rdbtnChinhXac_DSHD.setBounds(294, 25, 90, 23);
 		panelDSHD.add(rdbtnChinhXac_DSHD);
 		GroupTimdon.add( rdbtnChinhXac_DSHD);
 
 		rdbtnTheoNam_DSHD = new JRadioButton("Theo năm");
+		rdbtnTheoNam_DSHD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoadJCalender_DSDon(false,false,false, true);
+			}
+		});
 		rdbtnTheoNam_DSHD.setBounds(294, 49, 90, 23);
 		panelDSHD.add(rdbtnTheoNam_DSHD);
 		GroupTimdon.add(rdbtnTheoNam_DSHD);
+		
+		panelTim_DSDon = new JPanel();
+		panelTim_DSDon.setBounds(10, 38, 153, 30);
+		panelDSHD.add(panelTim_DSDon);
+		panelTim_DSDon.setLayout(null);
+		
+		lblNewLabel_10 = new JLabel("Tìm hết các móc thời gian");
+		lblNewLabel_10.setBounds(0, 0, 153, 30);
+		panelTim_DSDon.add(lblNewLabel_10);
 
 		scrollPaneDanhSachDon.setBounds(22, 99, 439, 262);
 		panelDoanhThu = new JPanel();
@@ -867,34 +899,57 @@ public class GiaoDienNhanVien extends JFrame {
 		scrollPaneDoanhThu.setBounds(10, 97, 443, 288);
 		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"");
 
-		dateChooser_DoanhThu = new JDateChooser();
-		dateChooser_DoanhThu.setDateFormatString("dd / MM /yyyy");
-		dateChooser_DoanhThu.setLocale(new Locale("vi", "VN"));
-		dateChooser_DoanhThu.setBounds(10, 36, 156, 20);
-		panelDoanhThu.add(dateChooser_DoanhThu);
-
 		GroupTimdoanhthu=new ButtonGroup();
 
-		rdbtnHienhet_Doanhthu = new JRadioButton("Hiện hết");
+		rdbtnHienhet_Doanhthu = new JRadioButton("Hiện hết đơn");
+		rdbtnHienhet_Doanhthu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadJCalender_Doanhthu(true, false, false, false);
+			}
+		});
 		rdbtnHienhet_Doanhthu.setSelected(true);
-		rdbtnHienhet_Doanhthu.setBounds(172, 21, 90, 23);
+		rdbtnHienhet_Doanhthu.setBounds(172, 21, 101, 23);
 		panelDoanhThu.add(rdbtnHienhet_Doanhthu);
 		GroupTimdoanhthu.add(rdbtnHienhet_Doanhthu);
 
 		rdbtnTheoThang_Doanhthu = new JRadioButton("Theo tháng");
+		rdbtnTheoThang_Doanhthu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadJCalender_Doanhthu(false, false,true, false);
+			}
+		});
 		rdbtnTheoThang_Doanhthu.setBounds(172, 45, 101, 23);
 		panelDoanhThu.add(rdbtnTheoThang_Doanhthu);
 		GroupTimdoanhthu.add(rdbtnTheoThang_Doanhthu);
 
 		rdbtnChinhXac_Doanhthu = new JRadioButton("Chính xác");
+		rdbtnChinhXac_Doanhthu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadJCalender_Doanhthu(false, true,false, false);
+			}
+		});
 		rdbtnChinhXac_Doanhthu.setBounds(275, 21, 90, 23);
 		panelDoanhThu.add(rdbtnChinhXac_Doanhthu);
 		GroupTimdoanhthu.add(rdbtnChinhXac_Doanhthu);
 
 		rdbtnTheonam_Doanhthu = new JRadioButton("Theo năm");
+		rdbtnTheonam_Doanhthu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadJCalender_Doanhthu(false,false,false, true);
+			}
+		});
 		rdbtnTheonam_Doanhthu.setBounds(275, 45, 90, 23);
 		panelDoanhThu.add(rdbtnTheonam_Doanhthu);
 		GroupTimdoanhthu.add(rdbtnTheonam_Doanhthu);
+		
+		panel_DoanhThu = new JPanel();
+		panel_DoanhThu.setBounds(10, 36, 152, 34);
+		panelDoanhThu.add(panel_DoanhThu);
+		panel_DoanhThu.setLayout(null);
+		
+		lblNewLabel_12 = new JLabel("Tìm hết các móc thời gian");
+		lblNewLabel_12.setBounds(0, 0, 152, 34);
+		panel_DoanhThu.add(lblNewLabel_12);
 		try {
 			ds.docNV();
 		} catch (SQLException e1) {
@@ -1047,24 +1102,23 @@ public class GiaoDienNhanVien extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		ArrayList<HoaDonBanHang> dshdban=null;
-		Date ngay = dateChooser_DoanhThu.getDate();
 		if(rdbtnHienhet_Doanhthu.isSelected())
 		{
 			dshdban=ds.listHDB;
 		}
 		else if(rdbtnChinhXac_Doanhthu.isSelected())
 		{
+			Date ngay = dateChooser_DoanhThu.getDate();
 			dshdban=control.TimHDNBanTheoNgay(dateformat.format(ngay));
 		}
 		else if(rdbtnTheoThang_Doanhthu.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1);
+			dshdban=control.TimHDNBanTheoThang(monthChooser_DoanhThu.getMonth()+1);
 		}
 		else if(rdbtnTheonam_Doanhthu.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoNam(ngay.getYear()+1900);
+			dshdban=control.TimHDNBanTheoNam(yearChooser_DoanhThu.getYear());
 		}
 
 		for(HoaDonBanHang hd : dshdban)
@@ -1089,22 +1143,23 @@ public class GiaoDienNhanVien extends JFrame {
 			e.printStackTrace();
 		}
 		ArrayList<HoaDonBanHang> dshdban=null;
-		Date ngay = dateChooser_DSHD.getDate();
+	
 		if(rdbtnHienHet_DSHD.isSelected())
 		{
 			dshdban=ds.listHDB;
 		}
 		else if(rdbtnChinhXac_DSHD.isSelected())
 		{
+			Date ngay = dateChooser_DSHD.getDate();
 			dshdban=control.TimHDNBanTheoNgay(dateformat.format(ngay));
 		}
 		else if(rdbtnTheoThang_DSHD.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoThang(ngay.getMonth()+1);
+			dshdban=control.TimHDNBanTheoThang(monthChooser_DSHD.getMonth()+1);
 		}
 		else if(rdbtnTheoNam_DSHD.isSelected())
 		{
-			dshdban=control.TimHDNBanTheoNam(ngay.getYear()+1900);
+			dshdban=control.TimHDNBanTheoNam(yearChooser_DSHD.getYear());
 		}
 		for(HoaDonBanHang hd : dshdban)
 		{
@@ -1114,5 +1169,71 @@ public class GiaoDienNhanVien extends JFrame {
 				tablemodelDanhSachDon.addRow(row);
 			}
 		}
+	}
+	public void LoadJCalender_DSDon(boolean a, boolean b,boolean c,boolean d)
+	{
+		panelTim_DSDon.removeAll();
+		panelTim_DSDon.repaint();
+		panelTim_DSDon.revalidate();
+		if(a==true)
+		{
+			panelTim_DSDon.add(new JLabel("Tìm hết các móc thời gian")).setSize(panelTim_DSDon.getSize());;
+		}
+		else if(b==true)
+		{
+			dateChooser_DSHD = new JDateChooser();
+			dateChooser_DSHD.setDateFormatString("dd / MM /yyyy");
+			dateChooser_DSHD.setLocale(new Locale("vi", "VN"));
+			dateChooser_DSHD.setSize(panelTim_DSDon.getSize());
+			panelTim_DSDon.add(dateChooser_DSHD);
+		}
+		else if(c==true)
+		{
+			monthChooser_DSHD = new JMonthChooser();
+			monthChooser_DSHD .setMonth(0);
+			monthChooser_DSHD .setLocale(new Locale("vi", "VN"));
+			monthChooser_DSHD .setSize(panelTim_DSDon.getSize());
+			panelTim_DSDon.add(monthChooser_DSHD );
+		}
+		else if(d==true)
+		{
+			yearChooser_DSHD = new JYearChooser();
+			yearChooser_DSHD.setSize(panelTim_DSDon.getSize());
+			panelTim_DSDon.add(yearChooser_DSHD);
+
+		}	
+	}
+	public void LoadJCalender_Doanhthu(boolean a, boolean b,boolean c,boolean d)
+	{
+		panel_DoanhThu.removeAll();
+		panel_DoanhThu.repaint();
+		panel_DoanhThu.revalidate();
+		if(a==true)
+		{
+			panel_DoanhThu.add(new JLabel("Tìm hết các móc thời gian")).setSize(panel_DoanhThu.getSize());;
+		}
+		else if(b==true)
+		{
+			dateChooser_DoanhThu = new JDateChooser();
+			dateChooser_DoanhThu.setDateFormatString("dd / MM /yyyy");
+			dateChooser_DoanhThu.setLocale(new Locale("vi", "VN"));
+			dateChooser_DoanhThu.setSize(panel_DoanhThu.getSize());
+			panel_DoanhThu.add(dateChooser_DoanhThu);
+		}
+		else if(c==true)
+		{
+			monthChooser_DoanhThu = new JMonthChooser();
+			monthChooser_DoanhThu.setMonth(0);
+			monthChooser_DoanhThu.setLocale(new Locale("vi", "VN"));
+			monthChooser_DoanhThu.setSize(panel_DoanhThu.getSize());
+			panel_DoanhThu.add(monthChooser_DoanhThu);
+		}
+		else if(d==true)
+		{
+			yearChooser_DoanhThu = new JYearChooser();
+			yearChooser_DoanhThu.setSize(panel_DoanhThu.getSize());
+			panel_DoanhThu.add(yearChooser_DoanhThu);
+
+		}	
 	}
 }
