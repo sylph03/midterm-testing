@@ -26,7 +26,6 @@ import entity.NhanVien;
 import entity.ThongTinThuoc;
 import giaodien.GiaoDienDangNhap;
 import giaodien.GiaoDienThongTinNhanVien;
-import main.Run;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
@@ -34,11 +33,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
-import java.awt.GridLayout;
 import javax.swing.JToggleButton;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
@@ -54,19 +51,15 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.Rectangle;
-import java.awt.SystemColor;
 
 import javax.swing.Icon;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Frame;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JMenuBar;
 import javax.swing.ImageIcon;
 import javax.swing.JToolBar;
-import javax.swing.JViewport;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.Cursor;
@@ -77,23 +70,21 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-import javax.swing.ListSelectionModel;
-import javax.swing.JFormattedTextField;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollBar;
 
 import java.awt.Toolkit;
+
+import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.awt.ComponentOrientation;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import java.util.Locale;
 import javax.swing.JTextArea;
-import javax.swing.border.CompoundBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import com.toedter.calendar.JMonthChooser;
+import com.toedter.calendar.JYearChooser;
 
 public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
@@ -131,6 +122,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private JTextField txtSDT_DanhSach_DanhSachNV;
 	private JTextField txtDiaChi_DanhSach_DanhSachNV;
 	private JTextField txtCMND_DanhSach_DanhSachNV;
+	private JButton btnSua_DanhSach_DanhSachNhanVien;
 	private JButton btnLuu_DanhSach_DanhSachThuoc;
 	private JButton btnXoa_DanhSach_DanhSachThuoc;
 	private JButton btnTim_DanhSach_DanhSachThuoc;	
@@ -180,10 +172,13 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private JRadioButton rdbtnHienTatCa_NhapHang_DanhSachDon;
 	private DefaultComboBoxModel<String> CBModelLoai_NhapHang_ThemThuoc,CBModelNCC_NhapHang_ThemThuoc,CBModelDonViTinh_NhapHang_ThemThuoc;
 	private JDateChooser datechooserNgaySinh_DanhSach_DanhSachNV;
+	private JMonthChooser monthChooser_NhapHang_DanhSachDon;
+	private JYearChooser yearChooser_NhapHang_DanhSachDon;
 	//4-Doanh thu và báo cáo
 
 	private JPanel panelDoanhThuvaBaoCao;
 	private JPanel panelThuChiDoanhthu_DoanhThuvaBaoCao;
+	private JPanel panel;
 	private JButton btnTim_DoanhthuvaBaoCao;
 	public JTable tableDoanhThu_Doanhthu_DoanhThuvaBaoCao,tableBaoCao_DoanhThuvaBaoCao;
 	public DefaultTableModel tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao,tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao;
@@ -201,11 +196,21 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 	private JScrollPane jsclist;
 	private ControlGiaoDien control = new ControlGiaoDien();
 	private DanhSachDuLieu ds = new DanhSachDuLieu();
-	private JButton btnSua_DanhSach_DanhSachNhanVien;
+	GiaoDienThongTinNhanVien tt =new GiaoDienThongTinNhanVien();
+	GiaoDienDangNhap dn ;
+	
 	private JTextField txtMaNV_BaoCaovaDoanhThu;
 	private JTextArea textArea;
 	private JLabel label_1;
 	private JLabel label_2;
+	private JLabel lblNewLabel_33;
+	private JLabel lblNewLabel_34;
+	private JLabel lbTenNhanVien;
+	private JLabel lbDangXuat;
+	private JLabel lbIDNhanVien;
+    public String IDNhanVien=dn.txtTK.getText();
+    private JPanel panelJcalender;
+    private JLabel lblNewLabel_35;
 
 	public GiaoDienQuanLy() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienQuanLy.class.getResource("/ser/pill.png")));
@@ -336,9 +341,10 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		ThanhToolBar = new JPanel();
 		ThanhToolBar.setBounds(0, 0, 795, 80);
 		contentPane.add(ThanhToolBar);
-		ThanhToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0,0));
+		ThanhToolBar.setLayout(null);
 
 		JToolBar toolBar = new JToolBar();
+		toolBar.setBounds(0, 0, 523, 77);
 		toolBar.setMinimumSize(new Dimension(0, 0));
 		ThanhToolBar.add(toolBar);
 		toolBar.setVerifyInputWhenFocusTarget(false);
@@ -361,23 +367,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnTrangChu.setPreferredSize(new Dimension(80, 75));
 		btnTrangChu.setMaximumSize(new Dimension(100, 100));
 		toolBar.add(btnTrangChu);
-
-		JButton btnNhanVien = new JButton("Thông Tin");
-		btnNhanVien.setMnemonic('2');
-		GiaoDienThongTinNhanVien tt =new GiaoDienThongTinNhanVien();
-		btnNhanVien.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				tt.setVisible(true);
-			}
-		});
-		btnNhanVien.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnNhanVien.setVerticalAlignment(SwingConstants.TOP);
-		btnNhanVien.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNhanVien.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/preferences_desktop_user.png")));
-		btnNhanVien.setPreferredSize(new Dimension(80, 75));
-		btnNhanVien.setMaximumSize(new Dimension(100, 100));
-		toolBar.add(btnNhanVien);
-		btnNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		
 
 		JButton btnThmThuc = new JButton("Thêm Thuốc");
 		btnThmThuc.setMnemonic('3');
@@ -431,6 +421,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 				Anpanel();
 				panelNhapHang.setVisible(true);
+				tabbedPane_NhapHang.setSelectedIndex(0);
 				panelTrangChu.setVisible(false);
 				KhoiTaoCBBoxNhapHang();
 			}
@@ -475,48 +466,22 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				Anpanel();
 				panelTinhTrang.setVisible(true);
 				panelTrangChu.setVisible(false);
+				for(int i = tableTinhTrangThuoc_TinhTrang.getRowCount()-1;i>=0;i--)
+				{
+					ThongTinThuoc thuoc = new ThongTinThuoc();
+					thuoc = ds.TimThuocTheoMa(tableModelTinhTrangThuoc_TinhTrang.getValueAt(i, 0)+"");
+					try {
+						control.autoCapNhatThuocHetHan(thuoc, panelTinhTrang);
+						ds.docBangCTHoaDonNhap();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				TaiTinhTrangThuoc();
 			}
 		});
 		groupDanhMuc.add(btnTinhTrang);
-
-
-
-		JButton btnDangXuat = new JButton("Đăng xuất");
-		btnDangXuat.setMnemonic('8');
-		btnDangXuat.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnDangXuat.setVerticalAlignment(SwingConstants.TOP);
-		btnDangXuat.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnDangXuat.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/application_exit.png")));
-		toolBar.add(btnDangXuat);
-		btnDangXuat.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnDangXuat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					dispose();
-					new GiaoDienDangNhap().setVisible(true);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-		btnDangXuat.setPreferredSize(new Dimension(80, 75));
-		btnDangXuat.setMaximumSize(new Dimension(100, 100));
-
-		JButton btnThoatChuongTrinh = new JButton("Thoát");
-		btnThoatChuongTrinh.setMnemonic('9');
-		btnThoatChuongTrinh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
-		btnThoatChuongTrinh.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnThoatChuongTrinh.setVerticalAlignment(SwingConstants.TOP);
-		btnThoatChuongTrinh.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnThoatChuongTrinh.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/exit (1).png")));
-		btnThoatChuongTrinh.setPreferredSize(new Dimension(80, 75));
-		btnThoatChuongTrinh.setMaximumSize(new Dimension(100, 100));
-		toolBar.add(btnThoatChuongTrinh);
 
 
 
@@ -525,6 +490,71 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		 * Khởi tạo layeredPane chứa các panel làm việc của các Button trên
 		 * 
 		 */
+
+		JPanel panelThongTinNhanVien = new JPanel();
+		panelThongTinNhanVien.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u00F4ng tin nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panelThongTinNhanVien.setBounds(525, 1, 266, 76);
+		ThanhToolBar.add(panelThongTinNhanVien);
+		panelThongTinNhanVien.setLayout(null);
+		
+		lblNewLabel_33 = new JLabel("ID NV :");
+		lblNewLabel_33.setBounds(10, 22, 58, 14);
+		panelThongTinNhanVien.add(lblNewLabel_33);
+		
+		lblNewLabel_34 = new JLabel("Tên NV :");
+		lblNewLabel_34.setBounds(10, 47, 58, 14);
+		panelThongTinNhanVien.add(lblNewLabel_34);
+		
+		lbTenNhanVien = new JLabel("");
+		lbTenNhanVien.setBounds(66, 47, 155, 14);
+		panelThongTinNhanVien.add(lbTenNhanVien);
+		
+		lbDangXuat = new JLabel("Đăng xuất");
+		lbDangXuat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbDangXuat.setForeground(Color.BLUE);
+				lbDangXuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbDangXuat.setForeground(Color.BLACK);
+				lbDangXuat.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					new GiaoDienDangNhap().setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				dispose();
+			}
+		});
+		lbDangXuat.setBounds(185, 11, 71, 20);
+		panelThongTinNhanVien.add(lbDangXuat);
+		
+		lbIDNhanVien = new JLabel(IDNhanVien);
+		lbIDNhanVien.setToolTipText("Bấm vào để xem thông tin chi tiết");
+		lbIDNhanVien.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbIDNhanVien.setForeground(Color.BLUE);
+				lbIDNhanVien.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbIDNhanVien.setForeground(Color.BLACK);
+				lbIDNhanVien.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tt.setVisible(true);
+			}
+		});
+		lbIDNhanVien.setBounds(66, 22, 122, 14);
+		panelThongTinNhanVien.add(lbIDNhanVien);
 
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setOpaque(true);
@@ -1046,7 +1076,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			public void focusLost(FocusEvent e) {
 				if(!txtTimKiem_DanhSach_DanhSachNhanVien.getText().trim().equals(""))
 				{
-					
+
 				}
 				else
 				{
@@ -1054,7 +1084,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 					txtTimkiem_DanhSach_DanhSachThuoc.setFont(new Font("Tahoma", Font.BOLD, 12));
 					txtTimKiem_DanhSach_DanhSachNhanVien.setForeground(Color.GRAY);
 				}
-				
+
 			}
 		});
 		txtTimKiem_DanhSach_DanhSachNhanVien.addKeyListener(new KeyAdapter() {
@@ -1076,10 +1106,10 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				}
 				else if(control.LocDuLieuNhanVientheoma(txt).size()>0)
 					dsnv =control.LocDuLieuNhanVientheoma(txt);
-				
+
 				try 
 				{
-					
+
 					for (NhanVien nv : dsnv) 
 					{
 						Object[] row = {nv.getMaNv(),nv.getHoTenNV(),nv.getNgaySinh(),nv.getGioiTinh(),nv.getDiaChi()};
@@ -1146,83 +1176,10 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		layeredPane.add(panelDoanhThuvaBaoCao);
 		panelDoanhThuvaBaoCao.setLayout(null);
 
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel.setBounds(10, 11, 770, 98);
-		panelDoanhThuvaBaoCao.add(panel);
-		panel.setLayout(null);
-
-		JLabel lblNewLabel_19 = new JLabel("Ngày :");
-		lblNewLabel_19.setBounds(10, 17, 73, 14);
-		panel.add(lblNewLabel_19);
-
-		btnTim_DoanhthuvaBaoCao = new JButton("Tìm");
-		btnTim_DoanhthuvaBaoCao.setBounds(562, 12, 89, 23);
-		panel.add(btnTim_DoanhthuvaBaoCao);
-		btnTim_DoanhthuvaBaoCao.addActionListener(this);
-
-		datechooserNgay_DoanthuvaBaocao = new JDateChooser();
-		datechooserNgay_DoanthuvaBaocao.setDateFormatString("dd / MM /yyyy");
-		datechooserNgay_DoanthuvaBaocao.setLocale(new Locale("vi", "VN"));
-		datechooserNgay_DoanthuvaBaocao.setBounds(58, 15, 173, 20);
-		panel.add(datechooserNgay_DoanthuvaBaocao);
-
-		JLabel lblNewLabel_22 = new JLabel("Mã nhân viên :");
-		lblNewLabel_22.setBounds(264, 17, 94, 14);
-		panel.add(lblNewLabel_22);
-
-		txtMaNV_BaoCaovaDoanhThu = new JTextField();
-		txtMaNV_BaoCaovaDoanhThu.setText("Nhập mã nv nếu muốn");
-		txtMaNV_BaoCaovaDoanhThu.setForeground(Color.gray);
-		txtMaNV_BaoCaovaDoanhThu.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent arg0) {
-				txtMaNV_BaoCaovaDoanhThu.setText("");
-				txtMaNV_BaoCaovaDoanhThu.setForeground(Color.BLACK);
-			}
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				if(txtMaNV_BaoCaovaDoanhThu.getText().equals(""))
-				{
-					txtMaNV_BaoCaovaDoanhThu.setText("Nhập mã nv nếu muốn");
-					txtMaNV_BaoCaovaDoanhThu.setForeground(Color.gray);
-				}
-			}
-		});
-		txtMaNV_BaoCaovaDoanhThu.setBounds(364, 15, 139, 20);
-		panel.add(txtMaNV_BaoCaovaDoanhThu);
-		txtMaNV_BaoCaovaDoanhThu.setColumns(10);
-
-		JLabel lblNewLabel_31 = new JLabel("");
-		lblNewLabel_31.setToolTipText("Tìm doanh thu cả nv theo thời gian chỉ định . Để trống để tìm hết các nhân viên");
-		lblNewLabel_31.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/get_info.png")));
-		lblNewLabel_31.setBounds(509, 18, 20, 17);
-		panel.add(lblNewLabel_31);
-
 		GroupDoanhthu= new ButtonGroup();
-		rdbtnHientatca_Doanhthu = new JRadioButton("Hiện tất cả");
-		rdbtnHientatca_Doanhthu.setSelected(true);
-		rdbtnHientatca_Doanhthu.setBounds(6, 38, 109, 23);
-		panel.add(rdbtnHientatca_Doanhthu);
-		GroupDoanhthu.add(rdbtnHientatca_Doanhthu);
-
-		rdbtnTimTheoNgay_Doanhthu = new JRadioButton("Tìm theo chính xác");
-		rdbtnTimTheoNgay_Doanhthu.setBounds(146, 38, 139, 23);
-		panel.add(rdbtnTimTheoNgay_Doanhthu);
-		GroupDoanhthu.add(rdbtnTimTheoNgay_Doanhthu);
-
-		rdbtnTimtheoThang_Doanhthu = new JRadioButton("Tìm theo tháng");
-		rdbtnTimtheoThang_Doanhthu.setBounds(6, 64, 120, 23);
-		panel.add(rdbtnTimtheoThang_Doanhthu);
-		GroupDoanhthu.add(rdbtnTimtheoThang_Doanhthu);
-
-		rdbtnTimTheoNam_Doanhthu = new JRadioButton("Tìm theo năm");
-		rdbtnTimTheoNam_Doanhthu.setBounds(146, 64, 139, 23);
-		panel.add(rdbtnTimTheoNam_Doanhthu);
-		GroupDoanhthu.add(rdbtnTimTheoNam_Doanhthu);
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(10, 110, 785, 363);
+		tabbedPane.setBounds(10, 11, 785, 462);
 		panelDoanhThuvaBaoCao.add(tabbedPane);
 
 		JPanel panelDoanhThu_DoanhThuvaBaoCao = new JPanel();
@@ -1232,22 +1189,22 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 		tabbedPane.addTab("Doanh thu", null, scrollPaneDoanhthu_DoanhThuvaBaoCao=new JScrollPane(tableDoanhThu_Doanhthu_DoanhThuvaBaoCao=
 				new JTable(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao)), null);
-		scrollPaneDoanhthu_DoanhThuvaBaoCao.setBounds(0, 0, 780, 272);
+		scrollPaneDoanhthu_DoanhThuvaBaoCao.setBounds(0, 106, 780, 272);
 		panelDoanhThu_DoanhThuvaBaoCao.add(scrollPaneDoanhthu_DoanhThuvaBaoCao);
 
 		JLabel lblNewLabel_28 = new JLabel("Tổng doanh thu");
-		lblNewLabel_28.setBounds(525, 305, 116, 14);
+		lblNewLabel_28.setBounds(515, 389, 116, 14);
 		panelDoanhThu_DoanhThuvaBaoCao.add(lblNewLabel_28);
 
 		JTextField TongDoanhThu_DoanhThu_DoanhThu = new JTextField();
 		TongDoanhThu_DoanhThu_DoanhThu.setEditable(false);
 		TongDoanhThu_DoanhThu_DoanhThu.setEnabled(false);
-		TongDoanhThu_DoanhThu_DoanhThu.setBounds(643, 302, 137, 20);
+		TongDoanhThu_DoanhThu_DoanhThu.setBounds(633, 386, 137, 20);
 		panelDoanhThu_DoanhThuvaBaoCao.add(TongDoanhThu_DoanhThu_DoanhThu);
 		TongDoanhThu_DoanhThu_DoanhThu.setColumns(10);
 
 		JButton btnXemChiTiet_DoanhThuvaBaoCao_DoanhThu = new JButton("Xem chi Tiết");
-		btnXemChiTiet_DoanhThuvaBaoCao_DoanhThu.setBounds(10, 301, 109, 23);
+		btnXemChiTiet_DoanhThuvaBaoCao_DoanhThu.setBounds(0, 385, 109, 23);
 		panelDoanhThu_DoanhThuvaBaoCao.add(btnXemChiTiet_DoanhThuvaBaoCao_DoanhThu);
 
 		panelThuChiDoanhthu_DoanhThuvaBaoCao = new JPanel();
@@ -1257,22 +1214,24 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(scrollPaneBaoCao_DoanhThuvaBaoCao = new JScrollPane(tableBaoCao_DoanhThuvaBaoCao=
 				new JTable(tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao)));
-		scrollPaneBaoCao_DoanhThuvaBaoCao.setBounds(10, 36, 758, 221);
+		scrollPaneBaoCao_DoanhThuvaBaoCao.setBounds(10, 36, 758, 338);
 
 		JLabel lblNewLabel_23 = new JLabel("Danh sách thuốc bán trong ngày");
 		lblNewLabel_23.setBounds(10, 11, 230, 14);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(lblNewLabel_23);
 
 		JLabel lblNewLabel_29 = new JLabel("Tổng tiền lời");
-		lblNewLabel_29.setBounds(540, 294, 82, 14);
+		lblNewLabel_29.setBounds(530, 404, 82, 14);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(lblNewLabel_29);
 
 		JTextField TongTienLoi_DoanhThu_BaoCao = new JTextField();
 		TongTienLoi_DoanhThu_BaoCao.setEnabled(false);
 		TongTienLoi_DoanhThu_BaoCao.setEditable(false);
-		TongTienLoi_DoanhThu_BaoCao.setBounds(632, 291, 136, 20);
+		TongTienLoi_DoanhThu_BaoCao.setBounds(622, 401, 136, 20);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(TongTienLoi_DoanhThu_BaoCao);
 		TongTienLoi_DoanhThu_BaoCao.setColumns(10);
+
+
 
 		btnXemChiTiet_DoanhThuvaBaoCao_DoanhThu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1284,6 +1243,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 					double tongTien = Double.parseDouble(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao.getValueAt(row, 4)+"");
 					new GiaoDienChiTietDoanhThu(maHD,maNV,tenNV,tongTien).setVisible(true);
 				}
+				else
+					JOptionPane.showMessageDialog(panelDoanhThu_DoanhThuvaBaoCao, "Vui lòng chọn đơn hàng cần xem!");
 			}
 		});
 
@@ -1325,7 +1286,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				}
 			}
 		});
-		btnXuatBaoCao_DoanhThu_BaoCao.setBounds(10, 290, 141, 23);
+		btnXuatBaoCao_DoanhThu_BaoCao.setBounds(10, 400, 141, 23);
 		panelThuChiDoanhthu_DoanhThuvaBaoCao.add(btnXuatBaoCao_DoanhThu_BaoCao);
 
 		panelNhapHang = new JPanel();
@@ -1365,11 +1326,13 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panelThonTinDonHang.add(lblNewLabel_3);
 
 		txtMaDon_NhapHang = new JTextField();
+		txtMaDon_NhapHang.setEnabled(false);
 		txtMaDon_NhapHang.setBounds(95, 25, 171, 20);
 		panelThonTinDonHang.add(txtMaDon_NhapHang);
 		txtMaDon_NhapHang.setColumns(10);
 
 		txtTongGia_NhapHang = new JTextField();
+		txtTongGia_NhapHang.setEnabled(false);
 		txtTongGia_NhapHang.setColumns(10);
 		txtTongGia_NhapHang.setBounds(95, 75, 171, 20);
 		panelThonTinDonHang.add(txtTongGia_NhapHang);
@@ -1477,7 +1440,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		panel_NhapHang_DanhSach.add(lblNewLabel_5);
 
 		JLabel lblNewLabel_14 = new JLabel("Thời gian :");
-		lblNewLabel_14.setBounds(12, 20, 98, 16);
+		lblNewLabel_14.setBounds(12, 32, 98, 16);
 		panel_NhapHang_DanhSach.add(lblNewLabel_14);
 
 		btnTim_NhapHang_DanhSachDon = new JButton("Tìm");
@@ -1504,7 +1467,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				}
 				else if(rdbtnTimTheoThang_NhapHang_DanhSachDon.isSelected())
 				{
-					ArrayList<HoaDonNhapHang> ds = control.TimHDNHangTheoThang(dateChoosertNgay_NhapHang_DanhSachDon.getDate().getMonth()+1);
+					ArrayList<HoaDonNhapHang> ds = control.TimHDNHangTheoThang(monthChooser_NhapHang_DanhSachDon.getMonth()+1);
 					for(HoaDonNhapHang hd : ds)
 					{
 						Object[] row = {hd.getMaHDN(),hd.getNgayNhap(),hd.getTongGiaNhap()};
@@ -1513,7 +1476,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 				}
 				else if(rdbtnTimTheoNam_NhapHang_DanhSachDon.isSelected())
 				{
-					ArrayList<HoaDonNhapHang> ds = control.TimHDNHangTheoNam(dateChoosertNgay_NhapHang_DanhSachDon.getDate().getYear()+1900);
+					ArrayList<HoaDonNhapHang> ds = control.TimHDNHangTheoNam(yearChooser_NhapHang_DanhSachDon.getYear());
 					for(HoaDonNhapHang hd : ds)
 					{
 						Object[] row = {hd.getMaHDN(),hd.getNgayNhap(),hd.getTongGiaNhap()};
@@ -1537,33 +1500,58 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		btnXoa_NhapHang_DanhSachDon.setBounds(588, 52, 98, 26);
 		panel_NhapHang_DanhSach.add(btnXoa_NhapHang_DanhSachDon);
 
-		dateChoosertNgay_NhapHang_DanhSachDon = new JDateChooser();
-		dateChoosertNgay_NhapHang_DanhSachDon.setDateFormatString("dd / MM / yyyy");
-		dateChoosertNgay_NhapHang_DanhSachDon.setLocale(new Locale("vi", "VN"));
-		dateChoosertNgay_NhapHang_DanhSachDon.setBounds(98, 20, 158, 20);
-		panel_NhapHang_DanhSach.add(dateChoosertNgay_NhapHang_DanhSachDon);
 
 		GroupTimkiem = new ButtonGroup();		
 		rdbtnTimChinhXac_NhapHang_DanhSachDon = new JRadioButton("Tìm chính xác");
+		rdbtnTimChinhXac_NhapHang_DanhSachDon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadJCalender(false,true, false, false);
+			}
+		});
 		rdbtnTimChinhXac_NhapHang_DanhSachDon.setBounds(417, 15, 117, 23);
 		panel_NhapHang_DanhSach.add(rdbtnTimChinhXac_NhapHang_DanhSachDon);
 		GroupTimkiem.add(rdbtnTimChinhXac_NhapHang_DanhSachDon);
 
 		rdbtnTimTheoThang_NhapHang_DanhSachDon = new JRadioButton("Tìm theo tháng");
+		rdbtnTimTheoThang_NhapHang_DanhSachDon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadJCalender(false, false, true, false);
+			}
+		});
 		rdbtnTimTheoThang_NhapHang_DanhSachDon.setBounds(275, 54, 130, 23);
 		panel_NhapHang_DanhSach.add(rdbtnTimTheoThang_NhapHang_DanhSachDon);
 		GroupTimkiem.add(rdbtnTimTheoThang_NhapHang_DanhSachDon);
 
 		rdbtnTimTheoNam_NhapHang_DanhSachDon = new JRadioButton("Tìm theo năm");
+		rdbtnTimTheoNam_NhapHang_DanhSachDon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoadJCalender(false, false, false, true);
+			}
+		});
 		rdbtnTimTheoNam_NhapHang_DanhSachDon.setBounds(417, 52, 109, 23);
 		panel_NhapHang_DanhSach.add(rdbtnTimTheoNam_NhapHang_DanhSachDon);
 		GroupTimkiem.add(rdbtnTimTheoNam_NhapHang_DanhSachDon);
 
 		rdbtnHienTatCa_NhapHang_DanhSachDon = new JRadioButton("Hiện tất cả đơn",true);
+		rdbtnHienTatCa_NhapHang_DanhSachDon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoadJCalender(true, false, false, false);
+			}
+		});
 		rdbtnHienTatCa_NhapHang_DanhSachDon.setBounds(275, 17, 130, 23);
 		panel_NhapHang_DanhSach.add(rdbtnHienTatCa_NhapHang_DanhSachDon);
 		GroupTimkiem.add(rdbtnHienTatCa_NhapHang_DanhSachDon);
-
+		
+		panelJcalender = new JPanel();
+		panelJcalender.setBounds(75, 25, 177, 31);
+		panel_NhapHang_DanhSach.add(panelJcalender);
+		panelJcalender.setLayout(null);
+		
+		lblNewLabel_35 = new JLabel("Tìm hết tất cả các móc thời gian");
+		lblNewLabel_35.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_35.setBounds(0, 0, 177, 31);
+		panelJcalender.add(lblNewLabel_35);
+		
 		btnXoa_NhapHang_DanhSachDon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -2016,7 +2004,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		});
 
 		panelTrangChu = new JPanel();
-		layeredPane.setLayer(panelTrangChu, 1);
+		layeredPane.setLayer(panelTrangChu, 0);
 		panelTrangChu.setBounds(0, 0, 795, 484);
 		layeredPane.add(panelTrangChu);
 		panelTrangChu.setLayout(null);
@@ -2056,28 +2044,91 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		scrollPaneTinhTrangThuoc_TinhTrang.setBounds(5, 26, 795, 423);
 
 
+
+		panel = new JPanel();
+		panel.setBounds(0, 0, 770, 98);
+		panelDoanhThu_DoanhThuvaBaoCao.add(panel);
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setLayout(null);
+
+		JLabel lblNewLabel_19 = new JLabel("Ngày :");
+		lblNewLabel_19.setBounds(10, 17, 73, 14);
+		panel.add(lblNewLabel_19);
+
+		btnTim_DoanhthuvaBaoCao = new JButton("Tìm");
+		btnTim_DoanhthuvaBaoCao.setBounds(562, 12, 89, 23);
+		panel.add(btnTim_DoanhthuvaBaoCao);
+		btnTim_DoanhthuvaBaoCao.addActionListener(this);
+
+		datechooserNgay_DoanthuvaBaocao = new JDateChooser();
+		datechooserNgay_DoanthuvaBaocao.setDateFormatString("dd / MM /yyyy");
+		datechooserNgay_DoanthuvaBaocao.setLocale(new Locale("vi", "VN"));
+		datechooserNgay_DoanthuvaBaocao.setBounds(58, 15, 173, 20);
+		panel.add(datechooserNgay_DoanthuvaBaocao);
+
+		JLabel lblNewLabel_22 = new JLabel("Mã nhân viên :");
+		lblNewLabel_22.setBounds(264, 17, 94, 14);
+		panel.add(lblNewLabel_22);
+
+		txtMaNV_BaoCaovaDoanhThu = new JTextField();
+		txtMaNV_BaoCaovaDoanhThu.setText("Nhập mã nv nếu muốn");
+		txtMaNV_BaoCaovaDoanhThu.setForeground(Color.gray);
+		txtMaNV_BaoCaovaDoanhThu.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				txtMaNV_BaoCaovaDoanhThu.setText("");
+				txtMaNV_BaoCaovaDoanhThu.setForeground(Color.BLACK);
+			}
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if(txtMaNV_BaoCaovaDoanhThu.getText().equals(""))
+				{
+					txtMaNV_BaoCaovaDoanhThu.setText("Nhập mã nv nếu muốn");
+					txtMaNV_BaoCaovaDoanhThu.setForeground(Color.gray);
+				}
+			}
+		});
+		txtMaNV_BaoCaovaDoanhThu.setBounds(364, 15, 139, 20);
+		panel.add(txtMaNV_BaoCaovaDoanhThu);
+		txtMaNV_BaoCaovaDoanhThu.setColumns(10);
+
+		JLabel lblNewLabel_31 = new JLabel("");
+		lblNewLabel_31.setToolTipText("Tìm doanh thu cả nv theo thời gian chỉ định . Để trống để tìm hết các nhân viên");
+		lblNewLabel_31.setIcon(new ImageIcon(GiaoDienQuanLy.class.getResource("/ser/get_info.png")));
+		lblNewLabel_31.setBounds(509, 18, 20, 17);
+		panel.add(lblNewLabel_31);
+		rdbtnHientatca_Doanhthu = new JRadioButton("Hiện tất cả");
+		rdbtnHientatca_Doanhthu.setSelected(true);
+		rdbtnHientatca_Doanhthu.setBounds(6, 38, 109, 23);
+		panel.add(rdbtnHientatca_Doanhthu);
+		GroupDoanhthu.add(rdbtnHientatca_Doanhthu);
+
+		rdbtnTimTheoNgay_Doanhthu = new JRadioButton("Tìm theo chính xác");
+		rdbtnTimTheoNgay_Doanhthu.setBounds(146, 38, 139, 23);
+		panel.add(rdbtnTimTheoNgay_Doanhthu);
+		GroupDoanhthu.add(rdbtnTimTheoNgay_Doanhthu);
+
+		rdbtnTimtheoThang_Doanhthu = new JRadioButton("Tìm theo tháng");
+		rdbtnTimtheoThang_Doanhthu.setBounds(6, 64, 120, 23);
+		panel.add(rdbtnTimtheoThang_Doanhthu);
+		GroupDoanhthu.add(rdbtnTimtheoThang_Doanhthu);
+
+		rdbtnTimTheoNam_Doanhthu = new JRadioButton("Tìm theo năm");
+		rdbtnTimTheoNam_Doanhthu.setBounds(146, 64, 139, 23);
+		panel.add(rdbtnTimTheoNam_Doanhthu);
+		GroupDoanhthu.add(rdbtnTimTheoNam_Doanhthu);
+
 		/*
 		 * Các hàm cần chạy ngay sau khi đã load Giao diện hoàn tất
 		 */
 		duaDuLieuTuListVaoTable();
+		lbTenNhanVien.setText(ds.TimNVTheoMa(IDNhanVien).getHoTenNV());
 		Anpanel();
 		TaiTinhTrangThuoc();
 		MoKhoaTextFeilDanhSachThuoc(false);
 		MoKhoaTextFeilDanhSachNV(false);
 		TongDoanhThu_DoanhThu_DoanhThu.setText(control.tongDoanhThu(tableModelDoanhThu_Doanhthu_DoanhThuvaBaoCao,4)+"");
 		TongTienLoi_DoanhThu_BaoCao.setText(control.tongDoanhThu(tableModelBaoCao_Doanhthu_DoanhThuvaBaoCao, 4)+"");
-		for(int i = tableTinhTrangThuoc_TinhTrang.getRowCount()-1;i>=0;i--)
-		{
-			ThongTinThuoc thuoc = new ThongTinThuoc();
-			thuoc = ds.TimThuocTheoMa(tableModelTinhTrangThuoc_TinhTrang.getValueAt(i, 0)+"");
-			try {
-				control.autoCapNhatThuocHetHan(thuoc, panelTinhTrang);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		TaiTinhTrangThuoc();
 	}
 
 
@@ -2229,6 +2280,7 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 							tableModelThuocNhap.removeRow(i);
 						}
 						duaDuLieuTuListVaoTable();
+						JOptionPane.showMessageDialog(panel_NhapHang_ThemThuoc, "Thêm thuốc thành công!");
 
 						txtmathuoc_NhapHang_Themthuoc.setText("");
 						txtTenThuoc_NhapHang_Themthuoc.setText("");
@@ -2254,40 +2306,45 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 		}
 		else if(e.getSource() == btnHoanTat_NhapHang_NhapDon)
 		{
-			HoaDonNhapHang hdn = new HoaDonNhapHang();
-			hdn.setMaHDN(txtMaDon_NhapHang.getText());
-			hdn.setNgayNhap(dateformat.format(datechooserNgayLap_NhapHang.getDate()));
-			hdn.setTongGiaNhap(Double.parseDouble(txtTongGia_NhapHang.getText()));
-			try {
-				control.themHDNVaoSQL(hdn);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			for(int i=tableModelThuocNhap.getRowCount()-1;i>=0;i--)
+			if(tableThuocNhap_NhapHang_NhapDon.getRowCount()>0)
 			{
-				CTHoaDonNhap ctHDN = new CTHoaDonNhap();
-				ctHDN.setMaHDN(txtMaDon_NhapHang.getText());
-				ctHDN.setMaThuoc(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 0)+"");
-				ctHDN.setSoLuong(Integer.parseInt(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 2)+""));
-				ctHDN.setHsd(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 3)+"");
-				ctHDN.setTinhTrang(1);
+				HoaDonNhapHang hdn = new HoaDonNhapHang();
+				hdn.setMaHDN(txtMaDon_NhapHang.getText());
+				hdn.setNgayNhap(dateformat.format(datechooserNgayLap_NhapHang.getDate()));
+				hdn.setTongGiaNhap(Double.parseDouble(txtTongGia_NhapHang.getText()));
 				try {
-					control.themCTHoaDonNhapVaoSQL(ctHDN);
+					control.themHDNVaoSQL(hdn);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+
+				for(int i=tableModelThuocNhap.getRowCount()-1;i>=0;i--)
+				{
+					CTHoaDonNhap ctHDN = new CTHoaDonNhap();
+					ctHDN.setMaHDN(txtMaDon_NhapHang.getText());
+					ctHDN.setMaThuoc(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 0)+"");
+					ctHDN.setSoLuong(Integer.parseInt(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 2)+""));
+					ctHDN.setHsd(tableThuocNhap_NhapHang_NhapDon.getValueAt(i, 3)+"");
+					ctHDN.setTinhTrang(1);
+					try {
+						control.themCTHoaDonNhapVaoSQL(ctHDN);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				for(int i=tableThuocNhap_NhapHang_NhapDon.getRowCount()-1;i>=0;i--)
+				{
+					tableModelThuocNhap.removeRow(i);
+				}
+				xoaRowtrongTable();
+				duaDuLieuTuListVaoTable();
+				txtMaDon_NhapHang.setText("");
+				txtTongGia_NhapHang.setText("");
 			}
-			for(int i=tableThuocNhap_NhapHang_NhapDon.getRowCount()-1;i>=0;i--)
-			{
-				tableModelThuocNhap.removeRow(i);
-			}
-			xoaRowtrongTable();
-			duaDuLieuTuListVaoTable();
-			txtMaDon_NhapHang.setText("");
-			txtTongGia_NhapHang.setText("");
+			else
+				JOptionPane.showMessageDialog(panelNhapHang, "Danh sách thuốc nhập không được rỗng!");
 		}
 		else if(e.getSource()==btnTim_DoanhthuvaBaoCao)
 		{
@@ -2349,7 +2406,8 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			{
 				if(control.kiemTraDuLieuSo(CMND) && control.kiemTraDuLieuSo(sdt))
 				{
-					if(Long.parseLong(CMND)>0 && Long.parseLong(sdt)>0)
+					if(Long.parseLong(CMND)>0 && Long.parseLong(sdt)>0 
+							&&control.kiemTraCMND(CMND) && control.kiemTraSDT(sdt))
 					{
 						try {
 							int selection = JOptionPane.showConfirmDialog(panelDanhSach, "Bạn có muốn lưu","Chú ý",JOptionPane.YES_NO_CANCEL_OPTION);
@@ -2375,8 +2433,15 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 							e1.printStackTrace();
 						}
 					}
-					else
-						JOptionPane.showMessageDialog(panelDanhSach, "SDDT và CMND không được chứa ký tự đặt biệt");
+					else{
+						if (Long.parseLong(CMND)<=0 && Long.parseLong(sdt)<=0 )
+							JOptionPane.showMessageDialog(panelDanhSach, "SDDT và CMND không được chứa ký tự đặt biệt");
+						if (!control.kiemTraCMND(CMND))
+							JOptionPane.showMessageDialog(panelDanhSach, "CMND phải bao gồm 9 hoặc 12 CHỮ SỐ!!! ");
+						if (!control.kiemTraSDT(sdt))
+							JOptionPane.showMessageDialog(panelDanhSach, "SDT phải bao gồm 10 hoặc 11 CHỮ SỐ !!! ");
+					}
+
 				}
 				else
 					JOptionPane.showMessageDialog(panelDanhSach, "SĐT và CMND phải là số");
@@ -2602,5 +2667,39 @@ public class GiaoDienQuanLy extends JFrame implements ActionListener {
 			CBModelDonViTinh_NhapHang_ThemThuoc.addElement(DVT[i]);
 		}
 	}
+	public void LoadJCalender(boolean a, boolean b,boolean c,boolean d)
+	{
+		panelJcalender.removeAll();
+		panelJcalender.repaint();
+		panelJcalender.revalidate();
+		if(a==true)
+		{
+			panelJcalender.add(new JLabel("Tìm hết các móc thời gian")).setSize(panelJcalender.getSize());;
+		}
+		else if(b==true)
+		{
+			dateChoosertNgay_NhapHang_DanhSachDon = new JDateChooser();
+			dateChoosertNgay_NhapHang_DanhSachDon.setDateFormatString("dd / MM / yyyy");
+			dateChoosertNgay_NhapHang_DanhSachDon.setLocale(new Locale("vi", "VN"));
+			dateChoosertNgay_NhapHang_DanhSachDon.setSize(panelJcalender.getSize());
+			panelJcalender.add(dateChoosertNgay_NhapHang_DanhSachDon);
 
+		}
+		else if(c==true)
+		{
+			monthChooser_NhapHang_DanhSachDon = new JMonthChooser();
+			monthChooser_NhapHang_DanhSachDon.setMonth(0);
+			monthChooser_NhapHang_DanhSachDon.setLocale(new Locale("vi", "VN"));
+			monthChooser_NhapHang_DanhSachDon.setSize(panelJcalender.getSize());
+			panelJcalender.add(monthChooser_NhapHang_DanhSachDon);
+		}
+		else if(d==true)
+		{
+			yearChooser_NhapHang_DanhSachDon = new JYearChooser();
+			yearChooser_NhapHang_DanhSachDon.setSize(panelJcalender.getSize());
+			panelJcalender.add(yearChooser_NhapHang_DanhSachDon);
+
+		}
+			
+	}
 }

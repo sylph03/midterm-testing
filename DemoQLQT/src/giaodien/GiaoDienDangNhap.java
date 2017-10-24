@@ -177,7 +177,6 @@ public class GiaoDienDangNhap extends JFrame {
 							{
 								new GiaoDienNhanVien().setVisible(true);
 								dispose();
-
 							}
 						}
 						else

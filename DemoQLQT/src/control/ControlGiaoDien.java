@@ -32,6 +32,7 @@ import entity.NhanVien;
 import entity.ThongTinThuoc;
 import jxl.CellType;
 import jxl.Workbook;
+import jxl.biff.drawing.ComboBox;
 import jxl.format.Alignment;
 import jxl.format.Border;
 import jxl.format.BorderLineStyle;
@@ -429,10 +430,13 @@ public class ControlGiaoDien {
 		Connection con =KetNoiSQL.getInstance().connect();
 		try 
 		{
-			String sql="update dbo.KhachHang set MoTa=? where CMND = ?";
+			String sql="update dbo.KhachHang set MoTa=?, TenKH=?, NgaySinh=?, SDT=? where CMND = ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,khmoi.getMoTaKH());
-			pstmt.setString(2,khmoi.getCMND());
+			pstmt.setString(5,khmoi.getCMND());
+			pstmt.setString(2, khmoi.getHoTenKH());
+			pstmt.setString(3, khmoi.getNgaySinh());
+			pstmt.setString(4, khmoi.getSdt());
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) 
@@ -701,12 +705,24 @@ public class ControlGiaoDien {
 		return soKiTuSo;
 	}
 	public boolean kiemTraCMND(String cmnd) {
-		if ((kiemTraDuLieuSo(cmnd)==true) && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==9))
+	       boolean soAm = false;
+	    try {
+	        if (Long.parseLong(cmnd)>0)
+                soAm=true;
+	    }catch (Exception e) {
+	    }
+		if ((kiemTraDuLieuSo(cmnd)==true) && soAm==true && (demSoKiTuSo1Chuoi(cmnd) == 12 || demSoKiTuSo1Chuoi(cmnd)==9))
 			return true;
 		return false;
 	}
 	public boolean kiemTraSDT(String sdt) {
-		if ((kiemTraDuLieuSo(sdt)==true) && (demSoKiTuSo1Chuoi(sdt) == 11 || demSoKiTuSo1Chuoi(sdt)==10))
+        boolean soAm = false;
+     try {
+         if (Long.parseLong(sdt)>0)
+             soAm=true;
+     }catch (Exception e) {
+     }
+		if ((kiemTraDuLieuSo(sdt)==true) && soAm==true && (demSoKiTuSo1Chuoi(sdt) == 11 || demSoKiTuSo1Chuoi(sdt)==10))
 			return true;
 		return false;
 	}
@@ -721,10 +737,30 @@ public class ControlGiaoDien {
 		catch (ParseException e) {
 			return false;
 		}
-		if (!sdf.format(testDate).equals(date)) {
-			return false;
+		if (sdf.format(testDate).equals(date)  && kiemTraNgaySoVoiHienTai(date, layNgayHeThong())) {
+			return true;
 		}
-		return true;
+		return false;
+	}
+	public boolean kiemTraNgaySoVoiHienTai(String date1,String heThong) {
+	    java.util.Date testDate = null;
+	    java.util.Date testDate2 = null;
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    try {
+            testDate = sdf.parse(date1);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    try {
+            testDate2=sdf.parse(heThong);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    if ( testDate .before(testDate2))
+	        return true;
+	    return false;
 	}
 	//
 	public void GhiEXECL(String fileName,String chuoi)
@@ -755,7 +791,7 @@ public class ControlGiaoDien {
 				if(colstart%4==0)
 				{
 					
-					new Number(colstart, rowstart,Double.parseDouble(data[run2]));
+					sheet1.addCell(new Label(colstart, rowstart,data[run2]));
 				}
 				else
 					sheet1.addCell(new Label(colstart,rowstart,data[run2]));

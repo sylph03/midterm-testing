@@ -8,6 +8,7 @@ import giaodien.GiaoDienDangNhap;
 
 
 public class Run {
+	//sasas
 	public static void main(String[] args) {
 		ControlGiaoDien control =new ControlGiaoDien();
 		SwingUtilities.invokeLater(new Runnable() {

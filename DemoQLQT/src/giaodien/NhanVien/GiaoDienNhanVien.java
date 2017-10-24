@@ -105,6 +105,9 @@ public class GiaoDienNhanVien extends JFrame {
     private ButtonGroup GroupTimdon,GroupTimdoanhthu;
     private DateFormat dateformat =new SimpleDateFormat("yyyy-MM-dd");
     private JDateChooser dateChooser_DSHD,dateChooser_DoanhThu;
+    private JLabel label;
+    private JLabel label_1;
+    private JLabel lblTrnnhChin;
 
     public GiaoDienNhanVien() {
         setResizable(false);
@@ -257,7 +260,7 @@ public class GiaoDienNhanVien extends JFrame {
         ButtonGroup groupToolBar =new ButtonGroup();
         JPanel ThanhToolBar = new JPanel();
         ThanhToolBar.setOpaque(false);
-        ThanhToolBar.setBounds(0, 24, 794, 80);
+        ThanhToolBar.setBounds(0, 24, 644, 80);
         contentPane.add(ThanhToolBar);
         ThanhToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0,0));
 
@@ -490,6 +493,32 @@ public class GiaoDienNhanVien extends JFrame {
                 return false;//Trả về false không cho edit. 
             } 
         }; 
+        
+        JPanel panelthongTin = new JPanel();
+        panelthongTin.setBackground(new Color(0, 0, 0,0));
+        panelthongTin.setBorder(new TitledBorder(null, "Nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+        panelthongTin.setBounds(654, 24, 130, 82);
+        contentPane.add(panelthongTin);
+        panelthongTin.setLayout(null);
+        
+        label = new JLabel(dn.txtTK.getText()+"");
+        label.setFont(new Font("Tahoma", Font.BOLD, 11));
+        label.setBackground(new Color(0, 0, 0,0));
+        label.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/user.png")));
+        label.setBounds(10, 22, 78, 23);
+        panelthongTin.add(label);
+        
+        label_1 = new JLabel("");
+        label_1.setBackground(new Color(0, 0, 0,0));
+        label_1.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/exit.png")));
+        label_1.setBounds(85, 22, 22, 23);
+        panelthongTin.add(label_1);
+        
+        lblTrnnhChin = new JLabel("Trần Đình Chiến");
+        lblTrnnhChin.setFont(new Font("Tahoma", Font.BOLD, 11));
+        lblTrnnhChin.setBackground(new Color(0, 0, 0,0));
+        lblTrnnhChin.setBounds(20, 48, 94, 23);
+        panelthongTin.add(lblTrnnhChin);
 
         JLabel lblbanquyen = new JLabel("Made by cCc ");
         lblbanquyen.setBounds(696, 546, 88, 14);
@@ -971,6 +1000,24 @@ public class GiaoDienNhanVien extends JFrame {
                 txtNgaySinh_CTHD.setText(kh.getNgaySinh());
                 txtSDT_CTHD.setText(kh.getSdt());
                 textAreaMoTa.setText(kh.getMoTaKH());
+            }
+            else
+            {
+            	panelTTKH.setEnabled(false);
+                txtCMND_CTHD.setEnabled(false);
+                txtTen_CTHD.setEnabled(false);
+                txtSDT_CTHD.setEnabled(false);
+                txtNgaySinh_CTHD.setEnabled(false);
+                textAreaMoTa.setEnabled(false);
+                lblCMND.setEnabled(false);
+                lblSDT.setEnabled(false);
+                lblTen.setEnabled(false);
+                lblNgaySinh.setEnabled(false);
+                txtCMND_CTHD.setText("");
+                txtTen_CTHD.setText("");
+                txtNgaySinh_CTHD.setText("");
+                txtSDT_CTHD.setText("");
+                textAreaMoTa.setText("");
             }
         }
         else {

@@ -1,8 +1,8 @@
 create database QuanLyQuayThuoc_Nhom09
 on
-	primary (name = QuanLyQuayThuocdata, filename = 'E:\CSDL\QuanLyQuayThuoc_Nhom09.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
+	primary (name = QuanLyQuayThuocdata, filename = 'D:\CSDL\QuanLyQuayThuoc_Nhom09.mdf', size = 20MB, maxsize = 40MB, filegrowth = 20%)
 log on
-	(name = QuanLyQuayThuoclog, filename = 'E:\CSDL\QuanLyQuayThuoc_Nhom09.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
+	(name = QuanLyQuayThuoclog, filename = 'D:\CSDL\QuanLyQuayThuoc_Nhom09.ldf', size = 5MB, maxsize = 10MB, filegrowth = 1MB)
 
 use QuanLyQuayThuoc_Nhom09
 
@@ -107,12 +107,12 @@ insert KhachHang values ('987654321',N'Nguyễn Tấn Đạt','17/8/1996','09047
 insert KhachHang values ('111111111',N'Tùng Văn Sơn','27/6/1999','0908564664',N'Đau đầu rùa')
 
 insert HoaDon values ('HD1','NV001','15/9/2017','123456789',14000)
-insert HoaDon values ('HD2','NV002','16/9/2017','123456789',20000)
-insert HoaDon values ('HD3','NV001','17/9/2017','123456789',20000)
+insert HoaDon values ('HD2','NV002','16/10/2017','123456789',20000)
+insert HoaDon values ('HD3','NV001','17/10/2017','123456789',20000)
 insert HoaDon values ('HD4','NV002','18/9/2017','987654321',20000)
-insert HoaDon values ('HD5','NV001','19/9/2017','987654321',20000)
+insert HoaDon values ('HD5','NV001','19/9/2015','987654321',20000)
 insert HoaDon values ('HD6','NV002','20/9/2017','987654321',20000)
-insert HoaDon values ('HD7','NV001','21/9/2017','111111111',20000)
+insert HoaDon values ('HD7','NV001','21/9/2016','111111111',20000)
 insert HoaDon values ('HD8','NV002','22/9/2017','111111111',20000)
 
 
