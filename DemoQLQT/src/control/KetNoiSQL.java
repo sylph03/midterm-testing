@@ -13,9 +13,9 @@ public class KetNoiSQL {
 	}
 	public Connection connect()
 	{
-		final String url="jdbc:sqlserver://localhost:1433;DatabaseName=QuanLyQuayThuoc_Nhom09";
+		final String url="jdbc:sqlserver://DESKTOP-I4L833F\\AHIHI:1433;databaseName=QuanLyQuayThuoc_Nhom09";
 		String user ="sa";
-		String pass ="sapassword";
+		String pass ="123456";
 		try 
 		{
 			con=DriverManager.getConnection(url,user,pass);

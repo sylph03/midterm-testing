@@ -1,6 +1,5 @@
 package giaodien.NhanVien;
 
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -39,7 +38,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.AllPermission;
-import java.security.acl.Group;
+// import java.security.acl.Group;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.Format;
@@ -81,43 +80,44 @@ import java.util.Locale;
 
 public class GiaoDienNhanVien extends JFrame {
 
-	private JPanel contentPane, panelTTKH,panelTrangChu;
-	private JScrollPane scrollPaneDanhSachThuoc,scrollPaneDanhSachDon,scrollPaneCTHD,scrollPaneDoanhThu;
-	private DefaultTableModel tablemodelThuoc,tablemodelDoanhThu,tablemodelCTHD,tablemodelDanhSachDon;
-	JTable tableDanhSachThuoc,tableDanhSachDon,tableCTHD,tableDoanhThu ;
+	private JPanel contentPane, panelTTKH, panelTrangChu;
+	private JScrollPane scrollPaneDanhSachThuoc, scrollPaneDanhSachDon, scrollPaneCTHD, scrollPaneDoanhThu;
+	private DefaultTableModel tablemodelThuoc, tablemodelDoanhThu, tablemodelCTHD, tablemodelDanhSachDon;
+	JTable tableDanhSachThuoc, tableDanhSachDon, tableCTHD, tableDoanhThu;
 	ControlGiaoDien control = new ControlGiaoDien();
 	DanhSachDuLieu ds = new DanhSachDuLieu();
 	GiaoDienDangNhap dn;
-	public String IDNhanVien=dn.txtTK.getText();
+	public String IDNhanVien = dn.txtTK.getText();
 	private JTextField txtMaHD;
 	private JTextField txtNgayLap;
 	private JTextField txtNguoiLap_timkiem;
 	private JTextField txtTongTien_timkiem;
 	private JTextField txtTongDoanhThu;
-	private JPanel panelCTHD,panelDSHD,panelDSThuoc,panelDoanhThu;
-	private JRadioButtonMenuItem chude1,chude2,chude3,chude4,chude5,chude6,chude7,chude8,chude9,chude10;
+	private JPanel panelCTHD, panelDSHD, panelDSThuoc, panelDoanhThu;
+	private JRadioButtonMenuItem chude1, chude2, chude3, chude4, chude5, chude6, chude7, chude8, chude9, chude10;
 	public JButton btnLapHoaDon;
 	GiaoDienThongTinNhanVien thongtinnv = new GiaoDienThongTinNhanVien();
-	GiaoDienLapHoaDon laphoadon ;
+	GiaoDienLapHoaDon laphoadon;
 	private JTextField txtCMND_CTHD;
 	private JTextField txtTen_CTHD;
 	private JTextField txtSDT_CTHD;
 	private JTextField txtNgaySinh_CTHD;
 	private TextArea textAreaMoTa;
-	private JLabel lblCMND,lblSDT,lblNgaySinh,lblTen;
+	private JLabel lblCMND, lblSDT, lblNgaySinh, lblTen;
 	private JLabel lblNewLabel_8;
-	private JRadioButton rdbtnHienHet_DSHD,rdbtnTheoThang_DSHD,rdbtnChinhXac_DSHD,rdbtnTheoNam_DSHD;
-	private JRadioButton rdbtnHienhet_Doanhthu,rdbtnTheoThang_Doanhthu,rdbtnChinhXac_Doanhthu,rdbtnTheonam_Doanhthu;
-	private ButtonGroup GroupTimdon,GroupTimdoanhthu;
-	private DateFormat dateformat =new SimpleDateFormat("yyyy-MM-dd");
-	private JDateChooser dateChooser_DSHD,dateChooser_DoanhThu;
+	private JRadioButton rdbtnHienHet_DSHD, rdbtnTheoThang_DSHD, rdbtnChinhXac_DSHD, rdbtnTheoNam_DSHD;
+	private JRadioButton rdbtnHienhet_Doanhthu, rdbtnTheoThang_Doanhthu, rdbtnChinhXac_Doanhthu, rdbtnTheonam_Doanhthu;
+	private ButtonGroup GroupTimdon, GroupTimdoanhthu;
+	private DateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+	private JDateChooser dateChooser_DSHD, dateChooser_DoanhThu;
 	private JLabel label;
 	private JPanel panelTim_DSDon;
-	private JMonthChooser monthChooser_DSHD,monthChooser_DoanhThu;
-	private JYearChooser  yearChooser_DSHD,yearChooser_DoanhThu;
+	private JMonthChooser monthChooser_DSHD, monthChooser_DoanhThu;
+	private JYearChooser yearChooser_DSHD, yearChooser_DoanhThu;
 	private JLabel lblNewLabel_10;
 	private JPanel panel_DoanhThu;
 	private JLabel lblNewLabel_12;
+
 	public GiaoDienNhanVien() {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(GiaoDienNhanVien.class.getResource("/ser/pill.png")));
@@ -152,7 +152,7 @@ public class GiaoDienNhanVien extends JFrame {
 		JMenu menu = new JMenu("Đổi giao diện");
 		mnNewMenu.add(menu);
 
-		chude1 = new JRadioButtonMenuItem("McWin",true);
+		chude1 = new JRadioButtonMenuItem("McWin", true);
 		chude1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				doiGiaoDien("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
@@ -265,13 +265,13 @@ public class GiaoDienNhanVien extends JFrame {
 		groupChuDe.add(chude9);
 		groupChuDe.add(chude10);
 
-		//----------------------------toolbar---------------------------------------
-		ButtonGroup groupToolBar =new ButtonGroup();
+		// ----------------------------toolbar---------------------------------------
+		ButtonGroup groupToolBar = new ButtonGroup();
 		JPanel ThanhToolBar = new JPanel();
 		ThanhToolBar.setOpaque(false);
 		ThanhToolBar.setBounds(0, 24, 571, 80);
 		contentPane.add(ThanhToolBar);
-		ThanhToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0,0));
+		ThanhToolBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		JToolBar toolBar = new JToolBar();
 		toolBar.setMinimumSize(new Dimension(0, 0));
@@ -298,11 +298,11 @@ public class GiaoDienNhanVien extends JFrame {
 		toolBar.add(btnTrangDangNhap);
 		groupToolBar.add(btnTrangDangNhap);
 
-		btnLapHoaDon =new JButton("Lập hóa đơn");
+		btnLapHoaDon = new JButton("Lập hóa đơn");
 		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnLapHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GiaoDienLapHoaDon().setVisible(true);       
+				new GiaoDienLapHoaDon().setVisible(true);
 			}
 		});
 		toolBar.add(btnLapHoaDon);
@@ -321,7 +321,7 @@ public class GiaoDienNhanVien extends JFrame {
 				panelDoanhThu.setVisible(false);
 				panelDSHD.setVisible(false);
 				panelDSThuoc.setVisible(true);
-				for(int i = tablemodelThuoc.getRowCount()-1;i>=0;i--)
+				for (int i = tablemodelThuoc.getRowCount() - 1; i >= 0; i--)
 					tablemodelThuoc.removeRow(i);
 				try {
 					ds.docThuoc();
@@ -329,9 +329,9 @@ public class GiaoDienNhanVien extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				for (ThongTinThuoc thuoc : ds.listThuoc) 
-				{
-					Object[] row = {thuoc.getMaThuoc(),thuoc.getTenThuoc(),thuoc.getLoai(),thuoc.getNcc(),thuoc.getSoLuong(),thuoc.getGiaBan()};
+				for (ThongTinThuoc thuoc : ds.listThuoc) {
+					Object[] row = { thuoc.getMaThuoc(), thuoc.getTenThuoc(), thuoc.getLoai(), thuoc.getNcc(),
+							thuoc.getSoLuong(), thuoc.getGiaBan() };
 					tablemodelThuoc.addRow(row);
 				}
 			}
@@ -364,13 +364,12 @@ public class GiaoDienNhanVien extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				for (HoaDonBanHang hd : ds.listHDB)
-				{
-					if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien))
-					{
-						Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
+				for (HoaDonBanHang hd : ds.listHDB) {
+					if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
+						Object[] row = { hd.getMaHD(), hd.getMaNVLap(), hd.getNgayLap(), hd.getMaKH(),
+								hd.getTongTien() };
 						tablemodelDanhSachDon.addRow(row);
-					}   
+					}
 				}
 			}
 		});
@@ -401,11 +400,11 @@ public class GiaoDienNhanVien extends JFrame {
 				}
 				for (HoaDonBanHang hd : ds.listHDB) {
 					if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
-						Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
+						Object[] row = { hd.getMaHD(), hd.getNgayLap(), hd.getMaNVLap(), hd.getTongTien() };
 						tablemodelDoanhThu.addRow(row);
 					}
 				}
-				txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"");
+				txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu, 3) + "");
 			}
 		});
 		groupToolBar.add(btnDoanhThu);
@@ -417,59 +416,61 @@ public class GiaoDienNhanVien extends JFrame {
 		btnDoanhThu.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 11));
 		toolBar.add(btnDoanhThu);
-		//-----------------------------------------header table---------------------
+		// -----------------------------------------header table---------------------
 
-		String[] headerDanhSachDon="Mã hóa đơn;Người lập;Ngày lập;Khách hàng;Tổng tiền".split(";");
-		tablemodelDanhSachDon = new DefaultTableModel(headerDanhSachDon,0){ 
-			@Override//Override lại phương thức isCellEditable 
-			public boolean isCellEditable(int row, int column) { 
-				return false;//Trả về false không cho edit. 
-			} 
-		}; 
+		String[] headerDanhSachDon = "Mã hóa đơn;Người lập;Ngày lập;Khách hàng;Tổng tiền".split(";");
+		tablemodelDanhSachDon = new DefaultTableModel(headerDanhSachDon, 0) {
+			@Override // Override lại phương thức isCellEditable
+			public boolean isCellEditable(int row, int column) {
+				return false;// Trả về false không cho edit.
+			}
+		};
 
-		String[] headerCTHD="Tên thuốc;Số lượng;Giá bán".split(";");
-		tablemodelCTHD = new DefaultTableModel(headerCTHD,0){ 
-			@Override//Override lại phương thức isCellEditable 
-			public boolean isCellEditable(int row, int column) { 
-				return false;//Trả về false không cho edit. 
-			} 
-		}; 
+		String[] headerCTHD = "Tên thuốc;Số lượng;Giá bán".split(";");
+		tablemodelCTHD = new DefaultTableModel(headerCTHD, 0) {
+			@Override // Override lại phương thức isCellEditable
+			public boolean isCellEditable(int row, int column) {
+				return false;// Trả về false không cho edit.
+			}
+		};
 
-		String[] headerDoanhThu="Mã đơn;Ngày lập;Người Lập;Tổng tiền".split(";");
-		tablemodelDoanhThu = new DefaultTableModel(headerDoanhThu,0){ 
-			@Override//Override lại phương thức isCellEditable 
-			public boolean isCellEditable(int row, int column) { 
-				return false;//Trả về false không cho edit. 
-			} 
-		}; 
+		String[] headerDoanhThu = "Mã đơn;Ngày lập;Người Lập;Tổng tiền".split(";");
+		tablemodelDoanhThu = new DefaultTableModel(headerDoanhThu, 0) {
+			@Override // Override lại phương thức isCellEditable
+			public boolean isCellEditable(int row, int column) {
+				return false;// Trả về false không cho edit.
+			}
+		};
 
-
-		String[] header="Mã thuốc;Tên thuốc;Loại thuốc;Nhà cung cấp;Số lượng còn;Giá bán".split(";");
-		tablemodelThuoc = new DefaultTableModel(header,0){ 
-			@Override//Override lại phương thức isCellEditable 
-			public boolean isCellEditable(int row, int column) { 
-				return false;//Trả về false không cho edit. 
-			} 
-		}; 
+		String[] header = "Mã thuốc;Tên thuốc;Loại thuốc;Nhà cung cấp;Số lượng còn;Giá bán".split(";");
+		tablemodelThuoc = new DefaultTableModel(header, 0) {
+			@Override // Override lại phương thức isCellEditable
+			public boolean isCellEditable(int row, int column) {
+				return false;// Trả về false không cho edit.
+			}
+		};
 
 		JPanel panelthongTin = new JPanel();
-		panelthongTin.setBorder(new TitledBorder(null, "Nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		panelthongTin.setBorder(new TitledBorder(null, "Nh\u00E2n vi\u00EAn", TitledBorder.LEADING, TitledBorder.TOP,
+				null, Color.BLUE));
 		panelthongTin.setBounds(571, 24, 223, 80);
 		contentPane.add(panelthongTin);
 		panelthongTin.setLayout(null);
 
-		label = new JLabel(dn.txtTK.getText()+"");
+		label = new JLabel(dn.txtTK.getText() + "");
 		label.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				label.setForeground(Color.BLUE);
 				label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				label.setForeground(Color.BLACK);
 				label.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				thongtinnv.setVisible(true);
@@ -512,11 +513,13 @@ public class GiaoDienNhanVien extends JFrame {
 				lblDangXuat.setForeground(Color.BLUE);
 				lblDangXuat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				lblDangXuat.setForeground(Color.BLACK);
 				lblDangXuat.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				try {
@@ -535,7 +538,7 @@ public class GiaoDienNhanVien extends JFrame {
 		contentPane.add(lblbanquyen);
 		lblbanquyen.setForeground(Color.LIGHT_GRAY);
 		lblbanquyen.setFont(new Font("Trebuchet MS", Font.BOLD, 13));
-		//----------------------------đa layer---------------------------------
+		// ----------------------------đa layer---------------------------------
 		JLayeredPane layeredPane = new JLayeredPane();
 		layeredPane.setBounds(0, 115, 794, 456);
 		contentPane.add(layeredPane);
@@ -548,7 +551,8 @@ public class GiaoDienNhanVien extends JFrame {
 
 		JPanel panel = new JPanel();
 		panel.setEnabled(false);
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.CENTER, TitledBorder.BELOW_TOP, null, new Color(0, 0, 0)));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.CENTER,
+				TitledBorder.BELOW_TOP, null, new Color(0, 0, 0)));
 		panel.setBounds(432, 29, 352, 190);
 		panelTrangChu.add(panel);
 		panel.setLayout(null);
@@ -565,8 +569,9 @@ public class GiaoDienNhanVien extends JFrame {
 		txtrthngTinH.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		txtrthngTinH.setEditable(false);
 		txtrthngTinH.setForeground(new Color(106, 90, 205));
-		txtrthngTinH.setText("\t------THÔNG TIN-------\r\n    Hệ thống quản lý quầy thuốc của bệnh viện\r\n Thiết kế bởi:\r\n\t+ Trần Đình Chiến\t15091761\r\n\t+ Trần Hùng Cường\t15056921\r\n\t+ Nguyễn Văn Mạnh Cường\t15051431\r\n GV: Võ Thị Thanh Vân\r\n Lớp: DHKTPM11A\r\n Môn: Phát triển ứng dụng\r\n Khoa Công nghệ thông tin - Đại học Công Nghiệp TPHCM");
-		txtrthngTinH.setBackground(new Color(0, 0, 0,0));
+		txtrthngTinH.setText(
+				"\t------THÔNG TIN-------\r\n    Hệ thống quản lý quầy thuốc của bệnh viện\r\n Thiết kế bởi:\r\n\t+ Trần Đình Chiến\t15091761\r\n\t+ Trần Hùng Cường\t15056921\r\n\t+ Nguyễn Văn Mạnh Cường\t15051431\r\n GV: Võ Thị Thanh Vân\r\n Lớp: DHKTPM11A\r\n Môn: Phát triển ứng dụng\r\n Khoa Công nghệ thông tin - Đại học Công Nghiệp TPHCM");
+		txtrthngTinH.setBackground(new Color(0, 0, 0, 0));
 		JLabel baner = new JLabel("");
 		baner.setIcon(new ImageIcon(GiaoDienNhanVien.class.getResource("/ser/baner2222.png")));
 		baner.setBounds(0, 223, 794, 222);
@@ -580,7 +585,9 @@ public class GiaoDienNhanVien extends JFrame {
 		panelCTHD = new JPanel();
 		panelCTHD.setBounds(10, 11, 774, 408);
 		layeredPane.add(panelCTHD);
-		panelCTHD.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Chi ti\u1EBFt h\u00F3a \u0111\u01A1n: ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panelCTHD.setBorder(
+				new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Chi ti\u1EBFt h\u00F3a \u0111\u01A1n: ",
+						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		panelCTHD.setForeground(new Color(0, 255, 255));
 		layeredPane.setLayer(panelCTHD, 0);
 		panelCTHD.setLayout(null);
@@ -644,10 +651,11 @@ public class GiaoDienNhanVien extends JFrame {
 		btnBack2.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnBack2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//------2 dòng này để xóa hết bảng cũ và hiện cái mới lên, ko có cái này thông tin chồng lên nhau
+				// ------2 dòng này để xóa hết bảng cũ và hiện cái mới lên, ko có cái này thông
+				// tin chồng lên nhau
 				tablemodelCTHD.getDataVector().removeAllElements();
 				tablemodelCTHD.fireTableDataChanged();
-				//-----------------
+				// -----------------
 				panelDSThuoc.setVisible(false);
 				panelDoanhThu.setVisible(false);
 				panelCTHD.setVisible(false);
@@ -668,7 +676,8 @@ public class GiaoDienNhanVien extends JFrame {
 
 		panelTTKH = new JPanel();
 		panelTTKH.setEnabled(false);
-		panelTTKH.setBorder(new TitledBorder(null, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		panelTTKH.setBorder(new TitledBorder(null, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:", TitledBorder.LEADING,
+				TitledBorder.TOP, null, Color.BLUE));
 		panelTTKH.setBounds(552, 11, 214, 271);
 		panelCTHD.add(panelTTKH);
 		panelTTKH.setLayout(null);
@@ -732,15 +741,18 @@ public class GiaoDienNhanVien extends JFrame {
 		panelTTKH.add(textAreaMoTa);
 		scrollPaneCTHD.setBounds(25, 90, 524, 192);
 		panelDSThuoc = new JPanel();
-		panelDSThuoc.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panelDSThuoc.setBorder(new TitledBorder(null, "Danh s\u00E1ch thu\u1ED1c:", TitledBorder.LEADING,
+				TitledBorder.TOP, null, new Color(0, 0, 255)));
 		panelDSThuoc.setBounds(10, 11, 774, 408);
 		layeredPane.add(panelDSThuoc);
-		panelDSThuoc.add(scrollPaneDanhSachThuoc = new JScrollPane(tableDanhSachThuoc= new JTable(tablemodelThuoc)));
+		panelDSThuoc.add(scrollPaneDanhSachThuoc = new JScrollPane(tableDanhSachThuoc = new JTable(tablemodelThuoc)));
 		tableDanhSachThuoc.setForeground(new Color(148, 0, 211));
 		scrollPaneDanhSachThuoc.setPreferredSize(new Dimension(750, 380));
 
 		panelDSHD = new JPanel();
-		panelDSHD.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Danh s\u00E1ch h\u00F3a \u0111\u01A1n: ", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panelDSHD.setBorder(
+				new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Danh s\u00E1ch h\u00F3a \u0111\u01A1n: ",
+						TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		layeredPane.setLayer(panelDSHD, 0);
 		panelDSHD.setBounds(10, 11, 774, 408);
 		layeredPane.add(panelDSHD);
@@ -773,7 +785,7 @@ public class GiaoDienNhanVien extends JFrame {
 		btnTim_DSHoaDon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				timKiemDSHD();
-			}   
+			}
 		});
 
 		panelDSHD.add(scrollPaneDanhSachDon = new JScrollPane(tableDanhSachDon = new JTable(tablemodelDanhSachDon)));
@@ -798,7 +810,6 @@ public class GiaoDienNhanVien extends JFrame {
 		lblNewLabel_7.setBounds(471, 31, 280, 350);
 		panelDSHD.add(lblNewLabel_7);
 
-
 		GroupTimdon = new ButtonGroup();
 		rdbtnHienHet_DSHD = new JRadioButton("Hiện hết đơn");
 		rdbtnHienHet_DSHD.addActionListener(new ActionListener() {
@@ -814,7 +825,7 @@ public class GiaoDienNhanVien extends JFrame {
 		rdbtnTheoThang_DSHD = new JRadioButton("Theo tháng");
 		rdbtnTheoThang_DSHD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LoadJCalender_DSDon(false, false,true, false);
+				LoadJCalender_DSDon(false, false, true, false);
 			}
 		});
 		rdbtnTheoThang_DSHD.setBounds(191, 49, 101, 23);
@@ -824,35 +835,36 @@ public class GiaoDienNhanVien extends JFrame {
 		rdbtnChinhXac_DSHD = new JRadioButton("Chính xác");
 		rdbtnChinhXac_DSHD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LoadJCalender_DSDon(false,true,false, false);
+				LoadJCalender_DSDon(false, true, false, false);
 			}
 		});
 		rdbtnChinhXac_DSHD.setBounds(294, 25, 90, 23);
 		panelDSHD.add(rdbtnChinhXac_DSHD);
-		GroupTimdon.add( rdbtnChinhXac_DSHD);
+		GroupTimdon.add(rdbtnChinhXac_DSHD);
 
 		rdbtnTheoNam_DSHD = new JRadioButton("Theo năm");
 		rdbtnTheoNam_DSHD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				LoadJCalender_DSDon(false,false,false, true);
+				LoadJCalender_DSDon(false, false, false, true);
 			}
 		});
 		rdbtnTheoNam_DSHD.setBounds(294, 49, 90, 23);
 		panelDSHD.add(rdbtnTheoNam_DSHD);
 		GroupTimdon.add(rdbtnTheoNam_DSHD);
-		
+
 		panelTim_DSDon = new JPanel();
 		panelTim_DSDon.setBounds(10, 38, 153, 30);
 		panelDSHD.add(panelTim_DSDon);
 		panelTim_DSDon.setLayout(null);
-		
+
 		lblNewLabel_10 = new JLabel("Tìm hết các móc thời gian");
 		lblNewLabel_10.setBounds(0, 0, 153, 30);
 		panelTim_DSDon.add(lblNewLabel_10);
 
 		scrollPaneDanhSachDon.setBounds(22, 99, 439, 262);
 		panelDoanhThu = new JPanel();
-		panelDoanhThu.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u1ED1ng k\u00EA doanh thu:", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		panelDoanhThu.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+				"Th\u1ED1ng k\u00EA doanh thu:", TitledBorder.CENTER, TitledBorder.TOP, null, new Color(0, 0, 255)));
 		layeredPane.setLayer(panelDoanhThu, 0);
 		panelDoanhThu.setBounds(10, 11, 774, 408);
 		layeredPane.add(panelDoanhThu);
@@ -887,7 +899,7 @@ public class GiaoDienNhanVien extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				timKiem_DoanhThu();
-			}   
+			}
 		});
 		panelDoanhThu.add(scrollPaneDoanhThu = new JScrollPane(tableDoanhThu = new JTable(tablemodelDoanhThu)));
 		tableDoanhThu.setForeground(new Color(210, 105, 30));
@@ -897,9 +909,9 @@ public class GiaoDienNhanVien extends JFrame {
 		lblNewLabel_6.setBounds(463, 39, 301, 315);
 		panelDoanhThu.add(lblNewLabel_6);
 		scrollPaneDoanhThu.setBounds(10, 97, 443, 288);
-		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu,3)+"");
+		txtTongDoanhThu.setText(control.tongDoanhThu(tablemodelDoanhThu, 3) + "");
 
-		GroupTimdoanhthu=new ButtonGroup();
+		GroupTimdoanhthu = new ButtonGroup();
 
 		rdbtnHienhet_Doanhthu = new JRadioButton("Hiện hết đơn");
 		rdbtnHienhet_Doanhthu.addActionListener(new ActionListener() {
@@ -915,7 +927,7 @@ public class GiaoDienNhanVien extends JFrame {
 		rdbtnTheoThang_Doanhthu = new JRadioButton("Theo tháng");
 		rdbtnTheoThang_Doanhthu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoadJCalender_Doanhthu(false, false,true, false);
+				LoadJCalender_Doanhthu(false, false, true, false);
 			}
 		});
 		rdbtnTheoThang_Doanhthu.setBounds(172, 45, 101, 23);
@@ -925,7 +937,7 @@ public class GiaoDienNhanVien extends JFrame {
 		rdbtnChinhXac_Doanhthu = new JRadioButton("Chính xác");
 		rdbtnChinhXac_Doanhthu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoadJCalender_Doanhthu(false, true,false, false);
+				LoadJCalender_Doanhthu(false, true, false, false);
 			}
 		});
 		rdbtnChinhXac_Doanhthu.setBounds(275, 21, 90, 23);
@@ -935,18 +947,18 @@ public class GiaoDienNhanVien extends JFrame {
 		rdbtnTheonam_Doanhthu = new JRadioButton("Theo năm");
 		rdbtnTheonam_Doanhthu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoadJCalender_Doanhthu(false,false,false, true);
+				LoadJCalender_Doanhthu(false, false, false, true);
 			}
 		});
 		rdbtnTheonam_Doanhthu.setBounds(275, 45, 90, 23);
 		panelDoanhThu.add(rdbtnTheonam_Doanhthu);
 		GroupTimdoanhthu.add(rdbtnTheonam_Doanhthu);
-		
+
 		panel_DoanhThu = new JPanel();
 		panel_DoanhThu.setBounds(10, 36, 152, 34);
 		panelDoanhThu.add(panel_DoanhThu);
 		panel_DoanhThu.setLayout(null);
-		
+
 		lblNewLabel_12 = new JLabel("Tìm hết các móc thời gian");
 		lblNewLabel_12.setBounds(0, 0, 152, 34);
 		panel_DoanhThu.add(lblNewLabel_12);
@@ -959,10 +971,10 @@ public class GiaoDienNhanVien extends JFrame {
 		lblTenNV.setText(ds.timNVTheoMa(IDNhanVien).getHoTenNV());
 		lbSoDT.setText(ds.timNVTheoMa(IDNhanVien).getSdt());
 	}
+
 	////////////////////////////////////////////
 	//////////////////////
-	void duaDuLieuTuListVaoTable()
-	{
+	void duaDuLieuTuListVaoTable() {
 		try {
 			ds.docThuoc();
 			ds.docBangHDB();
@@ -970,72 +982,65 @@ public class GiaoDienNhanVien extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (ThongTinThuoc thuoc : ds.listThuoc) 
-		{
-			Object[] row = {thuoc.getMaThuoc(),thuoc.getTenThuoc(),thuoc.getLoai(),thuoc.getNcc(),thuoc.getSoLuong(),thuoc.getGiaBan()};
+		for (ThongTinThuoc thuoc : ds.listThuoc) {
+			Object[] row = { thuoc.getMaThuoc(), thuoc.getTenThuoc(), thuoc.getLoai(), thuoc.getNcc(),
+					thuoc.getSoLuong(), thuoc.getGiaBan() };
 			tablemodelThuoc.addRow(row);
 		}
-		for (HoaDonBanHang hd : ds.listHDB)
-		{
-			if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien))
-			{
-				Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
-				tablemodelDanhSachDon.addRow(row);
-			}   
-		}
-		for (HoaDonBanHang hd : ds.listHDB) 
-		{
+		for (HoaDonBanHang hd : ds.listHDB) {
 			if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
-				Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
+				Object[] row = { hd.getMaHD(), hd.getMaNVLap(), hd.getNgayLap(), hd.getMaKH(), hd.getTongTien() };
+				tablemodelDanhSachDon.addRow(row);
+			}
+		}
+		for (HoaDonBanHang hd : ds.listHDB) {
+			if (hd.getMaNVLap().equalsIgnoreCase(IDNhanVien)) {
+				Object[] row = { hd.getMaHD(), hd.getNgayLap(), hd.getMaNVLap(), hd.getTongTien() };
 				tablemodelDoanhThu.addRow(row);
 			}
 		}
 	}
 
-	void xoaDuLieuTrongTable()
-	{
-		for(int i = tablemodelThuoc.getRowCount()-1;i>=0;i--)
+	void xoaDuLieuTrongTable() {
+		for (int i = tablemodelThuoc.getRowCount() - 1; i >= 0; i--)
 			tablemodelThuoc.removeRow(i);
-		for(int i = tablemodelDanhSachDon.getRowCount()-1;i>=0;i--)
+		for (int i = tablemodelDanhSachDon.getRowCount() - 1; i >= 0; i--)
 			tablemodelDanhSachDon.removeRow(i);
-		for(int i = tablemodelDoanhThu.getRowCount()-1;i>=0;i--)
+		for (int i = tablemodelDoanhThu.getRowCount() - 1; i >= 0; i--)
 			tablemodelDoanhThu.removeRow(i);
 	}
-	public void doiGiaoDien(String chude)
-	{
-		try
-		{
+
+	public void doiGiaoDien(String chude) {
+		try {
 			UIManager.setLookAndFeel(chude);
 			SwingUtilities.updateComponentTreeUI(GiaoDienNhanVien.this);
 			control.LuuChuDe(chude);
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	public void xemChiTietHD() {
 		int row = tableDanhSachDon.getSelectedRow();
-		if (row!=-1) {
+		if (row != -1) {
 			panelDSThuoc.setVisible(false);
 			panelDoanhThu.setVisible(false);
 			panelDSHD.setVisible(false);
 			panelCTHD.setVisible(true);
 
-			String maHD =(String) tableDanhSachDon.getValueAt(row, 0);
-			String ngay =(String) tableDanhSachDon.getValueAt(row, 2);
-			String tongTien = tableDanhSachDon.getValueAt(row, 4)+"";
-			String CMND = tableDanhSachDon.getValueAt(row, 3)+"";
+			String maHD = (String) tableDanhSachDon.getValueAt(row, 0);
+			String ngay = (String) tableDanhSachDon.getValueAt(row, 2);
+			String tongTien = tableDanhSachDon.getValueAt(row, 4) + "";
+			String CMND = tableDanhSachDon.getValueAt(row, 3) + "";
 			try {
 				ds.docBangCTHoaDonBan();
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			for (CTHoaDonBan cthd : ds.listThuocBan)
-			{
+			for (CTHoaDonBan cthd : ds.listThuocBan) {
 				if (cthd.getMaHD().equalsIgnoreCase(maHD)) {
-					Object[] roww = {cthd.getTenThuoc(),cthd.getSoLuong(),cthd.getDonGia()};
+					Object[] roww = { cthd.getTenThuoc(), cthd.getSoLuong(), cthd.getDonGia() };
 					tablemodelCTHD.addRow(roww);
 				}
 			}
@@ -1066,9 +1071,7 @@ public class GiaoDienNhanVien extends JFrame {
 				txtNgaySinh_CTHD.setText(kh.getNgaySinh());
 				txtSDT_CTHD.setText(kh.getSdt());
 				textAreaMoTa.setText(kh.getMoTaKH());
-			}
-			else
-			{
+			} else {
 				panelTTKH.setEnabled(false);
 				txtCMND_CTHD.setEnabled(false);
 				txtTen_CTHD.setEnabled(false);
@@ -1085,15 +1088,13 @@ public class GiaoDienNhanVien extends JFrame {
 				txtSDT_CTHD.setText("");
 				textAreaMoTa.setText("");
 			}
-		}
-		else {
+		} else {
 			JOptionPane.showMessageDialog(panelDSHD, "Vui lòng chọn hóa đơn cần xem !!!");
 		}
 	}
-	public void timKiem_DoanhThu() 
-	{
-		for(int i = tablemodelDoanhThu.getRowCount()-1;i>=0;i--)
-		{
+
+	public void timKiem_DoanhThu() {
+		for (int i = tablemodelDoanhThu.getRowCount() - 1; i >= 0; i--) {
 			tablemodelDoanhThu.removeRow(i);
 		}
 		try {
@@ -1102,38 +1103,28 @@ public class GiaoDienNhanVien extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ArrayList<HoaDonBanHang> dshdban=null;
-		if(rdbtnHienhet_Doanhthu.isSelected())
-		{
-			dshdban=ds.listHDB;
-		}
-		else if(rdbtnChinhXac_Doanhthu.isSelected())
-		{
+		ArrayList<HoaDonBanHang> dshdban = null;
+		if (rdbtnHienhet_Doanhthu.isSelected()) {
+			dshdban = ds.listHDB;
+		} else if (rdbtnChinhXac_Doanhthu.isSelected()) {
 			Date ngay = dateChooser_DoanhThu.getDate();
-			dshdban=control.TimHDNBanTheoNgay(dateformat.format(ngay));
-		}
-		else if(rdbtnTheoThang_Doanhthu.isSelected())
-		{
-			dshdban=control.TimHDNBanTheoThang(monthChooser_DoanhThu.getMonth()+1);
-		}
-		else if(rdbtnTheonam_Doanhthu.isSelected())
-		{
-			dshdban=control.TimHDNBanTheoNam(yearChooser_DoanhThu.getYear());
+			dshdban = control.TimHDNBanTheoNgay(dateformat.format(ngay));
+		} else if (rdbtnTheoThang_Doanhthu.isSelected()) {
+			dshdban = control.TimHDNBanTheoThang(monthChooser_DoanhThu.getMonth() + 1);
+		} else if (rdbtnTheonam_Doanhthu.isSelected()) {
+			dshdban = control.TimHDNBanTheoNam(yearChooser_DoanhThu.getYear());
 		}
 
-		for(HoaDonBanHang hd : dshdban)
-		{
-			if(hd.getMaNVLap().equals(IDNhanVien))
-			{
-				Object[] row = {hd.getMaHD(),hd.getNgayLap(),hd.getMaNVLap(),hd.getTongTien()};
+		for (HoaDonBanHang hd : dshdban) {
+			if (hd.getMaNVLap().equals(IDNhanVien)) {
+				Object[] row = { hd.getMaHD(), hd.getNgayLap(), hd.getMaNVLap(), hd.getTongTien() };
 				tablemodelDoanhThu.addRow(row);
 			}
 		}
 	}
-	public void timKiemDSHD() 
-	{
-		for(int i = tablemodelDanhSachDon.getRowCount()-1;i>=0;i--)
-		{
+
+	public void timKiemDSHD() {
+		for (int i = tablemodelDanhSachDon.getRowCount() - 1; i >= 0; i--) {
 			tablemodelDanhSachDon.removeRow(i);
 		}
 		try {
@@ -1142,98 +1133,77 @@ public class GiaoDienNhanVien extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ArrayList<HoaDonBanHang> dshdban=null;
-	
-		if(rdbtnHienHet_DSHD.isSelected())
-		{
-			dshdban=ds.listHDB;
-		}
-		else if(rdbtnChinhXac_DSHD.isSelected())
-		{
+		ArrayList<HoaDonBanHang> dshdban = null;
+
+		if (rdbtnHienHet_DSHD.isSelected()) {
+			dshdban = ds.listHDB;
+		} else if (rdbtnChinhXac_DSHD.isSelected()) {
 			Date ngay = dateChooser_DSHD.getDate();
-			dshdban=control.TimHDNBanTheoNgay(dateformat.format(ngay));
+			dshdban = control.TimHDNBanTheoNgay(dateformat.format(ngay));
+		} else if (rdbtnTheoThang_DSHD.isSelected()) {
+			dshdban = control.TimHDNBanTheoThang(monthChooser_DSHD.getMonth() + 1);
+		} else if (rdbtnTheoNam_DSHD.isSelected()) {
+			dshdban = control.TimHDNBanTheoNam(yearChooser_DSHD.getYear());
 		}
-		else if(rdbtnTheoThang_DSHD.isSelected())
-		{
-			dshdban=control.TimHDNBanTheoThang(monthChooser_DSHD.getMonth()+1);
-		}
-		else if(rdbtnTheoNam_DSHD.isSelected())
-		{
-			dshdban=control.TimHDNBanTheoNam(yearChooser_DSHD.getYear());
-		}
-		for(HoaDonBanHang hd : dshdban)
-		{
-			if(hd.getMaNVLap().equals(IDNhanVien))
-			{
-				Object[] row = {hd.getMaHD(),hd.getMaNVLap(),hd.getNgayLap(),hd.getMaKH(),hd.getTongTien()};
+		for (HoaDonBanHang hd : dshdban) {
+			if (hd.getMaNVLap().equals(IDNhanVien)) {
+				Object[] row = { hd.getMaHD(), hd.getMaNVLap(), hd.getNgayLap(), hd.getMaKH(), hd.getTongTien() };
 				tablemodelDanhSachDon.addRow(row);
 			}
 		}
 	}
-	public void LoadJCalender_DSDon(boolean a, boolean b,boolean c,boolean d)
-	{
+
+	public void LoadJCalender_DSDon(boolean a, boolean b, boolean c, boolean d) {
 		panelTim_DSDon.removeAll();
 		panelTim_DSDon.repaint();
 		panelTim_DSDon.revalidate();
-		if(a==true)
-		{
-			panelTim_DSDon.add(new JLabel("Tìm hết các móc thời gian")).setSize(panelTim_DSDon.getSize());;
-		}
-		else if(b==true)
-		{
+		if (a == true) {
+			panelTim_DSDon.add(new JLabel("Tìm hết các móc thời gian")).setSize(panelTim_DSDon.getSize());
+			;
+		} else if (b == true) {
 			dateChooser_DSHD = new JDateChooser();
 			dateChooser_DSHD.setDateFormatString("dd / MM /yyyy");
 			dateChooser_DSHD.setLocale(new Locale("vi", "VN"));
 			dateChooser_DSHD.setSize(panelTim_DSDon.getSize());
 			panelTim_DSDon.add(dateChooser_DSHD);
-		}
-		else if(c==true)
-		{
+		} else if (c == true) {
 			monthChooser_DSHD = new JMonthChooser();
-			monthChooser_DSHD .setMonth(0);
-			monthChooser_DSHD .setLocale(new Locale("vi", "VN"));
-			monthChooser_DSHD .setSize(panelTim_DSDon.getSize());
-			panelTim_DSDon.add(monthChooser_DSHD );
-		}
-		else if(d==true)
-		{
+			monthChooser_DSHD.setMonth(0);
+			monthChooser_DSHD.setLocale(new Locale("vi", "VN"));
+			monthChooser_DSHD.setSize(panelTim_DSDon.getSize());
+			panelTim_DSDon.add(monthChooser_DSHD);
+		} else if (d == true) {
 			yearChooser_DSHD = new JYearChooser();
 			yearChooser_DSHD.setSize(panelTim_DSDon.getSize());
 			panelTim_DSDon.add(yearChooser_DSHD);
 
-		}	
+		}
 	}
-	public void LoadJCalender_Doanhthu(boolean a, boolean b,boolean c,boolean d)
-	{
+
+	public void LoadJCalender_Doanhthu(boolean a, boolean b, boolean c, boolean d) {
 		panel_DoanhThu.removeAll();
 		panel_DoanhThu.repaint();
 		panel_DoanhThu.revalidate();
-		if(a==true)
-		{
-			panel_DoanhThu.add(new JLabel("Tìm hết các móc thời gian")).setSize(panel_DoanhThu.getSize());;
-		}
-		else if(b==true)
-		{
+		if (a == true) {
+			panel_DoanhThu.add(new JLabel("Tìm hết các móc thời gian")).setSize(panel_DoanhThu.getSize());
+			;
+		} else if (b == true) {
 			dateChooser_DoanhThu = new JDateChooser();
 			dateChooser_DoanhThu.setDateFormatString("dd / MM /yyyy");
 			dateChooser_DoanhThu.setLocale(new Locale("vi", "VN"));
 			dateChooser_DoanhThu.setSize(panel_DoanhThu.getSize());
 			panel_DoanhThu.add(dateChooser_DoanhThu);
-		}
-		else if(c==true)
-		{
+		} else if (c == true) {
 			monthChooser_DoanhThu = new JMonthChooser();
 			monthChooser_DoanhThu.setMonth(0);
 			monthChooser_DoanhThu.setLocale(new Locale("vi", "VN"));
 			monthChooser_DoanhThu.setSize(panel_DoanhThu.getSize());
 			panel_DoanhThu.add(monthChooser_DoanhThu);
-		}
-		else if(d==true)
-		{
+		} else if (d == true) {
 			yearChooser_DoanhThu = new JYearChooser();
 			yearChooser_DoanhThu.setSize(panel_DoanhThu.getSize());
 			panel_DoanhThu.add(yearChooser_DoanhThu);
 
-		}	
+		}
 	}
 }

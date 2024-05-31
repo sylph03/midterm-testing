@@ -1,6 +1,5 @@
 package giaodien;
 
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -32,14 +31,14 @@ import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
 
-
 public class GiaoDienDangNhap extends JFrame {
 
 	private JPanel contentPane;
-	public static  JTextField txtTK;
+	public static JTextField txtTK;
 	public static JPasswordField txtMK;
 	private JButton btnDangNhap;
 	ControlGiaoDien control = new ControlGiaoDien();
+
 	public GiaoDienDangNhap() throws SQLException {
 		setForeground(new Color(255, 255, 255));
 		setResizable(false);
@@ -72,7 +71,7 @@ public class GiaoDienDangNhap extends JFrame {
 		lblSDT.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		lblSDT.setBounds(34, 292, 132, 20);
 		contentPane.add(lblSDT);
-		
+
 		JLabel labeltieude2 = new JLabel("QUẦY THUỐC");
 		labeltieude2.setToolTipText("");
 		labeltieude2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -122,7 +121,6 @@ public class GiaoDienDangNhap extends JFrame {
 		contentPane.add(txtMK);
 		txtMK.setColumns(10);
 
-
 		btnDangNhap = new JButton("  Đăng Nhập");
 		btnDangNhap.setToolTipText("Enter");
 		btnDangNhap.setBounds(53, 463, 140, 30);
@@ -143,7 +141,8 @@ public class GiaoDienDangNhap extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/dangnhap22.jpg")));
-	//	lblNewLabel.setIcon(new ImageIcon(GiaoDienDangNhap.class.getResource("/ser/Background.jpg")));
+		// lblNewLabel.setIcon(new
+		// ImageIcon(GiaoDienDangNhap.class.getResource("/ser/Background.jpg")));
 		lblNewLabel.setBounds(0, 0, 794, 535);
 		contentPane.add(lblNewLabel);
 		btnThoat.addActionListener(new ActionListener() {
@@ -158,35 +157,26 @@ public class GiaoDienDangNhap extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				txtTK.setText(txtTK.getText().toUpperCase());
-				String Id=txtTK.getText();
-				char[] pass =txtMK.getPassword();
-				String mk=new String(pass);
+				String Id = txtTK.getText();
+				char[] pass = txtMK.getPassword();
+				String mk = new String(pass);
 				try {
 					NhanVien nv = control.docDuLieuNhanVien(Id);
-					Component plDangNhap=null;
-					if(nv!=null)
-					{
-						if(nv.getPass().equals(mk))
-						{
-							if(control.PhanQuyenNV(nv)==true)
-							{
+					Component plDangNhap = null;
+					if (nv != null) {
+						if (nv.getPass().equals(mk)) {
+							if (control.PhanQuyenNV(nv) == true) {
 								new GiaoDienQuanLy().setVisible(true);
 								dispose();
-							}
-							else
-							{
+							} else {
 								new GiaoDienNhanVien().setVisible(true);
 								dispose();
 							}
-						}
-						else
-							JOptionPane.showMessageDialog(plDangNhap,"Tài khoản hoặc mật khẩu sai");
-					}
-					else
-						JOptionPane.showMessageDialog(plDangNhap,"Tài khoản hoặc mật khẩu sai");
-				} 
-				catch (SQLException e1)
-				{
+						} else
+							JOptionPane.showMessageDialog(plDangNhap, "Tài khoản hoặc mật khẩu sai");
+					} else
+						JOptionPane.showMessageDialog(plDangNhap, "Tài khoản hoặc mật khẩu sai");
+				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -194,12 +184,11 @@ public class GiaoDienDangNhap extends JFrame {
 		});
 		//
 		LoadTaiKhoan();
-		//--------------------phím tắt-------------
+		// --------------------phím tắt-------------
 		txtTK.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-				{
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					btnDangNhap.doClick();
 				}
 			}
@@ -207,8 +196,7 @@ public class GiaoDienDangNhap extends JFrame {
 		txtMK.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ENTER)
-				{
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					btnDangNhap.doClick();
 				}
 			}
@@ -216,8 +204,7 @@ public class GiaoDienDangNhap extends JFrame {
 		txtMK.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
-				{
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					btnThoat.doClick();
 				}
 			}
@@ -225,38 +212,31 @@ public class GiaoDienDangNhap extends JFrame {
 		txtTK.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
-				{
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					btnThoat.doClick();
 				}
 			}
 		});
-		//-----------------------------------------
+		// -----------------------------------------
 
 	}
-	public void LoadTaiKhoan()
-	{
-		String filename="data.txt";
-		BufferedReader br =null;
-		try
-		{
-			if(new File(filename).exists())
-			{
+
+	public void LoadTaiKhoan() {
+		String filename = "data.txt";
+		BufferedReader br = null;
+		try {
+			if (new File(filename).exists()) {
 				br = new BufferedReader(new FileReader(filename));
 				br.readLine();
-				while(br.ready())
-				{
+				while (br.ready()) {
 					String line = br.readLine();
-					if(line !=null && !line.equals("") )
-					{
+					if (line != null && !line.equals("")) {
 						String[] c = line.split(";");
 						txtTK.setText(c[0]);
 					}
 				}
 			}
-		}
-		catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

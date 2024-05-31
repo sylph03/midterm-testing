@@ -56,33 +56,34 @@ import java.awt.event.FocusEvent;
 public class GiaoDienLapHoaDon extends JFrame {
 
 	private JFrame frmLapHoaDon;
-	private JTable table,tableThemThuoc;
-	public DefaultTableModel tablemode,	tablemodelBangThemThuoc;
+	public JTable table, tableThemThuoc;
+	public DefaultTableModel tablemode, tablemodelBangThemThuoc;
 	private JScrollPane scrollPane_1;
-	private JTextField txtTongTien;
-	private JPanel panelDienThongTin, panelBangThemThuoc;
-	private JComboBox cbbNgay,cbbThang,cbbNam;
+	public JTextField txtTongTien;
+	public JPanel panelDienThongTin, panelBangThemThuoc;
+	public JComboBox cbbNgay, cbbThang, cbbNam;
 	GiaoDienDangNhap dn;
-	MaskFormatter formattextsl,formatextcmnd_sdt;
-	ControlGiaoDien control = new ControlGiaoDien() ;
+	MaskFormatter formattextsl, formatextcmnd_sdt;
+	public ControlGiaoDien control = new ControlGiaoDien();
 	GiaoDienThongTinNhanVien thongtinNV = new GiaoDienThongTinNhanVien();
 	DanhSachDuLieu ds = new DanhSachDuLieu();
-	private JCheckBox chkKeDon;
+	public JCheckBox chkKeDon;
 	private JTextArea txtAMota;
-	private JTextField txtNguoiLap;
-	private JTextField txtMa;
-	private JTextField txtNgay;
-	private JTextField txtCMND;
+	public JTextField txtNguoiLap;
+	public JTextField txtMa;
+	public JTextField txtNgay;
+	public JTextField txtCMND;
 	private JTextField txtTenKH;
-	private JTextField txtSDT;
+	public JTextField txtSDT;
 	private JTextField txtTenThuoc_TimKiem;
 	private JTextField txtSoLuong;
 	private JTextField txtLoai;
-	private JTextField txtSoLuong_BangThemThuoc;
+	public JTextField txtSoLuong_BangThemThuoc;
 	private JScrollPane scrollPaneBangThemThuoc_1;
 	private DefaultListModel<String> listmodel;
 	private JList list;
 	private JScrollPane jsc;
+
 	public GiaoDienLapHoaDon() {
 		setResizable(false);
 		initialize();
@@ -96,29 +97,27 @@ public class GiaoDienLapHoaDon extends JFrame {
 		setBounds(500, 100, 490, 600);
 		getContentPane().setLayout(null);
 
-		String[] ngay={"01", "02", "03", "04", "05", "06", "07", "08", "09",
+		String[] ngay = { "01", "02", "03", "04", "05", "06", "07", "08", "09",
 				"10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
-				"24", "25", "26", "27", "28", "29", "30", "31"};
+				"24", "25", "26", "27", "28", "29", "30", "31" };
 
-		String[] thang ={"01", "02", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+		String[] thang = { "01", "02", "04", "05", "06", "07", "08", "09", "10", "11", "12" };
 
-
-		String[] headerBangThemThuoc="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá".split(";");
-		tablemodelBangThemThuoc = new DefaultTableModel(headerBangThemThuoc,0){ 
-			@Override//Override lại phương thức isCellEditable 
-			public boolean isCellEditable(int row, int column) { 
-				return false;//Trả về false không cho edit. 
-			} 
+		String[] headerBangThemThuoc = "Tên thuốc;Số lượng;Đơn vị tính;Đơn giá".split(";");
+		tablemodelBangThemThuoc = new DefaultTableModel(headerBangThemThuoc, 0) {
+			@Override // Override lại phương thức isCellEditable
+			public boolean isCellEditable(int row, int column) {
+				return false;// Trả về false không cho edit.
+			}
 		};
 
-
-		String [] header="Tên thuốc;Số lượng;Đơn vị tính;Đơn giá;Thành tiền".split(";");
+		String[] header = "Tên thuốc;Số lượng;Đơn vị tính;Đơn giá;Thành tiền".split(";");
 		JScrollPane scrollPane = new JScrollPane();
-		tablemode =new DefaultTableModel(header, 0){ 
-			@Override//Override lại phương thức isCellEditable 
-			public boolean isCellEditable(int row, int column) { 
-				return false;//Trả về false không cho edit. 
-			} 
+		tablemode = new DefaultTableModel(header, 0) {
+			@Override // Override lại phương thức isCellEditable
+			public boolean isCellEditable(int row, int column) {
+				return false;// Trả về false không cho edit.
+			}
 		};
 
 		JLabel lblTongTien = new JLabel("Tổng tiền:");
@@ -152,7 +151,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 				txtSoLuong.setText("");
 				txtSoLuong_BangThemThuoc.setText("");
 				txtTongTien.setText("");
-				for(int i = tablemode.getRowCount()-1;i>=0;i--)
+				for (int i = tablemode.getRowCount() - 1; i >= 0; i--)
 					tablemode.removeRow(i);
 				dispose();
 			}
@@ -237,7 +236,9 @@ public class GiaoDienLapHoaDon extends JFrame {
 		JPanel panelThongtinKH = new JPanel();
 		panelThongtinKH.setLayout(null);
 		panelThongtinKH.setForeground(Color.RED);
-		panelThongtinKH.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:", TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(0, 128, 0)));
+		panelThongtinKH.setBorder(
+				new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Th\u00F4ng tin kh\u00E1ch h\u00E0ng:",
+						TitledBorder.TRAILING, TitledBorder.TOP, null, new Color(0, 128, 0)));
 		panelThongtinKH.setBounds(10, 104, 464, 133);
 		panelDienThongTin.add(panelThongtinKH);
 
@@ -281,8 +282,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 		btnThongTinNhanVien.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==KeyEvent.VK_ESCAPE)
-				{
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					btnHuy.doClick();
 				}
 			}
@@ -293,34 +293,32 @@ public class GiaoDienLapHoaDon extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String cmnd;
 				boolean kt = false;
-				cmnd = txtCMND.getText()+"";
-				boolean ktcmnd=control.kiemTraCMND(cmnd);
-				if (ktcmnd ==true) {
+				cmnd = txtCMND.getText() + "";
+				boolean ktcmnd = control.kiemTraCMND(cmnd);
+				if (ktcmnd == true) {
 					try {
 						ds.docBangKhachHang();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					for(KhachHang kh : ds.listKhachHang)
-					{
-						if(kh.getCMND().equalsIgnoreCase(cmnd))
-						{
-							String[] date=kh.getNgaySinh().split("-");
-							txtTenKH.setText(kh.getHoTenKH()+"");
-							txtSDT.setText(kh.getSdt()+"");
-							txtAMota.setText(kh.getMoTaKH()+"");
+					for (KhachHang kh : ds.listKhachHang) {
+						if (kh.getCMND().equalsIgnoreCase(cmnd)) {
+							String[] date = kh.getNgaySinh().split("-");
+							txtTenKH.setText(kh.getHoTenKH() + "");
+							txtSDT.setText(kh.getSdt() + "");
+							txtAMota.setText(kh.getMoTaKH() + "");
 							cbbThang.setSelectedItem(date[1]);
 							cbbNgay.setSelectedItem(date[2]);
 							cbbNam.setSelectedItem(date[0]);
-							kt =true;
+							kt = true;
 						}
 					}
 					if (kt == false)
 						JOptionPane.showMessageDialog(panelThongtinKH, "Khách hàng chưa có, vui lòng thêm mới !!");
-				}
-				else
-					JOptionPane.showMessageDialog(panelThongtinKH, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 9 CHỮ SỐ !!");
+				} else
+					JOptionPane.showMessageDialog(panelThongtinKH,
+							"Số CMND ko hợp lệ !! CMND phải có 12 hoặc 9 CHỮ SỐ !!");
 			}
 		});
 		btnKiemTra.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/search.png")));
@@ -340,15 +338,18 @@ public class GiaoDienLapHoaDon extends JFrame {
 		label_8.setBounds(264, 26, 46, 14);
 		panelThongtinKH.add(label_8);
 
-		cbbNgay = new JComboBox(new Object[]{});
-		cbbNgay.setModel(new DefaultComboBoxModel(new String[] {"All--", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+		cbbNgay = new JComboBox(new Object[] {});
+		cbbNgay.setModel(new DefaultComboBoxModel(new String[] { "All--", "01", "02", "03", "04", "05", "06", "07",
+				"08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
+				"25", "26", "27", "28", "29", "30", "31" }));
 		cbbNgay.setEnabled(false);
 		cbbNgay.setEditable(false);
 		cbbNgay.setBounds(87, 76, 46, 20);
 		panelThongtinKH.add(cbbNgay);
 
-		cbbThang = new JComboBox(new Object[]{});
-		cbbThang.setModel(new DefaultComboBoxModel(new String[] {"All--", "01", "02","03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
+		cbbThang = new JComboBox(new Object[] {});
+		cbbThang.setModel(new DefaultComboBoxModel(
+				new String[] { "All--", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
 		cbbThang.setEnabled(false);
 		cbbThang.setEditable(false);
 		cbbThang.setBounds(143, 76, 46, 20);
@@ -356,7 +357,8 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 		cbbNam = new JComboBox();
 		cbbNam.setEnabled(false);
-		cbbNam.setModel(new DefaultComboBoxModel(new String[] {"All--", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2017", "2018"}));
+		cbbNam.setModel(new DefaultComboBoxModel(new String[] { "All--", "1990", "1991", "1992", "1993", "1994", "1995",
+				"1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2017", "2018" }));
 		cbbNam.setBounds(199, 76, 55, 20);
 		panelThongtinKH.add(cbbNam);
 
@@ -377,14 +379,12 @@ public class GiaoDienLapHoaDon extends JFrame {
 				txtTenThuoc_TimKiem.setText("");
 				txtTenThuoc_TimKiem.setForeground(Color.BLACK);
 			}
+
 			@Override
 			public void focusLost(FocusEvent e) {
-				if(!txtTenThuoc_TimKiem.getText().equals(""))
-				{
-					//Không làm gì cả
-				}
-				else
-				{
+				if (!txtTenThuoc_TimKiem.getText().equals("")) {
+					// Không làm gì cả
+				} else {
 					txtTenThuoc_TimKiem.setForeground(Color.GRAY);
 					txtTenThuoc_TimKiem.setText("Tên thuốc....");
 					jsc.setVisible(false);
@@ -395,27 +395,21 @@ public class GiaoDienLapHoaDon extends JFrame {
 		txtTenThuoc_TimKiem.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if(txtTenThuoc_TimKiem.getText().length()>0)
-				{
-					if(!txtTenThuoc_TimKiem.getText().trim().equals(""))
-					{
+				if (txtTenThuoc_TimKiem.getText().length() > 0) {
+					if (!txtTenThuoc_TimKiem.getText().trim().equals("")) {
 						listmodel.removeAllElements();
 						try {
-							String kq=ds.Timtenthuoc(txtTenThuoc_TimKiem.getText());
-							String[] data=kq.split(";");
-							if(!kq.equals(""))
-							{
-								for(int i=0;i<data.length;i++)
-								{
-									if(i<6)
+							String kq = ds.Timtenthuoc(txtTenThuoc_TimKiem.getText());
+							String[] data = kq.split(";");
+							if (!kq.equals("")) {
+								for (int i = 0; i < data.length; i++) {
+									if (i < 6)
 										listmodel.addElement(data[i]);
 									else
 										break;
 								}
 								jsc.setVisible(true);
-							}
-							else
-							{
+							} else {
 								listmodel.removeAllElements();
 								jsc.setVisible(false);
 							}
@@ -424,15 +418,11 @@ public class GiaoDienLapHoaDon extends JFrame {
 							e1.printStackTrace();
 							txtTenThuoc_TimKiem.setText("");
 						}
-					}
-					else
-					{
-					    jsc.setVisible(false);
+					} else {
+						jsc.setVisible(false);
 						listmodel.removeAllElements();
 					}
-				}
-				else
-				{
+				} else {
 					listmodel.removeAllElements();
 					jsc.setVisible(false);
 				}
@@ -454,21 +444,23 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnXoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int row = table.getSelectedRow();
-				int soLuongMua = Integer.parseInt(tablemode.getValueAt(row, 1)+"");
-				int soLuongCon = timThuocTrongBangTheoTenTraVeSoLuong(tablemode.getValueAt(row, 0)+"", tablemodelBangThemThuoc);
-				if (row==-1)
+				int soLuongMua = Integer.parseInt(tablemode.getValueAt(row, 1) + "");
+				int soLuongCon = timThuocTrongBangTheoTenTraVeSoLuong(tablemode.getValueAt(row, 0) + "",
+						tablemodelBangThemThuoc);
+				if (row == -1)
 					JOptionPane.showMessageDialog(panelDienThongTin, "Vui lòng chọn thuốc");
 				else {
-					int sel = JOptionPane.showConfirmDialog(panelDienThongTin, "Bạn có muốn xóa không?","Xóa", JOptionPane.YES_NO_OPTION);
-					if (sel == JOptionPane.YES_OPTION)
-					{
-						for(int i = tablemodelBangThemThuoc.getRowCount()-1;i>=0;i--)
-							if((tablemode.getValueAt(row, 0)+"").equals(tablemodelBangThemThuoc.getValueAt(i, 0)+""))
-								tablemodelBangThemThuoc.setValueAt(soLuongCon+soLuongMua, i, 1);
+					int sel = JOptionPane.showConfirmDialog(panelDienThongTin, "Bạn có muốn xóa không?", "Xóa",
+							JOptionPane.YES_NO_OPTION);
+					if (sel == JOptionPane.YES_OPTION) {
+						for (int i = tablemodelBangThemThuoc.getRowCount() - 1; i >= 0; i--)
+							if ((tablemode.getValueAt(row, 0) + "")
+									.equals(tablemodelBangThemThuoc.getValueAt(i, 0) + ""))
+								tablemodelBangThemThuoc.setValueAt(soLuongCon + soLuongMua, i, 1);
 						tablemode.removeRow(row);
-					}		
+					}
 				}
-				txtTongTien.setText(tongTien(tablemode)+"");
+				txtTongTien.setText(tongTien(tablemode) + "");
 			}
 		});
 		btnXoa.setToolTipText("Xóa");
@@ -479,10 +471,10 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThemNangCao.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/more_01.png")));
 		btnThemNangCao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(tablemodelBangThemThuoc.getRowCount()==0)	
-					for(ThongTinThuoc thuoc : ds.listThuoc)
-					{
-						Object[] row ={thuoc.getTenThuoc(),thuoc.getSoLuong(),thuoc.getDonViTinh(),thuoc.getGiaBan()};
+				if (tablemodelBangThemThuoc.getRowCount() == 0)
+					for (ThongTinThuoc thuoc : ds.listThuoc) {
+						Object[] row = { thuoc.getTenThuoc(), thuoc.getSoLuong(), thuoc.getDonViTinh(),
+								thuoc.getGiaBan() };
 						tablemodelBangThemThuoc.addRow(row);
 					}
 				panelBangThemThuoc.setVisible(true);
@@ -497,7 +489,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnThem.setIcon(new ImageIcon(GiaoDienLapHoaDon.class.getResource("/ser/add.png")));
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			        them_panelThongTin();
+				them_panelThongTin();
 			}
 		});
 		btnThem.setToolTipText("Thêm");
@@ -517,8 +509,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if(chkKeDon.isSelected())
-				{
+				if (chkKeDon.isSelected()) {
 					panelThongtinKH.setEnabled(true);
 					label_4.setEnabled(true);
 					label_5.setEnabled(true);
@@ -537,8 +528,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 					txtAMota.setEditable(true);
 					txtAMota.setBackground(Color.decode("#ffffff"));
 					btnKiemTra.setEnabled(true);
-				}
-				else {
+				} else {
 					panelThongtinKH.setEnabled(false);
 					label_4.setEnabled(false);
 					label_5.setEnabled(false);
@@ -561,30 +551,34 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 			}
 		});
-		txtMa.setText("HD"+ds.demSoHDBan());
+		txtMa.setText("HD" + ds.demSoHDBan());
 
 		panelBangThemThuoc = new JPanel();
 		panelBangThemThuoc.setForeground(Color.ORANGE);
 		panelBangThemThuoc.setBounds(10, 11, 464, 268);
 		layeredPane.add(panelBangThemThuoc);
-		panelBangThemThuoc.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Ch\u1ECDn thu\u1ED1c t\u1EEB b\u1EA3ng \u0111\u1EC3 th\u00EAm v\u00E0o h\u00F3a \u0111\u01A1n:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 128, 0)));
+		panelBangThemThuoc.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
+				"Ch\u1ECDn thu\u1ED1c t\u1EEB b\u1EA3ng \u0111\u1EC3 th\u00EAm v\u00E0o h\u00F3a \u0111\u01A1n:",
+				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 128, 0)));
 		panelBangThemThuoc.setLayout(null);
-		panelBangThemThuoc.add(scrollPaneBangThemThuoc_1 = new JScrollPane(tableThemThuoc = new JTable(tablemodelBangThemThuoc) ));
+		panelBangThemThuoc
+				.add(scrollPaneBangThemThuoc_1 = new JScrollPane(tableThemThuoc = new JTable(tablemodelBangThemThuoc)));
 		scrollPaneBangThemThuoc_1.setBounds(10, 21, 370, 238);
 
-		//		tableThemThuoc.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-		//			
-		//			@Override
-		//			public void valueChanged(ListSelectionEvent arg0) {
-		//				// TODO Auto-generated method stub
-		//				int row = tableThemThuoc.getSelectedRow();
-		//			}
-		//		});
+		// tableThemThuoc.getSelectionModel().addListSelectionListener(new
+		// ListSelectionListener() {
+		//
+		// @Override
+		// public void valueChanged(ListSelectionEvent arg0) {
+		// // TODO Auto-generated method stub
+		// int row = tableThemThuoc.getSelectedRow();
+		// }
+		// });
 
 		JButton btnThem_BangThemThuoc = new JButton("");
 		btnThem_BangThemThuoc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				    them_panelBangThemThuoc();
+				them_panelBangThemThuoc();
 			}
 		});
 		btnThem_BangThemThuoc.setToolTipText("Thêm");
@@ -617,10 +611,10 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnHuyBangThemThuoc.setBounds(390, 193, 64, 64);
 		panelBangThemThuoc.add(btnHuyBangThemThuoc);
 
-		//------tìm kiếm có gợi ý-------------
-		listmodel =new DefaultListModel<String>();
+		// ------tìm kiếm có gợi ý-------------
+		listmodel = new DefaultListModel<String>();
 		list = new JList<String>(listmodel);
-		jsc =new JScrollPane(list);
+		jsc = new JScrollPane(list);
 		jsc.setBounds(76, 280, 143, 107);
 		getContentPane().add(jsc);
 		jsc.setVisible(false);
@@ -630,28 +624,25 @@ public class GiaoDienLapHoaDon extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 				Object data = list.getSelectedValue();
-				if(data!=null)
-				{
-					txtTenThuoc_TimKiem.setText(list.getSelectedValue()+"");
-					    jsc.setVisible(false);
+				if (data != null) {
+					txtTenThuoc_TimKiem.setText(list.getSelectedValue() + "");
+					jsc.setVisible(false);
 					ThongTinThuoc thuoc2 = ds.TimThuocTheoTen(txtTenThuoc_TimKiem.getText());
-					txtLoai.setText(thuoc2.getDonViTinh()+"");
-				}
-				else
-				{
+					txtLoai.setText(thuoc2.getDonViTinh() + "");
+				} else {
 					txtTenThuoc_TimKiem.setText("");
 				}
 
 			}
 		});
-		getContentPane().add(scrollPane_1 = new JScrollPane(table =new JTable(tablemode)));
+		getContentPane().add(scrollPane_1 = new JScrollPane(table = new JTable(tablemode)));
 		scrollPane_1.setSize(464, 194);
 		scrollPane_1.setLocation(10, 290);
 
 		JScrollPane scrollPaneBangThemThuoc = new JScrollPane((Component) null);
 		scrollPaneBangThemThuoc.setBounds(10, 36, 373, 223);
 
-		//--------------------------------------
+		// --------------------------------------
 
 		txtNgay.setText(control.layNgayHeThong());
 		try {
@@ -663,89 +654,88 @@ public class GiaoDienLapHoaDon extends JFrame {
 		btnXoq.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				luuToanBoTTHoaDon();
-			}	
+			}
 		});
 
-		//--------------------------------------------------
+		// --------------------------------------------------
 
 	}
 
 	public void themThuocTuBangVaoHoaDon() {
 		int row = tableThemThuoc.getSelectedRow();
-		if (row!=-1) {
-			String tenThuoc = tableThemThuoc.getValueAt(row, 0)+"";
+		if (row != -1) {
+			String tenThuoc = tableThemThuoc.getValueAt(row, 0) + "";
 			int soluong = Integer.parseInt(txtSoLuong_BangThemThuoc.getText());
-			String dvt = tableThemThuoc.getValueAt(row, 2) +"";
+			String dvt = tableThemThuoc.getValueAt(row, 2) + "";
 			double dongia = (double) tableThemThuoc.getValueAt(row, 3);
-			double tt = soluong*dongia;
-			Object a[] = {tenThuoc,soluong,dvt,dongia,tt};
+			double tt = soluong * dongia;
+			Object a[] = { tenThuoc, soluong, dvt, dongia, tt };
 			tablemode.addRow(a);
 		}
 	}
-	   public void themThuocTuBangVaoHoaDon_TangSoLuong(String ten,int sl) {
-	        int row = tableThemThuoc.getSelectedRow();
-	        if (row!=-1) {
-	            String dvt = tableThemThuoc.getValueAt(row, 2) +"";
-	            double dongia = (double) tableThemThuoc.getValueAt(row, 3);
-	            double tt = sl*dongia;
-	            Object a[] = {ten,sl,dvt,dongia,tt};
-	            tablemode.addRow(a);
-	        }
-	    }
-	public double tongTien(DefaultTableModel tbm)
-	{
+
+	public void themThuocTuBangVaoHoaDon_TangSoLuong(String ten, int sl) {
+		int row = tableThemThuoc.getSelectedRow();
+		if (row != -1) {
+			String dvt = tableThemThuoc.getValueAt(row, 2) + "";
+			double dongia = (double) tableThemThuoc.getValueAt(row, 3);
+			double tt = sl * dongia;
+			Object a[] = { ten, sl, dvt, dongia, tt };
+			tablemode.addRow(a);
+		}
+	}
+
+	public double tongTien(DefaultTableModel tbm) {
 		double tong = 0;
-		for(int i=tbm.getRowCount()-1;i>=0;i--)
-		{
-			double tong2=Double.parseDouble(tbm.getValueAt(i, 4)+"");
-			tong+=tong2;
+		for (int i = tbm.getRowCount() - 1; i >= 0; i--) {
+			double tong2 = Double.parseDouble(tbm.getValueAt(i, 4) + "");
+			tong += tong2;
 		}
 		return tong;
 	}
 
-	//---------------------các hàm của lập hóa đơn--------------------
+	// ---------------------các hàm của lập hóa đơn--------------------
 	public void luuToanBoTTHoaDon() {
-		if(table.getRowCount()>=1)
-		{
-			if(chkKeDon.isSelected())
-			{	
+		if (table.getRowCount() >= 1) {
+			if (chkKeDon.isSelected()) {
 				String date = control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam);
-				String sdt = txtSDT.getText()+"";
-				String cmnd = txtCMND.getText()+"";
+				String sdt = txtSDT.getText() + "";
+				String cmnd = txtCMND.getText() + "";
 				if (kiemTraTTKH(sdt, cmnd, date)) {
 					luuHD();
 					luuCTHD();
 					luuKhachHang();
 					dispose();
-					JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (CÓ lưu thông tin khách hàng)");
-				}
-				else {
+					JOptionPane.showMessageDialog(panelDienThongTin,
+							"Lập hóa đơn thành công (CÓ lưu thông tin khách hàng)");
+				} else {
 					if (!control.kiemTraCMND(txtCMND.getText()))
-						JOptionPane.showMessageDialog(panelDienThongTin, "Số CMND ko hợp lệ !! CMND phải có 12 hoặc 9 CHỮ SỐ không âm");
-					if(!control.kiemTraSDT(txtSDT.getText()))
-						JOptionPane.showMessageDialog(panelDienThongTin, "SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ không âm");
+						JOptionPane.showMessageDialog(panelDienThongTin,
+								"Số CMND ko hợp lệ !! CMND phải có 12 hoặc 9 CHỮ SỐ không âm");
+					if (!control.kiemTraSDT(txtSDT.getText()))
+						JOptionPane.showMessageDialog(panelDienThongTin,
+								"SĐT ko hợp lệ !! SĐT phải có 10 hoặc 11 CHỮ SỐ không âm");
 					if (!control.kiemTraNgayHopLe(date))
 						JOptionPane.showMessageDialog(panelDienThongTin, "Ngày sinh của khách hàng không hợp lệ !! ");
 				}
-			}
-			else {
+			} else {
 				luuHD();
 				luuCTHD();
 				dispose();
-				JOptionPane.showMessageDialog(panelDienThongTin, "Lập hóa đơn thành công (KHÔNG lưu thông tin khách hàng)");
+				JOptionPane.showMessageDialog(panelDienThongTin,
+						"Lập hóa đơn thành công (KHÔNG lưu thông tin khách hàng)");
 			}
-		}
-		else
+		} else
 			JOptionPane.showMessageDialog(panelDienThongTin, "Danh sách thuốc bán không được rỗng!");
 	}
 
 	public void luuHD() {
 		HoaDonBanHang hdb = new HoaDonBanHang();
-		hdb.setMaHD(txtMa.getText()+"");
-		hdb.setMaNVLap(txtNguoiLap.getText()+"");
-		hdb.setNgayLap(txtNgay.getText()+"");
-		hdb.setMaKH(txtCMND.getText()+"");
-		hdb.setTongTien(Double.parseDouble(txtTongTien.getText()+""));
+		hdb.setMaHD(txtMa.getText() + "");
+		hdb.setMaNVLap(txtNguoiLap.getText() + "");
+		hdb.setNgayLap(txtNgay.getText() + "");
+		hdb.setMaKH(txtCMND.getText() + "");
+		hdb.setTongTien(Double.parseDouble(txtTongTien.getText() + ""));
 		try {
 			control.themHDBVaoSQL(hdb);
 		} catch (SQLException e) {
@@ -755,20 +745,19 @@ public class GiaoDienLapHoaDon extends JFrame {
 	}
 
 	public void luuCTHD() {
-		for(int i=table.getRowCount()-1;i>=0;i--)
-		{
-			String tenThuoc = tablemode.getValueAt(i, 0)+"";
+		for (int i = table.getRowCount() - 1; i >= 0; i--) {
+			String tenThuoc = tablemode.getValueAt(i, 0) + "";
 			String maThuoc = ds.TimThuocTheoTen(tenThuoc).getMaThuoc();
-			int soLuong = Integer.parseInt(tablemode.getValueAt(i, 1)+"");
+			int soLuong = Integer.parseInt(tablemode.getValueAt(i, 1) + "");
 			CTHoaDonBan ctHDB = new CTHoaDonBan();
-			ctHDB.setMaHD(txtMa.getText()+"");
+			ctHDB.setMaHD(txtMa.getText() + "");
 			ctHDB.setMaThuoc(maThuoc);
 			ctHDB.setTenThuoc(tenThuoc);
 			ctHDB.setSoLuong(soLuong);
-			ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3)+""));
+			ctHDB.setDonGia(Double.parseDouble(tablemode.getValueAt(i, 3) + ""));
 			try {
 				control.themCTHoaDonBanVaoSQL(ctHDB);
-				control.truSoLuongThuocDaBan(maThuoc,soLuong);
+				control.truSoLuongThuocDaBan(maThuoc, soLuong);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -781,7 +770,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 		KhachHang kh = new KhachHang();
 		kh.setCMND(txtCMND.getText());
 		kh.setHoTenKH(txtTenKH.getText());
-		kh.setNgaySinh( control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam));
+		kh.setNgaySinh(control.layChuoiNgayThangNam(cbbNgay, cbbThang, cbbNam));
 		kh.setSdt(txtSDT.getText());
 		kh.setMoTaKH(txtAMota.getText());
 		try {
@@ -790,10 +779,8 @@ public class GiaoDienLapHoaDon extends JFrame {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		for(KhachHang kh1 : ds.listKhachHang)
-		{
-			if(kh1.getCMND().equals(txtCMND.getText()))
-			{
+		for (KhachHang kh1 : ds.listKhachHang) {
+			if (kh1.getCMND().equals(txtCMND.getText())) {
 
 				try {
 					control.suaDuLieuKhachHangTrongSQL(kh);
@@ -804,8 +791,7 @@ public class GiaoDienLapHoaDon extends JFrame {
 				kt = true;
 			}
 		}
-		if(kt == false)
-		{
+		if (kt == false) {
 			try {
 				control.themKHVaoSQL(kh);
 			} catch (SQLException e) {
@@ -815,149 +801,148 @@ public class GiaoDienLapHoaDon extends JFrame {
 
 		}
 	}
-	//------------------kết thúc các hàm của lâp hóa đơn--------------------------------
-	public void them_panelBangThemThuoc() {	
-	    int row = tableThemThuoc.getSelectedRow();
-	    String ten = tableThemThuoc.getValueAt(row, 0)+"";
-	    boolean kqTim = timThuocTrongBangTheoTen(ten, tablemode);
-        if (row==-1)
-            JOptionPane.showMessageDialog(panelBangThemThuoc, "Vui lòng chọn thuốc cần thêm !!!");
-        else {
-            if (txtSoLuong_BangThemThuoc.getText().equals("")) 
-                JOptionPane.showMessageDialog(panelBangThemThuoc, "Vui lòng nhập số lượng !! ");
-            else {
-                if (control.kiemTraDuLieuSo(txtSoLuong_BangThemThuoc.getText()+"")==true && (kqTim==false)) {
-                    int sl = Integer.parseInt(txtSoLuong_BangThemThuoc.getText());
-                    if (sl<=0)
-                        JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
-                    else {
-                        if(sl<=Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+""))
-                        {
-                        	int soLuongConLai =Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+"")- sl;
-                            themThuocTuBangVaoHoaDon();
-                            txtTongTien.setText(tongTien(tablemode)+"");
-                            tableThemThuoc.setValueAt(soLuongConLai, row, 1);
-                        }
-                        else
-                            JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
-                    }
-                }
-                else {
-                    if (control.kiemTraDuLieuSo(txtSoLuong_BangThemThuoc.getText()+"")==false)
-                            JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng phải bao gồm các CHỮ SỐ");
-                    if (timThuocTrongBangTheoTen(ten, tablemode)) {
-                        
-                        int sl = Integer.parseInt(txtSoLuong_BangThemThuoc.getText());
-                        int slCu = timThuocTrongBangTheoTenTraVeSoLuong(ten, tablemode);
-                        if (sl<=0)
-                            JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
-                        else {
-                            if(sl<=Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+""))
-                            {	
-                            	int soLuongConLai = Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1)+"") - sl;
-                                for(int i = tablemode.getRowCount()-1;i>=0;i--)
-                                    if (tablemode.getValueAt(i, 0).equals(ten))
-                                        tablemode.removeRow(i);
-                                themThuocTuBangVaoHoaDon_TangSoLuong(ten,(sl+slCu));
-                                txtTongTien.setText(tongTien(tablemode)+"");
-                                tableThemThuoc.setValueAt(soLuongConLai, row, 1);
-                            }
-                            else
-                                JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
-                        }
-                    }
-                }
-            }
-        }
+
+	// ------------------kết thúc các hàm của lâp hóa
+	// đơn--------------------------------
+	public void them_panelBangThemThuoc() {
+		int row = tableThemThuoc.getSelectedRow();
+		String ten = tableThemThuoc.getValueAt(row, 0) + "";
+		boolean kqTim = timThuocTrongBangTheoTen(ten, tablemode);
+		if (row == -1)
+			JOptionPane.showMessageDialog(panelBangThemThuoc, "Vui lòng chọn thuốc cần thêm !!!");
+		else {
+			if (txtSoLuong_BangThemThuoc.getText().equals(""))
+				JOptionPane.showMessageDialog(panelBangThemThuoc, "Vui lòng nhập số lượng !! ");
+			else {
+				if (control.kiemTraDuLieuSo(txtSoLuong_BangThemThuoc.getText() + "") == true && (kqTim == false)) {
+					int sl = Integer.parseInt(txtSoLuong_BangThemThuoc.getText());
+					if (sl <= 0)
+						JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
+					else {
+						if (sl <= Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1) + "")) {
+							int soLuongConLai = Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1) + "") - sl;
+							themThuocTuBangVaoHoaDon();
+							txtTongTien.setText(tongTien(tablemode) + "");
+							tableThemThuoc.setValueAt(soLuongConLai, row, 1);
+						} else
+							JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
+					}
+				} else {
+					if (control.kiemTraDuLieuSo(txtSoLuong_BangThemThuoc.getText() + "") == false)
+						JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng phải bao gồm các CHỮ SỐ");
+					if (timThuocTrongBangTheoTen(ten, tablemode)) {
+
+						int sl = Integer.parseInt(txtSoLuong_BangThemThuoc.getText());
+						int slCu = timThuocTrongBangTheoTenTraVeSoLuong(ten, tablemode);
+						if (sl <= 0)
+							JOptionPane.showMessageDialog(panelBangThemThuoc, "Số lượng không được âm và khác 0 !!");
+						else {
+							if (sl <= Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1) + "")) {
+								int soLuongConLai = Integer.parseInt(tablemodelBangThemThuoc.getValueAt(row, 1) + "")
+										- sl;
+								for (int i = tablemode.getRowCount() - 1; i >= 0; i--)
+									if (tablemode.getValueAt(i, 0).equals(ten))
+										tablemode.removeRow(i);
+								themThuocTuBangVaoHoaDon_TangSoLuong(ten, (sl + slCu));
+								txtTongTien.setText(tongTien(tablemode) + "");
+								tableThemThuoc.setValueAt(soLuongConLai, row, 1);
+							} else
+								JOptionPane.showMessageDialog(panelBangThemThuoc, "Thuốc ko đủ số lượng để bán!");
+						}
+					}
+				}
+			}
+		}
 	}
+
 	public void them_panelThongTin() {
-	    String ten = txtTenThuoc_TimKiem.getText()+"";
-        boolean ketQua = timThuocTrongBangTheoTen(ten, tablemode);
-        if ((control.kiemTraDuLieuSo(txtSoLuong.getText()+"")==true) && (ketQua == false)  && (!txtSoLuong.getText().equals(""))) {
-            int soluong = Integer.parseInt(txtSoLuong.getText());
-            if (soluong>0)
-            {
-                try {
-                    ds.docThuoc();
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                for(ThongTinThuoc thuoc : ds.listThuoc)
-                {
-                    if(ten.equals(thuoc.getTenThuoc()+""))
-                    {
-                        if(soluong <= thuoc.getSoLuong())
-                        {
-                            Object[] row = {ten,soluong,thuoc.getDonViTinh(),thuoc.getGiaBan(),soluong*thuoc.getGiaBan()};
-                            tablemode.addRow(row);
-                            for(int i = tablemodelBangThemThuoc.getRowCount()-1;i>=0;i--)
-                            	if(ten.equals(tablemodelBangThemThuoc.getValueAt(i, 0)+""))
-                            		tablemodelBangThemThuoc.setValueAt(Integer.parseInt(tablemodelBangThemThuoc.getValueAt(i, 1)+"")-soluong, i, 1);
-                        }
-                        else 
-                            JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
-                    }
-                }
-                txtTongTien.setText(tongTien(tablemode)+"");
-            }
-            else 
-                JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng không âm và phải khác 0 !! ");
-        }
-        else {
-            if (control.kiemTraDuLieuSo(txtSoLuong.getText()+"")==false)
-                JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng phải là CHỮ SỐ");
-            if (txtSoLuong.getText().equals(""))
-                JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng không được để trống!!");
-            else {
-                if (ketQua==true) {
-                    int soluongMoi = Integer.parseInt(txtSoLuong.getText());
-                    int soluongCu = timThuocTrongBangTheoTenTraVeSoLuong(ten, tablemode);
-                    try {
-                        ds.docThuoc();
-                    } catch (SQLException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    for(ThongTinThuoc thuoc : ds.listThuoc)
-                    {
-                        if(ten.equals(thuoc.getTenThuoc()+""))
-                        {
-                            if((soluongCu+soluongMoi) <= thuoc.getSoLuong())
-                            {
-                                for(int i = tablemode.getRowCount()-1;i>=0;i--)
-                                    if (tablemode.getValueAt(i, 0).equals(ten))
-                                        tablemode.removeRow(i);
-                                Object[] row = {ten,soluongCu+soluongMoi,thuoc.getDonViTinh(),thuoc.getGiaBan(),(soluongCu+soluongMoi)*thuoc.getGiaBan()};
-                                tablemode.addRow(row);
-                                for(int i = tablemodelBangThemThuoc.getRowCount()-1;i>=0;i--)
-                                	if(ten.equals(tablemodelBangThemThuoc.getValueAt(i, 0)+""))
-                                		tablemodelBangThemThuoc.setValueAt(Integer.parseInt(tablemodelBangThemThuoc.getValueAt(i, 1)+"")-soluongMoi, i, 1);
-                            }
-                            else 
-                                JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
-                        }
-                    }
-                    txtTongTien.setText(tongTien(tablemode)+"");
-                }
-            }
-        }
+		String ten = txtTenThuoc_TimKiem.getText() + "";
+		boolean ketQua = timThuocTrongBangTheoTen(ten, tablemode);
+		if ((control.kiemTraDuLieuSo(txtSoLuong.getText() + "") == true) && (ketQua == false)
+				&& (!txtSoLuong.getText().equals(""))) {
+			int soluong = Integer.parseInt(txtSoLuong.getText());
+			if (soluong > 0) {
+				try {
+					ds.docThuoc();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for (ThongTinThuoc thuoc : ds.listThuoc) {
+					if (ten.equals(thuoc.getTenThuoc() + "")) {
+						if (soluong <= thuoc.getSoLuong()) {
+							Object[] row = { ten, soluong, thuoc.getDonViTinh(), thuoc.getGiaBan(),
+									soluong * thuoc.getGiaBan() };
+							tablemode.addRow(row);
+							for (int i = tablemodelBangThemThuoc.getRowCount() - 1; i >= 0; i--)
+								if (ten.equals(tablemodelBangThemThuoc.getValueAt(i, 0) + ""))
+									tablemodelBangThemThuoc.setValueAt(
+											Integer.parseInt(tablemodelBangThemThuoc.getValueAt(i, 1) + "") - soluong,
+											i, 1);
+						} else
+							JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
+					}
+				}
+				txtTongTien.setText(tongTien(tablemode) + "");
+			} else
+				JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng không âm và phải khác 0 !! ");
+		} else {
+			if (control.kiemTraDuLieuSo(txtSoLuong.getText() + "") == false)
+				JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng phải là CHỮ SỐ");
+			if (txtSoLuong.getText().equals(""))
+				JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng không được để trống!!");
+			else {
+				if (ketQua == true) {
+					int soluongMoi = Integer.parseInt(txtSoLuong.getText());
+					int soluongCu = timThuocTrongBangTheoTenTraVeSoLuong(ten, tablemode);
+					try {
+						ds.docThuoc();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					for (ThongTinThuoc thuoc : ds.listThuoc) {
+						if (ten.equals(thuoc.getTenThuoc() + "")) {
+							if ((soluongCu + soluongMoi) <= thuoc.getSoLuong()) {
+								for (int i = tablemode.getRowCount() - 1; i >= 0; i--)
+									if (tablemode.getValueAt(i, 0).equals(ten))
+										tablemode.removeRow(i);
+								Object[] row = { ten, soluongCu + soluongMoi, thuoc.getDonViTinh(), thuoc.getGiaBan(),
+										(soluongCu + soluongMoi) * thuoc.getGiaBan() };
+								tablemode.addRow(row);
+								for (int i = tablemodelBangThemThuoc.getRowCount() - 1; i >= 0; i--)
+									if (ten.equals(tablemodelBangThemThuoc.getValueAt(i, 0) + ""))
+										tablemodelBangThemThuoc.setValueAt(
+												Integer.parseInt(tablemodelBangThemThuoc.getValueAt(i, 1) + "")
+														- soluongMoi,
+												i, 1);
+							} else
+								JOptionPane.showMessageDialog(panelDienThongTin, "Số lượng thuốc không đủ để bán");
+						}
+					}
+					txtTongTien.setText(tongTien(tablemode) + "");
+				}
+			}
+		}
 	}
-	public boolean kiemTraTTKH(String sdt, String cmnd,String ngaysinh) {
+
+	public boolean kiemTraTTKH(String sdt, String cmnd, String ngaysinh) {
 		if ((control.kiemTraCMND(cmnd)) && (control.kiemTraSDT(sdt)) && (control.kiemTraNgayHopLe(ngaysinh)))
 			return true;
 		return false;
 	}
-	public boolean timThuocTrongBangTheoTen(String ten, TableModel tbm) {
-        for(int i = tbm.getRowCount()-1;i>=0;i--)
-            if (tbm.getValueAt(i, 0).equals(ten))
-                return  true;
-	    return false;
+
+	public static boolean timThuocTrongBangTheoTen(String ten, TableModel tbm) {
+		for (int i = tbm.getRowCount() - 1; i >= 0; i--)
+			if (tbm.getValueAt(i, 0).equals(ten))
+				return true;
+		return false;
 	}
-	   public int timThuocTrongBangTheoTenTraVeSoLuong(String ten, TableModel tbm) {
-	        for(int i = tbm.getRowCount()-1;i>=0;i--)
-	            if (tbm.getValueAt(i, 0).equals(ten))
-	                return  (int)tbm.getValueAt(i, 1);
-	        return 0;
-	    }
+
+	public int timThuocTrongBangTheoTenTraVeSoLuong(String ten, TableModel tbm) {
+		for (int i = tbm.getRowCount() - 1; i >= 0; i--)
+			if (tbm.getValueAt(i, 0).equals(ten))
+				return (int) tbm.getValueAt(i, 1);
+		return 0;
+	}
 }
